@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('fonts/font-awesome/fontawesome-webfont.eot?v=4.7.0');
+  src: url('fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('fonts/font-awesome/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('fonts/font-awesome/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('fonts/font-awesome/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('fonts/font-awesome/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body.authentication.forgot-password,
+body.login_admin {
+  background: url('./images/login_bg.jpg');
+  background-position: center center center center;
+  background-repeat: no-repeat;
+}
+.company-logo a {
+  font-size: 25px;
+  color: #fff;
+}
+body h1 {
+  color: #fff !important;
+}
+body.login_admin .btn.btn-primary.btn-block {
+  background: #5e78ff;
+}
+body.login_admin a {
+  color: #5e78ff;
+}

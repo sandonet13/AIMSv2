@@ -1,0 +1,38 @@
+body .navbar a.navbar-brand {
+    padding: 23px 0 5px 0;
+}
+
+.btn-primary, .available_time_info.hwp {
+    background-color: #5d78ff;
+}
+
+body #wrapper .btn-primary,
+body .btn-pfxcbsubmit {
+    background-color: #5d78ff;
+}
+
+body .btn-pfxcbsubmit:focus,
+body .btn-pfxcbsubmit:active,
+body .btn-pfxcbsubmit:hover,
+body #wrapper .btn-primary.active.focus,
+body #wrapper .btn-primary.active:focus,
+body #wrapper .btn-primary.active:hover,
+body #wrapper .btn-primary:active.focus,
+body #wrapper .btn-primary:active:focus,
+body #wrapper .btn-primary:active:hover,
+body #wrapper .open > .dropdown-toggle.btn-primary.focus,
+body #wrapper .open > .dropdown-toggle.btn-primary:focus,
+body #wrapper .open > .dropdown-toggle.btn-primary:hover {
+    color: #fff;
+    background-color: #4c66e7;
+}
+
+body:not(.customers_login) .navbar-default .navbar-nav > li.customers-nav-item-profile > a {
+    background: transparent;
+}
+
+body:not(.customers_login) .navbar-default .navbar-nav > li.customers-nav-item-profile > a:active,
+body:not(.customers_login) .navbar-default .navbar-nav > li.customers-nav-item-profile > a:focus,
+body:not(.customers_login) .navbar-default .navbar-nav > li.customers-nav-item-profile > a:hover {
+    background: transparent !important;
+}

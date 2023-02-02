@@ -2118,3 +2118,5 @@ ERROR - 2023-02-02 13:48:38 --> Could not find the language line "New"
 ERROR - 2023-02-02 07:53:02 --> 404 Page Not Found: /index
 ERROR - 2023-02-02 14:00:23 --> Could not find the language line "Purchase Quotation Added EST-000002"
 ERROR - 2023-02-02 14:00:23 --> Could not find the language line "New"
+ERROR - 2023-02-02 14:04:44 --> Could not find the language line "Purchase Quotation Added EST-000002"
+ERROR - 2023-02-02 14:04:44 --> Could not find the language line "purchase_widget"

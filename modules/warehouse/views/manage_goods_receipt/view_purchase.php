@@ -22,11 +22,11 @@
                      </a>
                   </li>  
 
-                  <li role="presentation">
+                  <!-- <li role="presentation">
                      <a href="#tab_tasks" onclick="init_rel_tasks_table(<?php echo $goods_receipt->id; ?>,'stock_import'); return false;" aria-controls="tab_tasks" role="tab" data-toggle="tab">
                      <?php echo _l('tasks'); ?>
                      </a>
-                  </li>
+                  </li> -->
 
                   <li role="presentation" data-toggle="tooltip" data-title="<?php echo _l('toggle_full_view'); ?>" class="tab-separator toggle_view">
                      <a href="#" onclick="small_table_full_view(); return false;">
@@ -140,11 +140,11 @@
                                      <th colspan="1"><?php echo _l('warehouse_name') ?></th>
                                      <th  colspan="1"><?php echo _l('unit_name') ?></th>
                                      <th  colspan="2" class="text-center"><?php echo _l('quantity') ?></th>
-                                     <th align="right" colspan="1"><?php echo _l('unit_price') ?></th>
-                                     <th align="right" colspan="1"><?php echo _l('total_money') ?></th>
-                                     <th align="right" colspan="1"><?php echo _l('tax_money') ?></th>
-                                     <th align="right" colspan="1"><?php echo _l('lot_number') ?></th>
-                                     <th align="right" colspan="1"><?php echo _l('expiry_date') ?></th>
+                                     <!-- <th align="right" colspan="1"><?php echo _l('unit_price') ?></th> -->
+                                     <!-- <th align="right" colspan="1"><?php echo _l('total_money') ?></th> -->
+                                     <!-- <th align="right" colspan="1"><?php echo _l('tax_money') ?></th> -->
+                                     <!-- <th align="right" colspan="1"><?php echo _l('lot_number') ?></th> -->
+                                     <!-- <th align="right" colspan="1"><?php echo _l('expiry_date') ?></th> -->
                                  </tr>
                               </thead>
                               <tbody class="ui-sortable">
@@ -186,11 +186,11 @@
                                   <td ><?php echo html_entity_decode($unit_name) ?></td>
                                   <td ></td>
                                   <td class="text-right" ><?php echo html_entity_decode($quantities) ?></td>
-                                  <td class="text-right"><?php echo app_format_money((float)$unit_price,'') ?></td>
-                                  <td class="text-right"><?php echo app_format_money((float)$goods_money,'') ?></td>
-                                  <td class="text-right"><?php echo app_format_money((float)$tax_money,'') ?></td>
-                                  <td class="text-right"><?php echo html_entity_decode($lot_number) ?></td>
-                                  <td class="text-right"><?php echo _d($expiry_date) ?></td>
+                                  <!-- <td class="text-right"><?php echo app_format_money((float)$unit_price,'') ?></td> -->
+                                  <!-- <td class="text-right"><?php echo app_format_money((float)$goods_money,'') ?></td> -->
+                                  <!-- <td class="text-right"><?php echo app_format_money((float)$tax_money,'') ?></td> -->
+                                  <!-- <td class="text-right"><?php echo html_entity_decode($lot_number) ?></td> -->
+                                  <!-- <td class="text-right"><?php echo _d($expiry_date) ?></td> -->
                                 </tr>
                              <?php  } ?>
                               </tbody>
@@ -201,25 +201,25 @@
                      <div class="col-md-6 col-md-offset-6">
                       <table class="table text-right table-margintop">
                         <tbody>
-                          <tr class="project-overview" id="subtotal">
+                          <!-- <tr class="project-overview" id="subtotal">
                             <td class="td_style"><span class="bold"><?php echo _l('total_goods_money'); ?></span>
                             </td>
                             <?php $total_goods_money = (isset($goods_receipt) ? $goods_receipt->total_goods_money : '');?>
                             <td><?php echo app_format_money((float)$total_goods_money, $base_currency); ?></td>
-                          </tr>
+                          </tr> -->
 
-                          <tr class="project-overview">
+                          <!-- <tr class="project-overview">
                             <td class="td_style"><span class="bold"><?php echo _l('value_of_inventory'); ?></span>
                             </td>
                             <?php $value_of_inventory = (isset($goods_receipt) ? $goods_receipt->value_of_inventory : '');?>
                             <td><?php echo app_format_money((float)$value_of_inventory, $base_currency); ?></td>
-                          </tr>
+                          </tr> -->
                           
                           <?php if(isset($goods_receipt) && $tax_data['html_currency'] != ''){
                             echo html_entity_decode($tax_data['html_currency']);
                           } ?>
                           
-                          <tr class="project-overview">
+                          <!-- <tr class="project-overview">
                             <td class="td_style"><span class="bold"><?php echo _l('total_tax_money'); ?></span>
                             </td>
                             <?php $total_tax_money = (isset($goods_receipt) ? $goods_receipt->total_tax_money : '');?>
@@ -232,7 +232,7 @@
                             <?php $total_money = (isset($goods_receipt) ? $goods_receipt->total_money : '');?>
                             <td><?php echo app_format_money((float)$total_money, $base_currency); ?></td>
 
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>

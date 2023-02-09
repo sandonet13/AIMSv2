@@ -17,8 +17,8 @@ class Migration_Version_145 extends App_module_migration
         /**
          * Alter table add viewed_at new column
          */
-        $CI->db->query("ALTER TABLE `" . db_prefix() . "chatclientmessages` ADD `viewed_at` DATETIME NULL DEFAULT NULL AFTER `time_sent`;");
-        $CI->db->query("ALTER TABLE `" . db_prefix() . "chatmessages` ADD `viewed_at` DATETIME NULL DEFAULT NULL AFTER `time_sent`;");
+        $CI->db->query("ALTER TABLE `chatclientmessages` ADD `viewed_at` DATETIME NULL DEFAULT NULL;");
+        $CI->db->query("ALTER TABLE `chatmessages` ADD `viewed_at` DATETIME NULL DEFAULT NULL;");
 
         /**
          * Delete column not needed anymore
@@ -36,4 +36,5 @@ class Migration_Version_145 extends App_module_migration
         $CI->db->where('message', '');
         $CI->db->delete(db_prefix() . 'chatgroupmessages');
     }
+
 }

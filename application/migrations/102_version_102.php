@@ -58,7 +58,7 @@ class Migration_Version_102 extends CI_Migration
 
         // Add options for estimates
         add_option('delete_only_on_last_estimate', 1);
-        add_option('estimate_prefix', 'EST-');
+        add_option('estimate_prefix', 'QT-');
         add_option('next_estimate_number', 1);
         add_option('estimate_number_decrement_on_delete', 1);
         add_option('estimate_number_format', 1);

@@ -193,6 +193,21 @@ function format_pur_estimate_number($id)
     ]);
 }
 
+
+// function format_pur_request_number($id)
+// {
+//     $CI   = & get_instance();
+//     $CI->db->where('id', $id);
+//     $pur = $CI->db->get(db_prefix() . 'pur_request')->row();
+
+//     $name='';
+//     if($pur){
+//         $name .= $pur->pur_rq_code;
+//     }
+
+//     return $id;
+// }
+
 /**
  * Gets the item hp.
  *

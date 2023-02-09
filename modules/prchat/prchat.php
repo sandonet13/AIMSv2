@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 /*
 Module Name: Perfex CRM Powerful Chat
-Description: Chat application for Perfex CRM
-Version: 1.4.6
+Description: Chat module for Perfex CRM
+Version: 1.5.0
 Author: Aleksandar Stojanov
 Author URI: https://idevalex.com
 Requires at least: 2.3.2
@@ -54,7 +54,7 @@ if (staff_can('view', PR_CHAT_MODULE_NAME)) {
         $CI->app_menu->add_sidebar_menu_item('prchat', [
             'name'     => 'Chat',
             'href'     => admin_url('prchat/Prchat_Controller/chat_full_view'),
-            'icon'     => 'fa fa-comments-o',
+            'icon'     => 'fa-regular fa-comment',
             'position' => 6,
         ]);
     }

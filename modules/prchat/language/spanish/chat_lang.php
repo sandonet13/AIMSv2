@@ -203,3 +203,23 @@ $lang['chat_cant_copy'] = 'This message can\'t be coppied';
 $lang['chat_message_copied'] = 'Message copied';
 $lang['chat_forward_message_btn'] = 'Forward';
 $lang['chat_search_users'] = 'Search users';
+
+#Version 1.4.6
+$lang['chat_group_renamed'] = 'Group name was changed to  ';
+$lang['chat_group_newname'] = 'Enter new group name';
+$lang['chat_rename_label'] = 'Rename Group';
+$lang['chat_delete_older_conversation_label'] = 'Delete conversation history older than 3 months (Uploads and Audio included)';
+$lang['chat_delete_note'] = 'Note: THIS CANNOT BE UNDONE AFTER DELETING THE CONVERSATION HISTORY WILL BE PERMANENTLY REMOVED';
+$lang['chat_all_messages_delete_text'] = 'All messages older than 3 months will be removed!';
+$lang['chat_delete_all_data'] = 'Delete all existing data (Uploads and Audio files included)';
+$lang['chat_purge_staff_label'] = 'Purge staff history';
+$lang['chat_purge_clients_label'] = 'Purge clients history';
+$lang['chat_purge_groups_label'] = 'Purge groups history';
+$lang['chat_purge_everything'] = 'Purge everything';
+$lang['chat_wipe_confirm'] = 'Completely wipe out all chat data and uploads?';
+$lang['chat_type_in_delete'] = 'Please type in DELETE to confirm';
+$lang['chat_history_conversation_deleted'] = 'Coversation history successfully deleted';
+$lang['chat_history_already_deleted'] = 'Coversation data for last 3 months is already deleted!';
+$lang['chat_action_was_cancelled'] = 'ACTION WAS CANCELLED OR WRONG INPUT';
+
+# Version 1.4.7

@@ -25,7 +25,7 @@ $chat_enabled = get_option('pusher_chat_enabled'); ?>
 <hr>
 
 <?php
-/** 
+/**
  * Show only staff members who have chat permissions
  * get_option chat_show_only_users_with_chat_permissions is by default 0
  */
@@ -78,7 +78,7 @@ $show_users_with_chat_permissions = get_option('chat_show_only_users_with_chat_p
 * Show options for chat pusher in Setup->Settings->Chat Settings
 * get_option chat_members_can_create_groups is by default 1
 -->
-<?php $chat_members_can_create_groups = get_option('chat_members_can_create_groups');  ?>
+<?php $chat_members_can_create_groups = get_option('chat_members_can_create_groups'); ?>
 <div class="form-group">
     <label for="y_opt_1_chat_members_can_create_groups" class="control-label clearfix">
         <?php echo _l('chat_staff_can_create_groups'); ?>
@@ -100,7 +100,7 @@ $show_users_with_chat_permissions = get_option('chat_show_only_users_with_chat_p
 * Show options for chat pusher in Setup->Settings->Chat Settings
 * get_option chat_staff_can_delete_messages is by default 1 
 -->
-<?php $can_delete = get_option('chat_staff_can_delete_messages');  ?>
+<?php $can_delete = get_option('chat_staff_can_delete_messages'); ?>
 <div class="form-group">
     <label for="pusher_chat" class="control-label clearfix">
         <?php echo _l('chat_allow_delete_messages'); ?>
@@ -121,7 +121,7 @@ $show_users_with_chat_permissions = get_option('chat_show_only_users_with_chat_p
 * Show options for chat pusher in Setup->Settings->Chat Settings
 * get_option chat_allow_staff_to_create_tickets is by default 1 
 -->
-<?php $alllow_to_covert_tickets = get_option('chat_allow_staff_to_create_tickets');  ?>
+<?php $alllow_to_covert_tickets = get_option('chat_allow_staff_to_create_tickets'); ?>
 <div class="form-group">
     <label for="pusher_chat" class="control-label clearfix">
         <?php echo _l('chat_allow_staff_to_create_tickets'); ?>
@@ -144,7 +144,7 @@ $show_users_with_chat_permissions = get_option('chat_show_only_users_with_chat_p
 * Show options for chat pusher in Setup->Settings->Chat Settings
 * get_option chat_desktop_messages_notifications is by default 1
 -->
-<?php $notification_option = get_option('chat_desktop_messages_notifications');  ?>
+<?php $notification_option = get_option('chat_desktop_messages_notifications'); ?>
 <div class="form-group">
     <label for="pusher_chat" class="control-label clearfix">
         <?php echo _l('chat_show_desktop_messages_notifications'); ?>
@@ -160,7 +160,18 @@ $show_users_with_chat_permissions = get_option('chat_show_only_users_with_chat_p
         </label>
     </div>
 </div>
+<hr>
+<div class="form-group">
+    <label><strong><?= _l("chat_delete_older_conversation_label"); ?></strong></label><br>
+    <span class="text-danger"><?= _l("chat_delete_note"); ?></span><br><br>
+    <button class="btn btn-danger" data-toggle="tooltip" title="<?= _l("chat_all_messages_delete_text"); ?>" type="button" onclick="purgeStaffHistory()"><?= _l("chat_purge_staff_label"); ?></button>
+    <button class="btn btn-danger" data-toggle="tooltip" type="button" title="<?= _l("chat_all_messages_delete_text"); ?>" onclick="purgeClientsHistory()"><?= _l("chat_purge_clients_label"); ?></button>
+    <button class="btn btn-danger" data-toggle="tooltip" type="button" title="<?= _l("chat_all_messages_delete_text"); ?>" onclick="purgeGroupsHistory()"><?= _l("chat_purge_groups_label"); ?></button>
+    <hr>
+    <label><strong><?= _l("chat_delete_all_data"); ?></strong></label><br>
+    <button class="btn btn-danger" data-toggle="tooltip" type="button" title="<?= _l("chat_wipe_confirm"); ?>" onclick="purgeAllHistory()"><?= _l("chat_purge_everything"); ?></button>
 </div>
+<hr>
 
 <div class="form-group panel-body">
     <span class="text-primary font-medium"><?= _l('chat_permissions_info'); ?></span>

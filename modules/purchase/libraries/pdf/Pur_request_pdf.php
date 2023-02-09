@@ -16,8 +16,8 @@ class Pur_request_pdf extends App_pdf
         parent::__construct();
 
         $this->pur_request = $pur_request;
-
-        $this->SetTitle('pur_request');
+        // echo json_encode(format_pur_request_number($id))
+        $this->SetTitle('Purchase Request');
         $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
         $this->SetHeaderMargin(PDF_MARGIN_HEADER);
         // $halaman = $this->PageNo();

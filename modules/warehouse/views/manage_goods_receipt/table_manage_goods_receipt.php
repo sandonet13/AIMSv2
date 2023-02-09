@@ -9,10 +9,10 @@ $aColumns = [
     'buyer_id',
     'pr_order_id',
     'date_add',
-    'total_tax_money', 
-    'total_goods_money',
-    'value_of_inventory',
-    'total_money',
+    // 'total_tax_money', 
+    // 'total_goods_money',
+    // 'value_of_inventory',
+    // 'total_money',
     'approval',
 ];
 $sIndexColumn = 'id';

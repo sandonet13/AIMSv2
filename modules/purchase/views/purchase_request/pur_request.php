@@ -3,6 +3,7 @@
 <?php init_head(); ?>
 
 <div id="wrapper">
+<br>
    <div class="content">
     <?php echo form_open($this->uri->uri_string(),array('id'=>'add_edit_pur_request-form','class'=>'_transaction_form')); ?>
       <div class="row">
@@ -128,8 +129,18 @@
                         </select>
                         <br><br>
                     </div>
-                    
+
                     <div class="col-md-3 form-group">
+                            <label for="type"><?php echo _l('Purchase Type'); ?></label>
+                              <select name="purchase_type" id="purchase_type" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                                <option value=""></option>
+                                <option value="Jasa" <?php if(isset($pur_request) && $pur_request->purchase_type == 'Jasa'){ echo 'selected';} ?>><?php echo _l('Jasa'); ?></option>
+                                <option value="Barang" <?php if(isset($pur_request) && $pur_request->purchase_type == 'Barang'){ echo 'selected';} ?>><?php echo _l('Barang'); ?></option>
+                              </select>
+                              <br><br>
+                          </div>
+                    
+                    <!-- <div class="col-md-3 form-group">
                       <label for="send_to_vendors"><?php echo _l('pur_send_to_vendors'); ?></label>
                       <select name="send_to_vendors[]" id="send_to_vendors" class="selectpicker" multiple="true" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>" >
                           <?php
@@ -142,7 +153,7 @@
                           <option value="<?php echo html_entity_decode($s['userid']); ?>" <?php if(isset($pur_request) && in_array($s['userid'], $vendors_arr)){ echo 'selected';  } ?> ><?php echo html_entity_decode($s['company']); ?></option>
                             <?php } ?>
                       </select>  
-                    </div>
+                    </div> -->
 
                     <div class="col-md-12">
                       <?php $rq_description = ( isset($pur_request) ? $pur_request->rq_description : '');

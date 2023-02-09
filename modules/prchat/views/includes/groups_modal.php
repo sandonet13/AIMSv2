@@ -115,9 +115,9 @@
       });
 
       $('#chat_groups_custom_modal input').keydown(function(e) {
-        if (e.keyCode == 32) {
-          return false;
-        }
+          // if (e.keyCode == 32) {
+          //   return false;
+          // }
       });
     })(jQuery);
   </script>

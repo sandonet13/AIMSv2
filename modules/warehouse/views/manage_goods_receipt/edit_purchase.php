@@ -50,7 +50,7 @@
 												</div>
 												<div class="col-md-4 pull-right">
 													<p><span class="span-font-style"><?php echo _l('days').' '.$day.' '._l('month').' '.$month.' '._l('year') .' '.$year; ?></p>
-														<p><span class="bold"><?php echo _l('stock_received_docket_number'); ?>: </span><?php echo html_entity_decode($goods_receipt->goods_receipt_code) ?></p>
+														<p><span class="bold"><?php echo _l('stock_received_docket_numbersssss'); ?>: </span><?php echo html_entity_decode($goods_receipt->goods_receipt_code) ?></p>
 													</div>
 												</div>
 											</div>
@@ -137,9 +137,9 @@
 														<th colspan="1"><?php echo _l('warehouse_name') ?></th>
 														<th  colspan="1"><?php echo _l('unit_name') ?></th>
 														<th  colspan="1" class="text-center"><?php echo _l('quantity') ?></th>
-														<th align="right" colspan="1"><?php echo _l('unit_price') ?></th>
-														<th align="right" colspan="1"><?php echo _l('total_money') ?></th>
-														<th align="right" colspan="1"><?php echo _l('tax_money') ?></th>
+														<!-- <th align="right" colspan="1"><?php echo _l('unit_price') ?></th> -->
+														<!-- <th align="right" colspan="1"><?php echo _l('total_money') ?></th> -->
+														<!-- <th align="right" colspan="1"><?php echo _l('tax_money') ?></th> -->
 														<th align="right" colspan="1"><?php echo _l('lot_number') ?></th>
 														<th align="right" colspan="1"><?php echo _l('expiry_date') ?></th>
 
@@ -173,9 +173,9 @@
 															<td ><?php echo html_entity_decode($warehouse_code) ?></td>
 															<td ><?php echo html_entity_decode($unit_name) ?></td>
 															<td class="text-right" ><?php echo html_entity_decode($quantities) ?></td>
-															<td class="text-right"><?php echo app_format_money((float)$unit_price,'') ?></td>
-															<td class="text-right"><?php echo app_format_money((float)$goods_money,'') ?></td>
-															<td class="text-right"><?php echo app_format_money((float)$tax_money,'') ?></td>
+															<!-- <td class="text-right"><?php echo app_format_money((float)$unit_price,'') ?></td> -->
+															<!-- <td class="text-right"><?php echo app_format_money((float)$goods_money,'') ?></td> -->
+															<!-- <td class="text-right"><?php echo app_format_money((float)$tax_money,'') ?></td> -->
 															<td class="text-right"><?php echo html_entity_decode($lot_number) ?></td>
 															<td class="text-right"><?php echo _d($expiry_date) ?></td>
 														</tr>

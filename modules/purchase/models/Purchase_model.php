@@ -3323,7 +3323,7 @@ class Purchase_model extends App_Model
           -->
           <--!
           <tr>
-            <td class="font_500">MR Number: '.$pur_request->pur_rq_code.'</td>
+            <td class="font_500">PR Number: '.$pur_request->pur_rq_code.'</td>
           </tr>
           
           -->
@@ -3346,8 +3346,8 @@ class Purchase_model extends App_Model
           <tr>
             <td style="width: 15%"><h4>'. _l('requester').':</h4></td>
             <td style="width: 57%">'. get_staff_full_name($pur_request->requester).'</td>
-            <td style="width: 15%" class="font_500"><h4>Date:</h4></td>
-            <td style="width: 15%">'.$day. '-' .$month.'-'.$year.'</td>
+            <td style="width: 15%" class="font_500"><h4>Purchase Type:</h4></td>
+            <td style="width: 15%">'.$pur_request->purchase_type.'</td>
           </tr>
           <tr>
             <td class="font_500"><h4>'. _l('project').':</h4></td>
@@ -3356,8 +3356,10 @@ class Purchase_model extends App_Model
             <td>'.  $dpm_name.'</td>
           </tr>
           <tr>
-                <td style="width: 15%" class="font_500"><h4>MR Number:</h4></td>
-                <td style="width: 60%">'.$pur_request->pur_rq_code.'</td>
+                <td style="width: 15%" class="font_500"><h4>PR Number:</h4></td>
+                <td style="width: 57%">'.$pur_request->pur_rq_code.'</td>
+                <td style="width: 15%" class="font_500"><h4>Date:</h4></td>
+                <td style="width: 15%">'.$day. '-' .$month.'-'.$year.'</td>
 
             </tr>
           <tr>
@@ -3468,17 +3470,22 @@ class Purchase_model extends App_Model
       <br>
       <table class="table">
         <tbody>
+        <tr>
+            <td style="text-align: left;width:50%"><h4>'. _l('Approved by').'</h4></td>
+        </tr>
+        <tr><br></tr>
           <tr>';
      if(count($list_approve_status) > 0){
       
         foreach ($list_approve_status as $value) {
-     $html .= '<td style="width: 70%" class="text-left">';
+     $html .= '<tr><td class="text-left">';
         if($value['action'] == 'sign'){
-            $html .= '<h4>APPROVED BY</h4>';
+            // $html .= '<h4>Approved By</h4>';
             if($value['approve'] == 2){ 
                 $html .= '<img src="'.FCPATH.'modules/purchase/uploads/pur_request/signature/'.$pur_request->id.'/signature_'.$value['id'].'.png" class="img_style">';
             }
-            $html .= '<h4>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h4>';
+            // $html .= '</br></br></br>';
+            // $html .= '<h4>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h4>';
 
                 
         }else{ 
@@ -3490,10 +3497,12 @@ class Purchase_model extends App_Model
              }
               
                 }
-       $html .= '</td>';
+       $html .= '</td></tr>';
         }
        
-    
+        $html .= '<tr><br></tr>
+                                    <tr></tr>
+                                    <td style="text-align: left;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>';
     
      } 
             $html .= '<--! <td class="td_ali_font"><h3>'.mb_strtoupper(_l('purchase_requestor')).'</h3></td>
@@ -6594,59 +6603,82 @@ class Purchase_model extends App_Model
         $month = date('m',strtotime($pur_estimate->date));
         $year = date('Y',strtotime($pur_estimate->date));
         $tax_data = $this->get_html_tax_pur_estimate($pur_estimate_id);
+
+        $mr_num = $pur_estimate->pur_request->pur_rq_code;
+        $mr_name = $pur_estimate->pur_request->pur_rq_name;
+        // echo json_encode($pur_estimate->pur_request);
         
     $html = '<table class="table">
-        <tbody>
-          <tr>
-            <td class="font_td_cpn" style="width: 70%">'. _l('purchase_company_name').': '. $company_name.'</td>
-            <td rowspan="2" style="width: 30%" class="text-right">'.get_po_logo(150).'</td>
-            
-          </tr>
-          <tr>
-            <td class="font_500">'. _l('address').': '. $address.'</td>
-            <td></td>
-            
-          </tr>
-        </tbody>
-      </table>
-      <table class="table">
-        <tbody>
-          <tr>
-            
-            <td class="td_ali_font"><h2 class="h2_style">'.mb_strtoupper(_l('estimate')).'</h2></td>
-           
-          </tr>
-          <tr>
-            
-            <td class="align_cen">'. _l('days').' '.$day.' '._l('month').' '.$month.' '._l('year') .' '.$year.'</td>
-            
-          </tr>
+    <tbody>
+    <tr>
+    <td style="width: 70%" class="text-left">'.get_po_logo().'</td>
+    <td style="width: 30%" class="text-left">
+    <table><tr>
+        <td class="child">
+            <small>Nomor Dokumen:</small>
+        </td>
+        <td class="child">
+            <small>AMI-F-PROC-P-01/02</small>
+        </td>
+        </tr>
+        <tr>
+        <td class="child">
+            <small>Revisi:</small>
+        </td>
+        <td class="child">
+            <small>01</small>
+        </td>
+    </tr>
+    <tr>
+        <td class="child">
+            <small>Tanggal Terbit:</small>
+        </td>
+        <td class="child">
+            <small>13 Februari 2017</small>
+        </td>
+    </tr></table>
+    </td>
+</tr>
+<tr>
+    
+    <td style="width: 100%" class="align_cen"><h3>'.mb_strtoupper(_l('Quotation')).'</h3></td>
+</tr>
           
         </tbody>
       </table>
       <table class="table">
         <tbody>
           <tr>
-            <td class="td_width_25"><h4>'. _l('add_from').':</h4></td>
-            <td class="td_width_75">'. get_staff_full_name($pur_estimate->addedfrom).'</td>
+            <td style="width: 15%"><h4>'. _l('add_from').':</h4></td>
+            <td style="width: 57%">'. get_staff_full_name($pur_estimate->addedfrom).'</td>
           </tr>
           <tr>
             <td class="td_width_25"><h4>'. _l('vendor').':</h4></td>
             <td class="td_width_75">'. get_vendor_company_name($pur_estimate->vendor->userid).'</td>
           </tr>
+          <tr>
+            <td style="width: 15%"><h4>'. _l('PR Number:').':</h4></td>
+            <td style="width: 75%">'.$mr_num.'</td>
+          </tr>
+          <tr>
+            <td style="width: 15%"><h4>'. _l('PR Name:').':</h4></td>
+            <td style="width: 75%">'.$mr_name.'</td>
+          </tr>
+          <tr>
+            <td style="width: 15%"><h4>'. _l('QT Number:').':</h4></td>
+            <td style="width: 75%">'. html_entity_decode(format_pur_estimate_number($pur_estimate_id)).'</td>
+          </tr>
           
         </tbody>
       </table>
 
-      <h3>
-       '. html_entity_decode(format_pur_estimate_number($pur_estimate_id)).'
-       </h3>
       <br><br>
       ';
 
       $html .=  '<table class="table purorder-item">
         <thead>
           <tr>
+            <th class="thead-dark">'._l('No').'</th>
             <th class="thead-dark">'._l('items').'</th>
             <th class="thead-dark" align="right">'._l('purchase_unit_price').'</th>
             <th class="thead-dark" align="right">'._l('purchase_quantity').'</th>';
@@ -6661,12 +6693,14 @@ class Purchase_model extends App_Model
           </thead>
           <tbody>';
         $t_mn = 0;
+        $counter = 1;  
       foreach($pur_estimate_detail as $row){
         $items = $this->get_items_by_id($row['item_code']);
         $units = $this->get_units_by_id($row['unit_id']);
-        $item_name = isset($items->commodity_code) ? $items->commodity_code.' - '.$items->description : $row['item_name'];
+        $item_name = isset($items->commodity_code) ? $items->description : $row['item_name'];
 
         $html .= '<tr nobr="true" class="sortable">
+            <td align="left">'. $counter .'</td>
             <td >'.$item_name.'</td>
             <td align="right">'.app_format_money($row['unit_price'],$base_currency->symbol).'</td>
             <td align="right">'.$row['quantity'].'</td>';
@@ -6678,7 +6712,7 @@ class Purchase_model extends App_Model
             $html .= '<td align="right">'.app_format_money($row['discount_money'],$base_currency->symbol).'</td>
             <td align="right">'.app_format_money($row['total_money'],$base_currency->symbol).'</td>
           </tr>';
-
+          $counter++;
         $t_mn += $row['total_money'];
       }  
       $html .=  '</tbody>
@@ -6721,10 +6755,24 @@ class Purchase_model extends App_Model
 
       $html .= ' </tbody></table>';
 
-      $html .= '<div class="col-md-12 mtop15">
-                        <h4>'. _l('terms_and_conditions').': </h4><p>'. html_entity_decode($pur_estimate->terms).'</p>
-                       
-                     </div>';
+      $html .= '<table nobr="true">
+                                    <tr>
+                                    <td style="width:20%"><h4>'. _l('Payment Terms').':</h4></td>
+                                    <td style="width:50%"><p>'. $pur_estimate->terms .'</p></td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:20%"><h4>'. _l('Delivery Time').':</h4></td>
+                                    <td style="width:50%"><p>'. $pur_estimate->delivery_time .'</p></td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:20%"><h4>'. _l('Inspection Note').':</h4></td>
+                                    <td style="width:50%"><p>'. $pur_estimate->inspection_note .'</p></td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:20%"><h4>'. _l('Vendor Note').':</h4></td>
+                                    <td style="width:50%"><p>'. $pur_estimate->vendornote .'</p></td>
+                                    </tr>
+                                </table>';
       $html .= '<br>
       <br>
       <br>

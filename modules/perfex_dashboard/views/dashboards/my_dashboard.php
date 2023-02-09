@@ -82,13 +82,13 @@ $tmp_last_12_months = $fn_generate_period('LAST_MONTHS', 12);
                 <div class="col-md-12">
                     <form method="get" action="<?php echo admin_url('perfex_dashboard/dashboards/my_dashboard'); ?>">
                         <div class="perfexdashboard-actions-wrap perfexdashboard-actions-wrap-between">
-                            <div class="perfexdashboard-actions-section-left">
+                            <!-- <div class="perfexdashboard-actions-section-left">
                                 <select name="dashboard_id" class="form-control perfexdashboard-width-select">
                                     <?php foreach ($user_dashboards as $user_dashboard) { ?>
                                         <option value="<?= $user_dashboard['id'] ?>" <?= $user_dashboard['id'] == $active_dashboard_id ? 'selected' : '' ?>><?= $user_dashboard['name'] ?></option>
                                     <?php } ?>
                                 </select>
-                            </div>
+                            </div> -->
                             <!-- <div class="perfexdashboard-actions-section-right">
                                 <div class="perfexdashboard-period-select">
                                     <?php

@@ -17,13 +17,13 @@ $aColumns = [
 	'(SELECT GROUP_CONCAT(name SEPARATOR ",") FROM ' . db_prefix() . 'taggables JOIN ' . db_prefix() . 'tags ON ' . db_prefix() . 'taggables.tag_id = ' . db_prefix() . 'tags.id WHERE rel_id = ' . db_prefix() . 'items.id and rel_type="item_tags" ORDER by tag_order ASC) as tags',
 	'commodity_barcode',
 	'unit_id',
-	'rate',
+	// 'rate',
 	'purchase_price',
 	't1.taxrate as taxrate_1',
-    't2.taxrate as taxrate_2',
+    // 't2.taxrate as taxrate_2',
 	'origin',
-	'2',	//minimum stock
-	'3',	//maximum stock
+	// '2',	//minimum stock
+	// '3',	//maximum stock
 	'4',	//maximum stock
 ];
 $sIndexColumn = 'id';

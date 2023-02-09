@@ -30,13 +30,13 @@
                   <div class="col-md-4">
                   <div class="_buttons">
                      <?php if (has_permission('purchase_vendors','','create')) { ?>
-                     <a href="<?php echo admin_url('purchase/vendor'); ?>" class="btn btn-info mright5 test pull-left display-block">
+                     <a href="<?php echo admin_url('purchase/vendor'); ?>" class="btn btn-info  test">
                      <?php echo _l('new_vendor'); ?></a>
 
-                     <a href="<?php echo admin_url('purchase/vendor_import'); ?>" class="btn btn-info mright5 test pull-left display-block">
+                     <a href="<?php echo admin_url('purchase/vendor_import'); ?>" class="btn btn-success  test">
                      <?php echo _l('import_vendors'); ?></a>
 
-                     <a href="<?php echo admin_url('purchase/all_contacts'); ?>" class="btn btn-info pull-left display-block mright5">
+                     <a href="<?php echo admin_url('purchase/all_contacts'); ?>" class="btn btn-warning ">
                      <?php echo _l('vendor_contacts'); ?></a>
 
                      

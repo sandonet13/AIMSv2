@@ -25,6 +25,7 @@ function data_tables_init($aColumns, $sIndexColumn, $sTable, $join = [], $where 
     if ((is_numeric($CI->input->post('start'))) && $CI->input->post('length') != '-1') {
         $sLimit = 'LIMIT ' . intval($CI->input->post('start')) . ', ' . intval($CI->input->post('length'));
     }
+    
     $_aColumns = [];
     foreach ($aColumns as $column) {
         // if found only one dot

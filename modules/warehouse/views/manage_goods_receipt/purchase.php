@@ -174,17 +174,17 @@
 								<thead>
 									<tr>
 										<th></th>
-										<th width="20%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('invoice_table_item_heading'); ?></th>
+										<th width="25%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('invoice_table_item_heading'); ?></th>
 										<th width="15%" align="left"><?php echo _l('warehouse_name'); ?></th>
 										<th width="10%" align="right" class="qty"><?php echo _l('quantity'); ?></th>
-										<th width="10%" align="right"><?php echo _l('unit_price'); ?></th>
-										<th width="12%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
-										<th width="10%" align="right"><?php echo _l('lot_number'); ?></th>
-										<th width="10%" align="right"><?php echo _l('date_manufacture'); ?></th>
-										<th width="10%" align="right"><?php echo _l('expiry_date'); ?></th>
-										<th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
+										<!-- <th width="10%" align="right"><?php echo _l('unit_price'); ?></th> -->
+										<!-- <th width="12%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th> -->
+										<!-- <th width="10%" align="right"><?php echo _l('lot_number'); ?></th> -->
+										<th width="20%" align="right"><?php echo _l('date_manufacture'); ?></th>
+										<th width="20%" align="right"><?php echo _l('expiry_date'); ?></th>
+										<!-- <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th> -->
 
-										<th align="center"><i class="fa fa-cog"></i></th>
+										<th width="5%" align="center"><i class="fa fa-cog"></i></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -192,13 +192,13 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="col-md-8 col-md-offset-4">
+						<!-- <div class="col-md-8 col-md-offset-4">
 							<table class="table text-right">
 								<tbody>
 									<tr id="subtotal">
 										<td><span class="bold"><?php echo _l('total_goods_money'); ?> :</span>
 										</td>
-										<td class="wh-subtotal">
+										<td class="wh-subtotaladad">
 										</td>
 									</tr>
 									<tr id="totalmoney">
@@ -209,7 +209,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</div> -->
 						<div id="removed-items"></div>
 					</div>
 

@@ -58,7 +58,8 @@ $route['translate_uri_dashes'] = false;
 /**
  * Dashboard clean route
  */
-$route['admin'] = 'admin/dashboard';
+// $route['admin'] = 'admin/dashboard';
+$route['admin'] = 'admin/perfex_dashboard/dashboards/my_dashboard';
 
 /**
  * Misc controller routes

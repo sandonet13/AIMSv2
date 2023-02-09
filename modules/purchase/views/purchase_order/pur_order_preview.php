@@ -34,7 +34,7 @@
                      <?php echo _l('payment_record'); ?>
                      </a>
                   </li>   
-                  <li role="presentation">
+                  <!-- <li role="presentation">
                      <a href="#tab_reminders" onclick="initDataTable('.table-reminders', admin_url + 'misc/get_reminders/' + <?php echo html_entity_decode($estimate->id) ;?> + '/' + 'purchase_order', undefined, undefined, undefined,[1,'asc']); return false;" aria-controls="tab_reminders" role="tab" data-toggle="tab">
                      <?php echo _l('estimate_reminders'); ?>
                      <?php
@@ -51,7 +51,7 @@
                         }
                         ?>
                      </a>
-                  </li>
+                  </li> -->
                      <?php
                      $customer_custom_fields = false;
                      if(total_rows(db_prefix().'customfields',array('fieldto'=>'pur_order','active'=>1)) > 0 ){
@@ -63,11 +63,11 @@
                      </a>
                   </li>
                   <?php } ?>
-                  <li role="presentation">
+                  <!-- <li role="presentation">
                      <a href="#tab_tasks" onclick="init_rel_tasks_table(<?php echo html_entity_decode($estimate->id); ?>,'pur_order'); return false;" aria-controls="tab_tasks" role="tab" data-toggle="tab">
                      <?php echo _l('tasks'); ?>
                      </a>
-                  </li>
+                  </li> -->
                   <li role="presentation" class="tab-separator">
                      <a href="#tab_notes" onclick="get_sales_notes(<?php echo html_entity_decode($estimate->id); ?>,'purchase'); return false" aria-controls="tab_notes" role="tab" data-toggle="tab">
                      <?php echo _l('estimate_notes'); ?>
@@ -517,10 +517,11 @@
                            </tbody>
                         </table>
                      </div>
-                     
+                     <div class="col-md-6 col-sm-6">
+                     <table>
+
                      <?php if($estimate->terbilang != ''){ ?>
                      <div class="col-md-12 mtop15">
-                     <table>
                         <tr>
                         <td style="width:40%;"><p class="bold text-muted"><?php echo _l('Terbilang'); ?>:</p></td>
                         <td><p><?php echo html_entity_decode($estimate->terbilang); ?></p></td>
@@ -561,19 +562,21 @@
                         <td style="width:40%;"><p class="bold text-muted"><?php echo _l('Inspection Note'); ?>:</p></td>
                         <td><p><?php echo html_entity_decode($estimate->inspection_note); ?></p></td>
                         </tr>
-                        </table>
                      </div>
                      <?php } ?>
+                     
+                     </table>
+                     </div>
 
                   </div>
                </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tab_reminders">
+            <!-- <div role="tabpanel" class="tab-pane" id="tab_reminders">
                <a href="#" data-toggle="modal" class="btn btn-info" data-target=".reminder-modal-purchase_order-<?php echo html_entity_decode($estimate->id); ?>"><i class="fa fa-bell-o"></i> <?php echo _l('estimate_set_reminder_title'); ?></a>
                <hr />
                <?php render_datatable(array( _l( 'reminder_description'), _l( 'reminder_date'), _l( 'reminder_staff'), _l( 'reminder_is_notified')), 'reminders'); ?>
                <?php $this->load->view('admin/includes/modals/reminder',array('id'=>$estimate->id,'name'=>'purchase_order','members'=>$members,'reminder_title'=>_l('estimate_set_reminder_title'))); ?>
-            </div>
+            </div> -->
             <div role="tabpanel" class="tab-pane" id="tab_notes">
                <?php echo form_open(admin_url('purchase/add_note/'.$estimate->id),array('id'=>'sales-notes','class'=>'estimate-notes-form')); ?>
                <?php echo render_textarea('description'); ?>

@@ -15,7 +15,7 @@
                     <div class="row">    
                         <div class="_buttons col-md-2">
                             <?php if (has_permission('purchase_request', '', 'create') || is_admin()) { ?>
-                            <a href="<?php echo admin_url('purchase/pur_request'); ?>"class="btn btn-info pull-left mright10 display-block">
+                            <a href="<?php echo admin_url('purchase/pur_request'); ?>"class="btn btn-info">
                                 <?php echo _l('new_pur_request'); ?>
                             </a>
                             <?php } ?>
@@ -42,7 +42,7 @@
                         _l('request_date'),
                         _l('status'),
                         _l('po_no'),
-                        _l('options'),
+                        // _l('options'),
                         ),'table_pur_request'); ?>
             
           </div>
@@ -133,7 +133,7 @@
       </div><!-- /.modal-content -->
           <?php echo form_close(); ?>
       </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>/.modal
 <?php init_tail(); ?>
 </body>
 </html>

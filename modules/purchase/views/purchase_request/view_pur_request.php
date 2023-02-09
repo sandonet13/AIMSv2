@@ -2,6 +2,7 @@
 
 <?php init_head(); ?>
 <div id="wrapper">
+  <br>
    <div class="content">
       <div class="row">
          <div class="col-md-12">
@@ -101,6 +102,10 @@
                   <div class=" col-md-12">
                       <table class="table border table-striped martop0">
                     <tbody>
+                    <tr class="project-overview">
+                          <td class="bold" width="30%"><?php echo _l('Purchase Type'); ?></td>
+                          <td><?php echo html_entity_decode($pur_request->purchase_type); ?></td>
+                       </tr>
                        <tr class="project-overview">
                           <td class="bold" width="30%"><?php echo _l('pur_rq_code'); ?></td>
                           <td><?php echo html_entity_decode($pur_request->pur_rq_code); ?></td>
@@ -124,7 +129,7 @@
                           <td><?php echo _dt($pur_request->request_date); ?></td>
                        </tr>
                        <tr>
-                        <td class="bold"><?php echo _l('pdf'); ?></td>
+                        <td class="bold"><?php echo _l('PDF Download/Print'); ?></td>
                         <td><div class="btn-group">
                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
                            <ul class="dropdown-menu dropdown-menu-right">
@@ -137,7 +142,7 @@
                               
                         </td>
                       </tr>
-                      <tr class="project-overview">
+                      <!-- <tr class="project-overview">
                           <td class="bold"><?php echo _l('public_link'); ?></td>
                           <td>
                             <div class="pull-right _buttons mright5">
@@ -151,7 +156,7 @@
                               } ?>
                            </div>
                            </td>
-                       </tr>
+                       </tr> -->
                        <tr class="project-overview">
                           <td class="bold"><?php echo _l('rq_description'); ?></td>
                           <td><?php echo html_entity_decode($pur_request->rq_description); ?></td>

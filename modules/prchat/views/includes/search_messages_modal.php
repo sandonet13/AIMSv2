@@ -70,11 +70,11 @@
                 if (msg.sender_id === userSessionId || msg.sender_id == 'staff_' + userSessionId) {
                     html += '<div class="panel panel-primary chat_message_history_own" data-toggle="tooltip" title="' + msg.time_sent + '">';
                     html += '<div class="panel-heading"><small>' + moment(msg.time_sent, "YYYYMMDD h:mm:ss").fromNow() + '</small> <h3 class="panel-title">' + sender_fullname + '</h3></div>';
-                    html += '<div class="panel-body"><span class="message_content">' + decodeChatMessageHtml(msg.message) + '<span></div> </div>';
+                    html += '<div style="border: 1px solid #ababab;padding: 10px;border-radius: 6px;"><span class="message_content">' + decodeChatMessageHtml(msg.message) + '<span></div> </div>';
                 } else {
                     html += '<div class="panel panel-primary chat_message_history_other" data-toggle="tooltip" title="' + msg.time_sent + '">';
                     html += '<div class="panel-heading"><small>' + moment(msg.time_sent, "YYYYMMDD h:mm:ss").fromNow() + '</small> <h3 class="panel-title">' + sender_fullname + '</h3></div>';
-                    html += '<div class="panel-body"><span class="message_content">' + decodeChatMessageHtml(msg.message) + '</span></div> </div>';
+                    html += '<div style="border: 1px solid #ababab;padding: 10px;border-radius: 6px;"><span class="message_content">' + decodeChatMessageHtml(msg.message) + '</span></div> </div>';
                 }
             });
 

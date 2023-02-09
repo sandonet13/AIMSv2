@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
 /*
 Module Name: Perfex CRM Powerful Chat
 Description: Chat Module for Perfex CRM
@@ -14,7 +15,7 @@ class Prchat_ClientsController extends ClientsController
      *
      * @var array
      */
-    protected $pusher_options = array();
+    protected $pusher_options = [];
 
     /**
      * Hold Pusher instance.
@@ -47,7 +48,7 @@ class Prchat_ClientsController extends ClientsController
             $this->pusher_options['app_key'],
             $this->pusher_options['app_secret'],
             $this->pusher_options['app_id'],
-            array('cluster' => $this->pusher_options['cluster'])
+            ['cluster' => $this->pusher_options['cluster']]
         );
     }
 
@@ -85,13 +86,13 @@ class Prchat_ClientsController extends ClientsController
                     $justLoggedIn = true;
                 }
 
-                $presence_data = array(
-                    'name' => $name,
+                $presence_data = [
+                    'name'         => $name,
                     'justLoggedIn' => $justLoggedIn,
-                    'contact_id' => get_contact_user_id(),
-                    'client_id' => get_client_user_id(),
-                    'company' => $this->chat_model->getClientCompanyName(get_client_user_id()),
-                );
+                    'contact_id'   => get_contact_user_id(),
+                    'client_id'    => get_client_user_id(),
+                    'company'      => $this->chat_model->getClientCompanyName(get_client_user_id()),
+                ];
 
                 $auth = $this->pusher->presence_auth($channel_name, $socket_id, $user_id, $presence_data);
                 $callback = str_replace('\\', '', $this->input->get('callback'));
@@ -120,60 +121,60 @@ class Prchat_ClientsController extends ClientsController
             if ($this->input->post('typing') == 'false') {
                 $message = $this->input->post('client_message');
 
-                $message_data = array(
-                    'sender_id' => $from,
+                $message_data = [
+                    'sender_id'   => $from,
                     'reciever_id' => $receiver,
-                    'message' => htmlentities($message),
-                    'viewed' => 0,
-                    'time_sent' => date("Y-m-d H:i:s"),
-                );
+                    'message'     => htmlentities($message),
+                    'viewed'      => 0,
+                    'time_sent'   => date("Y-m-d H:i:s"),
+                ];
 
                 $lastInsertId = $this->chat_model->recordClientMessage($message_data);
 
                 $this->pusher->trigger(
                     'presence-clients',
                     'send-event',
-                    array(
-                        'message' => pr_chat_convertLinkImageToString($message),
-                        'from' => $from,
-                        'to' => $receiver,
-                        'client_id' => $client_id,
-                        'company' => $contact_company_name,
+                    [
+                        'message'           => pr_chat_convertLinkImageToString($message),
+                        'from'              => $from,
+                        'to'                => $receiver,
+                        'client_id'         => $client_id,
+                        'company'           => $contact_company_name,
                         'contact_full_name' => $contact_full_name,
                         'client_image_path' => contact_profile_image_url(str_replace('client_', '', $from)),
-                        'from_name' => get_staff_full_name(str_replace('staff_', '', $from)),
-                        'last_insert_id' => $lastInsertId,
-                    )
+                        'from_name'         => get_staff_full_name(str_replace('staff_', '', $from)),
+                        'last_insert_id'    => $lastInsertId,
+                    ]
                 );
 
                 $this->pusher->trigger(
                     'presence-clients',
                     'notify-event',
-                    array(
-                        'from' => $from,
-                        'to' => $receiver,
+                    [
+                        'from'      => $from,
+                        'to'        => $receiver,
                         'from_name' => get_staff_full_name($from),
-                    )
+                    ]
                 );
-            } elseif ($this->input->post('typing') == 'true') {
+            } else if ($this->input->post('typing') == 'true') {
                 $this->pusher->trigger(
                     'presence-clients',
                     'typing-event',
-                    array(
+                    [
                         'message' => $this->input->post('typing'),
-                        'from' => $from,
-                        'to' => $receiver,
-                    )
+                        'from'    => $from,
+                        'to'      => $receiver,
+                    ]
                 );
             } else {
                 $this->pusher->trigger(
                     'presence-clients',
                     'typing-event',
-                    array(
+                    [
                         'message' => 'null',
-                        'from' => $from,
-                        'to' => $receiver,
-                    )
+                        'from'    => $from,
+                        'to'      => $receiver,
+                    ]
                 );
             }
         }
@@ -248,11 +249,11 @@ class Prchat_ClientsController extends ClientsController
         $allowedFiles = str_replace(',', '|', $allowedFiles);
         $allowedFiles = str_replace('.', '', $allowedFiles);
 
-        $config = array(
-            'upload_path' => PR_CHAT_MODULE_UPLOAD_FOLDER,
+        $config = [
+            'upload_path'   => PR_CHAT_MODULE_UPLOAD_FOLDER,
             'allowed_types' => $allowedFiles,
-            'max_size' => '9048000',
-        );
+            'max_size'      => '9048000',
+        ];
 
         $this->load->library('upload', $config);
 
@@ -272,7 +273,7 @@ class Prchat_ClientsController extends ClientsController
         $id = $this->input->post('id');
         $client = $this->input->post('client');
         $pusher = $this->pusher;
-        echo json_encode($this->chat_model->updateClientUnreadMessages($id, ($client) ? $client : null, $pusher));
+        echo json_encode($this->chat_model->updateClientUnreadMessages($id, $pusher, ($client) ? $client : null));
     }
 
 
@@ -305,7 +306,7 @@ class Prchat_ClientsController extends ClientsController
         if ($this->db->affected_rows() !== 0) {
             echo json_encode(['customers' => $result]);
         } else {
-            echo json_encode(array('customers' => []));
+            echo json_encode(['customers' => []]);
         }
     }
 
@@ -330,18 +331,18 @@ class Prchat_ClientsController extends ClientsController
         $trigger = $this->pusher->trigger(
             'presence-clients',
             'chat-ticket-event',
-            array(
+            [
                 'ticket_id' => $this->input->post('ticket_id'),
                 'client_id' => $this->input->post('client_id'),
-            )
+            ]
         );
 
         header('Content-Type: application/json');
         if ($trigger) {
             echo json_encode(
                 [
-                    'result' => 'success',
-                    'ticket_id' =>  $this->input->post('ticket_id')
+                    'result'    => 'success',
+                    'ticket_id' => $this->input->post('ticket_id')
                 ]
             );
         } else {
@@ -350,7 +351,7 @@ class Prchat_ClientsController extends ClientsController
     }
 
     /**
-     * Renders to file 
+     * Renders to file
      *
      * @return json
      */
@@ -363,4 +364,5 @@ class Prchat_ClientsController extends ClientsController
             return $this->chat_model->handleAudioData($audioBase64Data);
         }
     }
+
 }

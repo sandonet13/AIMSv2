@@ -6293,6 +6293,11 @@ class purchase extends AdminController
         $this->app->get_table_data(module_views_path('purchase', 'dashboard_po_table'));
     }
 
+    public function dashboard_po_request_table()
+    {
+        $this->app->get_table_data(module_views_path('purchase', 'dashboard_po_request_table'));
+    }
+
     /**
      * Compares the quote pur request.
      *

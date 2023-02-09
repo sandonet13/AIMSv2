@@ -1,6 +1,6 @@
 
 
-<div class="widget" id="widget-<?php echo basename(__FILE__,".php"); ?>" data-name="<?php echo _l('purchase_widget'); ?>">
+<div class="widget" id="widget-<?php echo basename(__FILE__,".php"); ?>" data-name="<?php echo _l('Purchase Order'); ?>">
 <div class="panel_s user-data">
   <div class="panel-body">
     <div class="widget-dragger"></div>
@@ -9,7 +9,7 @@
        <div class="col-md-12">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="no-margin font-bold"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <?php echo _l('orders_are_about_to_be_delivered'); ?></h4>
+              <h4 class="no-margin font-bold"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <?php echo _l('Purchase Order'); ?></h4>
             </div>
             <div class="col-md-6">
               <a href="<?php echo admin_url('purchase/purchase_order'); ?>" class="btn btn-info pull-right"><?php echo _l('view_all'); ?></a>

@@ -19,11 +19,11 @@
                         <?php if (has_permission('purchase_items', '', 'create') || is_admin()) { ?>
 
                           <!-- dung cho add 1 -->
-                        <a href="#" onclick="new_commodity_item(); return false;" class="btn btn-info pull-left display-block mr-4 button-margin-r-b" data-toggle="sidebar-right" data-target=".commodity_list-add-edit-modal">
+                        <a href="#" onclick="new_commodity_item(); return false;" class="btn btn-info mr-4 button-margin-r-b" data-toggle="sidebar-right" data-target=".commodity_list-add-edit-modal">
                             <?php echo _l('add'); ?>
                         </a>
 
-                        <a href="<?php echo admin_url('purchase/import_xlsx_commodity'); ?>" class="btn btn-success pull-left display-block mr-4 button-margin-r-b">
+                        <a href="<?php echo admin_url('purchase/import_xlsx_commodity'); ?>" class="btn btn-success mr-4 button-margin-r-b">
                             <?php echo _l('import_items'); ?>
                         </a>
                         <?php } ?>

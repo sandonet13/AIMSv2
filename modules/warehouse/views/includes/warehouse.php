@@ -13,10 +13,10 @@
                         <div class="col-md-4 ">
                             <?php if (has_permission('warehouse', '', 'create') || is_admin() ) { ?>
 
-                            <a href="#" onclick="add_one_warehouse(); return false;" class="btn btn-info pull-left display-block mr-4 button-margin-r-b">
+                            <a href="#" onclick="add_one_warehouse(); return false;" class="btn btn-info mr-4 button-margin-r-b">
                                 <?php echo _l('add_warehouse'); ?>
 
-                            </a><a href="#" onclick="new_warehouse_type(); return false;" class="btn btn-primary pull-left display-block mr-4 button-margin-r-b">
+                            </a><a href="#" onclick="new_warehouse_type(); return false;" class="btn btn-primary mr-4 button-margin-r-b">
                                 <?php echo _l('add_warehouse_list'); ?>
                             </a>
                         </div>

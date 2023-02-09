@@ -27,14 +27,14 @@ if (location.protocol != 'http:') {
 
         this.children[0].classList.add("flashit");
 
-        var constraints = { audio: true, video: false }
+        var constraints = {audio: true, video: false}
 
         /*
     	We're using the standard promise based getUserMedia() 
     	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
 	*/
 
-        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
             /*
             	create an audio context after getUserMedia is called
             	sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
@@ -52,17 +52,18 @@ if (location.protocol != 'http:') {
             //input.connect(audioContext.destination)
 
             recorder = new WebAudioRecorder(input, {
-                workerDir: "/modules/prchat/assets/js/audio/", // must end with slash
+                workerDir: site_url + "/modules/prchat/assets/js/audio/", // must end with slash
                 encoding: encodingType,
                 numChannels: 2, //2 is the default, mp3 encoding supports only 2
-                onEncoderLoading: function(recorder, encoding) {
+                onEncoderLoading: function (recorder, encoding) {
                     // show "loading encoder..." display
                 },
-                onEncoderLoaded: function(recorder, encoding) {
+                onEncoderLoaded: function (recorder, encoding) {
                     function padRecordTime(val) {
                         return val > 9 ? val : "0" + val;
                     }
-                    timer = setInterval(function() {
+
+                    timer = setInterval(function () {
                         chat_seconds_element.innerHTML = padRecordTime(++chat_rec_sec % 60);
                         chat_minutes_element.innerHTML = padRecordTime(parseInt(chat_rec_sec / 60, 10));
                     }, 1000);
@@ -71,7 +72,7 @@ if (location.protocol != 'http:') {
                 }
             });
 
-            recorder.onComplete = function(recorder, blob) {
+            recorder.onComplete = function (recorder, blob) {
                 var clients = false;
                 var activeTab = $('.chat_nav li.active');
                 var chatBox = $('body').find('.client_chatbox');
@@ -99,7 +100,7 @@ if (location.protocol != 'http:') {
                 var reader = new window.FileReader();
                 reader.readAsDataURL(blob);
 
-                reader.onloadend = function() {
+                reader.onloadend = function () {
                     base64data = reader.result;
                     /** If request is from clients side */
                     var url;
@@ -110,12 +111,12 @@ if (location.protocol != 'http:') {
                         url = admin_url + "prchat/Prchat_Controller/handleAudio";
                     }
 
-                    $.post(url, { "audio": base64data }, function(res) {
+                    $.post(url, {"audio": base64data}, function (res) {
                         if (res.filename) {
 
                             var audio = '<audio controls src="' + site_url + 'modules/prchat/uploads/audio/' + res.filename + '" type="audio/ogg"></audio>';
 
-                            $('#audio-wrapper').hide(1, function() {
+                            $('#audio-wrapper').hide(1, function () {
                                 stopRecording();
                                 setTimeout(() => {
                                     chatBox.val(audio);
@@ -136,14 +137,14 @@ if (location.protocol != 'http:') {
             recorder.setOptions({
                 timeLimit: 600, // 10 minutes max recording
                 encodeAfterRecord: encodeAfterRecord,
-                ogg: { quality: 0.5 },
-                mp3: { bitRate: 160 }
+                ogg: {quality: 0.5},
+                mp3: {bitRate: 160}
             });
 
             //start the recording process
             recorder.startRecording();
 
-        }).catch(function(err) {
+        }).catch(function (err) {
 
             //enable the record button if getUSerMedia() fails
             recordButton.disabled = false;
@@ -156,7 +157,7 @@ if (location.protocol != 'http:') {
         stopButton.disabled = false;
     }
 
-    /** 
+    /**
      * Clear recording fields
      */
     function clearMinutesAndSeconds() {
@@ -170,7 +171,8 @@ if (location.protocol != 'http:') {
     function ifRecordingCancelledAndClose() {
 
         // If no microphone device is found
-        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {}).catch(function(err) {
+        navigator.mediaDevices.getUserMedia({audio: true, video: false}).then(function (stream) {
+        }).catch(function (err) {
             err = err.toString()
 
             if (err == 'NotFoundError: Requested device not found') {
@@ -235,7 +237,7 @@ if (location.protocol != 'http:') {
         }
     }
 
-    document.onkeydown = function(evt) {
+    document.onkeydown = function (evt) {
         evt = evt || window.event;
         var isEscape = false;
         if ("key" in evt) {

@@ -2696,6 +2696,7 @@ class Warehouse_model extends App_Model {
 	 */
 	public function get_stock_import_pdf_html($goods_receipt_id) {
 		$this->load->model('currencies_model');
+		$this->load->model('purchase/purchase_model');
 		$base_currency = $this->currencies_model->get_base_currency();
 
 		// get_goods_receipt
@@ -2711,27 +2712,74 @@ class Warehouse_model extends App_Model {
 		$month = date('m', strtotime($goods_receipt->date_add));
 		$year = date('Y', strtotime($goods_receipt->date_add));
 		$warehouse_lotnumber_bottom_infor_option = get_warehouse_option('goods_delivery_pdf_display_warehouse_lotnumber_bottom_infor');
+		$supplier_value = $this->purchase_model->get_vendor($goods_receipt->supplier_code);
 
-		$html = '';
+
+		// $html = '';
+		$html .= '
+		<table class="table">
+				<tbody>
+				<tr>
+				<td style="width: 70%" class="text-left">'.get_po_logo().'</td>
+				<td style="width: 30%" class="text-left">
+				<table><tr>
+					<td class="child">
+						<small>Nomor Dokumen:</small>
+					</td>
+					<td class="child">
+						<small>AMI-F-PROC-P-01/02</small>
+					</td>
+					</tr>
+					<tr>
+					<td class="child">
+						<small>Revisi:</small>
+					</td>
+					<td class="child">
+						<small>01</small>
+					</td>
+				</tr>
+				<tr>
+					<td class="child">
+						<small>Tanggal Terbit:</small>
+					</td>
+					<td class="child">
+						<small>13 Februari 2017</small>
+					</td>
+				</tr></table>
+				</td>
+			</tr>
+			<tr>
+				
+				<td style="width: 100%" class="align_cen"><h3>'.mb_strtoupper(_l('Receiving Inventory')).'</h3></td>
+			</tr>
+					
+					</tbody>
+      </table>
+		';
 		$html .= '<table class="table">
-		<tbody>
-		<tr>
-		<td rowspan="2" width="50%" class="text-left">'.pdf_logo_url().'</td>
-		<td class="text_right_weight "><h3>' . mb_strtoupper(_l('receiving')) . '</h3></td>
-		</tr>
+        <tbody>
+          <tr>
+            <td style="width: 17%"><h4>'. _l('Receiving Code').':</h4></td>
+            <td style="width: 57%">'. $goods_receipt->goods_receipt_code.'</td>
+          </tr>
+          <tr>
+            <td class="td_width_25"><h4>'. _l('vendor').':</h4></td>
+            <td class="td_width_75">'. $supplier_value->company.'</td>
+          </tr>
+          <tr>
+            <td class="td_width_25"><h4>'. _l('PO Number').':</h4></td>
+            <td class="td_width_75">'. get_pur_order_name($goods_receipt->pr_order_id).'</td>
+          </tr>
+          
+        </tbody>
+      </table>
+	  <br><br>';	
 
-		<tr>
-		<td class="text_right">#'.$goods_receipt->goods_receipt_code.'</td>
-		</tr>
-		</tbody>
-		</table>
-		<br><br><br>
-		';	
 
 		//organization_info
-		$organization_info = '<div  class="bill_to_color">';
-		$organization_info .= format_organization_info();
-		$organization_info .= '</div>';
+		// $organization_info = '<div  class="bill_to_color">';
+		// $organization_info .= format_organization_info();
+		// $organization_info .= '</div>';
 
 		//get vendor infor
 
@@ -2795,46 +2843,47 @@ class Warehouse_model extends App_Model {
 		//invoice_data_date
 		$invoice_date = '<br /><b>' . _l('invoice_data_date') . ' ' . _d($goods_receipt->date_add) . '</b><br />';
 
-		$html .= '<table class="table">
-		<tbody>
+		// $html .= '<table class="table">
+		// <tbody>
+		// <tr>
+		// <td rowspan="2" width="50%" class="text-left">'.$organization_info.'</td>
+		// <td rowspan="2" width="50%" class="text_right">'.$bill_to.'</td>
+		// </tr>
+		// </tbody>
+		// </table>
+		// <br><br>
+		// <br><br>
+		// ';
+
+		// $html .= '<table class="table">
+		// <tbody>
+		// <tr>
+		// <td rowspan="2" width="50%" class="text-left"></td>
+		// <td rowspan="2" width="50%" class="text_right">'.$invoice_date.'</td>
+		// </tr>
+		// </tbody>
+		// </table>
+		// <br><br><br>
+		// <br><br><br>
+		// ';
+
+		$html .= '<table class="table purorder-item">
+		<thead>
 		<tr>
-		<td rowspan="2" width="50%" class="text-left">'.$organization_info.'</td>
-		<td rowspan="2" width="50%" class="text_right">'.$bill_to.'</td>
+		<th class="thead-dark">'. _l('No').'</th>
+		<th class="thead-dark">' . _l('commodity_code') . '</th>
+		<th class="thead-dark">' . _l('warehouse_name') . '</th>
+		<th class="thead-dark">' . _l('unit_name') . '</th>
+		<th class="thead-dark">' . _l('quantity') . '</th>
+	<!--	<th class="thead-dark">' . _l('unit_price') . '</th>
+		<th class="thead-dark">' . _l('total_money') . '</th>
+		<th class="thead-dark">' . _l('tax_money') . '</th>
+		<th class="thead-dark">' . _l('lot_number') . '</th> -->
+		<th class="thead-dark">' . _l('expiry_date') . '</th>
+
 		</tr>
-		</tbody>
-		</table>
-		<br><br>
-		<br><br>
-		';
-
-		$html .= '<table class="table">
-		<tbody>
-		<tr>
-		<td rowspan="2" width="50%" class="text-left"></td>
-		<td rowspan="2" width="50%" class="text_right">'.$invoice_date.'</td>
-		</tr>
-		</tbody>
-		</table>
-		<br><br><br>
-		<br><br><br>
-		';
-
-		$html .= '<table class="table">
-		<tbody>
-
-		<tr>
-		<th class="thead-dark-ip">'. _l('_order').'</th>
-		<th class="thead-dark-ip">' . _l('commodity_code') . '</th>
-		<th class="thead-dark-ip">' . _l('warehouse_name') . '</th>
-		<th class="thead-dark-ip">' . _l('unit_name') . '</th>
-		<th class="thead-dark-ip">' . _l('quantity') . '</th>
-		<th class="thead-dark-ip">' . _l('unit_price') . '</th>
-		<th class="thead-dark-ip">' . _l('total_money') . '</th>
-		<th class="thead-dark-ip">' . _l('tax_money') . '</th>
-		<th class="thead-dark-ip">' . _l('lot_number') . '</th>
-		<th class="thead-dark-ip">' . _l('expiry_date') . '</th>
-
-		</tr>';
+		</thead>
+		<tbody>';
 		foreach ($goods_receipt_detail as $receipt_key => $receipt_value) {
 
 			$commodity_name = (isset($receipt_value) ? $receipt_value['commodity_name'] : '');
@@ -2860,16 +2909,16 @@ class Warehouse_model extends App_Model {
 
 			$key = $receipt_key+1;
 
-			$html .= '<tr>';
+			$html .= '<tr nobr="true" class="sortable">';
 			$html .= '<td class="td_style_r_ep_c"><b>' . $key . '</b></td>
-			<td class="td_style_r_ep_c"><b>' . $commodity_name.'</b></td>
-			<td class="td_style_r_ep_c">' . $warehouse_code . '</td>
-			<td class="td_style_r_ep_c">' . $unit_name . '</td>
-			<td class="td_style_r_ep_c">' . $quantities . '</td>
-			<td class="td_style_r_ep_c">' . app_format_money((float) $unit_price, '') . '</td>
+			<td class="td_style_r_ep_c" style="align:left"><b>' . $commodity_name.'</b></td>
+			<td class="td_style_r_ep_c" style="align:left">' . $warehouse_code . '</td>
+			<td class="td_style_r_ep_c" style="align:left">' . $unit_name . '</td>
+			<td class="td_style_r_ep_c" style="align:center">' . $quantities . '</td>
+			<!-- <td class="td_style_r_ep_c">' . app_format_money((float) $unit_price, '') . '</td>
 			<td class="td_style_r_ep_c">' . app_format_money((float) $goods_money, '') . '</td>
 			<td class="td_style_r_ep_c">' . app_format_money((float) $tax_money, '') . '</td>
-			<td class="td_style_r_ep_c">' . $lot_number . '</td>
+			<td class="td_style_r_ep_c">' . $lot_number . '</td> -->
 			<td class="td_style_r_ep_c">' . _d($expiry_date) . '</td>
 			</tr>';
 		}
@@ -2883,48 +2932,48 @@ class Warehouse_model extends App_Model {
 		<p>' . $goods_receipt->description . '</p>';
 
 
-		$html .= '<table class="table">
-		<tbody>
-		<tr>
-		<td ></td>
-		<td ></td>
-		<td ></td>
-		<td class="text_left"><b>' . _l('total_goods_money') . '</b></td>
-		<td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_goods_money, '') . '</td>
-		</tr>
+		// $html .= '<table class="table">
+		// <tbody>
+		// <tr>
+		// <td ></td>
+		// <td ></td>
+		// <td ></td>
+		// <td class="text_left"><b>' . _l('total_goods_money') . '</b></td>
+		// <td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_goods_money, '') . '</td>
+		// </tr>
 
-		<tr>
-		<td ></td>
-		<td ></td>
-		<td ></td>
-		<td class="text_left"><b>' . _l('value_of_inventory') . '</b></td>
-		<td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->value_of_inventory, '') . '</td>
-		</tr>';
+		// <tr>
+		// <td ></td>
+		// <td ></td>
+		// <td ></td>
+		// <td class="text_left"><b>' . _l('value_of_inventory') . '</b></td>
+		// <td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->value_of_inventory, '') . '</td>
+		// </tr>';
 
-		$html .= $tax_data['pdf_html'];
+		// $html .= $tax_data['pdf_html'];
 
-		$html .= '<tr>
-		<td ></td>
-		<td ></td>
-		<td ></td>
-		<td class="text_left"><b>' . _l('total_tax_money') . '</b></td>
-		<td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_tax_money, '') . '</td>
-		</tr>';
+		// $html .= '<tr>
+		// <td ></td>
+		// <td ></td>
+		// <td ></td>
+		// <td class="text_left"><b>' . _l('total_tax_money') . '</b></td>
+		// <td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_tax_money, '') . '</td>
+		// </tr>';
 
 		
 		
-		$html .= '<tr>
-		<td ></td>
-		<td ></td>
-		<td ></td>
-		<td class="text_left"><b>' . _l('total_money') . '</b></td>
-		<td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_money, '') . '</td>
-		</tr>
+		// $html .= '<tr>
+		// <td ></td>
+		// <td ></td>
+		// <td ></td>
+		// <td class="text_left"><b>' . _l('total_money') . '</b></td>
+		// <td class="text_right">' .$base_currency->symbol. app_format_money((float) $goods_receipt->total_money, '') . '</td>
+		// </tr>
 		
-		</tbody>
-		</table>
-		<br><br><br>
-		';
+		// </tbody>
+		// </table>
+		// <br><br><br>
+		// ';
 
 		if($warehouse_lotnumber_bottom_infor_option == 1){
 			$html .= '<table class="table">
@@ -14245,7 +14294,7 @@ class Warehouse_model extends App_Model {
 
 		if ($name == '') {
 			$row .= '<tr class="main">
-                  <td></td>';
+			<td></td>';
 			$vehicles = [];
 			$array_attr = ['placeholder' => _l('unit_price')];
 
@@ -14256,7 +14305,10 @@ class Warehouse_model extends App_Model {
 
 		} else {
 			$row .= '<tr class="sortable item">
-					<td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
+					<td class="dragger">
+						<input type="hidden" class="order" name="' . $name . '[order]">
+						<input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '">
+					</td>';
 			$name_commodity_code = $name . '[commodity_code]';
 			$name_commodity_name = $name . '[commodity_name]';
 			$name_warehouse_id = $name . '[warehouse_id]';
@@ -14317,8 +14369,8 @@ class Warehouse_model extends App_Model {
 
 		$row .= '<td class="">' . render_textarea($name_commodity_name, '', $commodity_name, ['rows' => 2, 'placeholder' => _l('item_description_placeholder'), 'readonly' => true] ) . '</td>';
 		$row .= '<td class="warehouse_select">' .
-		// render_select_with_input_group($name_warehouse_id, $warehouse_data,array('warehouse_id','warehouse_name'),'',$warehouse_id,'<a href="javascript:void(0)" onclick="new_vehicle_reg(this,\''.$name_commodity_code.'\', \''.$name_warehouse_id.'\');return false;"><i class="fa fa-plus"></i></a>', ["data-none-selected-text" => _l('warehouse_name')]).
-		render_select($name_warehouse_id, $warehouse_data,array('warehouse_id','warehouse_name'),'',$warehouse_id,[], ["data-none-selected-text" => _l('warehouse_name')], 'no-margin').
+		render_select_with_input_group($name_warehouse_id, $warehouse_data,array('warehouse_id','warehouse_name'),'',$warehouse_id,'<a href="javascript:void(0)" onclick="new_vehicle_reg(this,\''.$name_commodity_code.'\', \''.$name_warehouse_id.'\');return false;"><i class="fa fa-plus"></i></a>', ["data-none-selected-text" => _l('warehouse_name')]).
+		// render_select($name_warehouse_id, $warehouse_data,array('warehouse_id','warehouse_name'),'',$warehouse_id,[], ["data-none-selected-text" => _l('warehouse_name')], 'no-margin').
 		render_input($name_note, '', $note, 'text', ['placeholder' => _l('commodity_notes')], [], 'no-margin', 'input-transparent text-left').
 		'</td>';
 		$row .= '<td class="quantities">' . 
@@ -14326,12 +14378,12 @@ class Warehouse_model extends App_Model {
 		render_input($name_unit_name, '', $unit_name, 'text', ['placeholder' => _l('unit'), 'readonly' => true], [], 'no-margin', 'input-transparent text-right wh_input_none').
 		'</td>';
 
-		$row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr) . '</td>';
-		$row .= '<td class="taxrate">' . $this->get_taxes_dropdown_template($name_tax_id_select, $invoice_item_taxes, 'invoice', $item_key, true, $manual) . '</td>';
-		$row .= '<td>' . render_input($name_lot_number, '', $lot_number, 'text', ['placeholder' => _l('lot_number')]) . '</td>';
+		$row .= '<td class="rate" hidden>' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr) . '</td>';
+		$row .= '<td class="taxrate" hidden>' . $this->get_taxes_dropdown_template($name_tax_id_select, $invoice_item_taxes, 'invoice', $item_key, true, $manual) . '</td>';
+		$row .= '<td hidden >' . render_input($name_lot_number, '', $lot_number, 'text', ['placeholder' => _l('lot_number')]) . '</td>';
 		$row .= '<td>' . render_date_input($name_date_manufacture, '', $date_manufacture, ['placeholder' => _l('date_manufacture')]) . '</td>';
 		$row .= '<td>' . render_date_input($name_expiry_date, '', $expiry_date, ['placeholder' => _l('expiry_date')]) . '</td>';
-		$row .= '<td class="amount" align="right">' . $amount . '</td>';
+		$row .= '<td class="amount" align="right" hidden>' . $amount . '</td>';
 
 		$row .= '<td class="hide commodity_code">' . render_input($name_commodity_code, '', $commodity_code, 'text', ['placeholder' => _l('commodity_code')]) . '</td>';
 		$row .= '<td class="hide unit_id">' . render_input($name_unit_id, '', $unit_id, 'text', ['placeholder' => _l('unit_id')]) . '</td>';

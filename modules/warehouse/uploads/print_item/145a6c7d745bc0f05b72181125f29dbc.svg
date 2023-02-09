@@ -1,0 +1,37 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="380" height="70" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<desc>0617643763768</desc>
+	<g id="bars" fill="black" stroke="none">
+		<rect x="0" y="0" width="4" height="70" />
+		<rect x="8" y="0" width="4" height="70" />
+		<rect x="16" y="0" width="4" height="70" />
+		<rect x="24" y="0" width="16" height="70" />
+		<rect x="48" y="0" width="8" height="70" />
+		<rect x="64" y="0" width="4" height="70" />
+		<rect x="72" y="0" width="12" height="70" />
+		<rect x="88" y="0" width="8" height="70" />
+		<rect x="100" y="0" width="4" height="70" />
+		<rect x="108" y="0" width="16" height="70" />
+		<rect x="128" y="0" width="4" height="70" />
+		<rect x="144" y="0" width="8" height="70" />
+		<rect x="156" y="0" width="16" height="70" />
+		<rect x="176" y="0" width="4" height="70" />
+		<rect x="184" y="0" width="4" height="70" />
+		<rect x="192" y="0" width="4" height="70" />
+		<rect x="200" y="0" width="4" height="70" />
+		<rect x="216" y="0" width="4" height="70" />
+		<rect x="228" y="0" width="4" height="70" />
+		<rect x="236" y="0" width="4" height="70" />
+		<rect x="256" y="0" width="4" height="70" />
+		<rect x="276" y="0" width="4" height="70" />
+		<rect x="284" y="0" width="4" height="70" />
+		<rect x="300" y="0" width="4" height="70" />
+		<rect x="312" y="0" width="4" height="70" />
+		<rect x="320" y="0" width="4" height="70" />
+		<rect x="340" y="0" width="4" height="70" />
+		<rect x="352" y="0" width="4" height="70" />
+		<rect x="368" y="0" width="4" height="70" />
+		<rect x="376" y="0" width="4" height="70" />
+	</g>
+</svg>

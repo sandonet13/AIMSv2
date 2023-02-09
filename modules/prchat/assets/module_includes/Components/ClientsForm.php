@@ -12,7 +12,7 @@
                <input type="hidden" class="ays-ignore to" name="to" value="client_" />
                <input type="hidden" class="ays-ignore typing" name="typing" value="false" />
                <input type="hidden" class="ays-ignore" name="<?php echo $instance->security->get_csrf_token_name(); ?>" value="<?php echo $instance->security->get_csrf_hash(); ?>">
-               <i class="fa fa-file-image-o attachment clientFileUpload" data-container="body" data-toggle="tooltip" title="<?php echo _l('chat_file_upload'); ?>" aria-hidden="true"></i>
+               <i class="fa-regular fa-file-image attachment clientFileUpload" data-container="body" data-toggle="tooltip" title="<?php echo _l('chat_file_upload'); ?>" aria-hidden="true"></i>
                <?php loadChatComponent('MicrophoneIcon'); ?>
                <?php loadChatComponent('SearchMessages', ['props' => 'search_client_messages']); ?>
                <input type="hidden" class="ays-ignore invisibleUnread" value="" />

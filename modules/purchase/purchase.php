@@ -73,8 +73,12 @@ hooks()->add_action('after_cron_run', 'recurring_purchase_invoice');
 hooks()->add_action('after_cron_run', 'pur_cronjob_currency_rates');
 
 // Purchase dashboard widget
-hooks()->add_filter('get_dashboard_widgets', 'purchase_add_dashboard_widget');
-hooks()->add_action('app_admin_footer', 'purchase_load_js');
+// hooks()->add_filter('get_dashboard_widgets', 'purchase_add_dashboard_widget');
+// hooks()->add_action('app_admin_footer', 'purchase_load_js');
+
+// Purchase Request dashboard widget
+// hooks()->add_filter('get_dashboard_widgets', 'purchase_request_add_dashboard_widget');
+// hooks()->add_action('app_admin_footer', 'purchase_load_js');
 
 //Filter sale upload path debit note
 hooks()->add_filter('get_upload_path_by_type', 'debit_note_upload_file_path', 10, 2);
@@ -288,12 +292,22 @@ function purchase_module_init_menu_items() {
  */
 function purchase_add_dashboard_widget($widgets)
 {
-    if (has_permission('purchase', '', 'view') || is_admin()) {
+
         $widgets[] = [
-                'path'      => 'purchase/purchase_widget',
+                'path'      => 'admin/dashboard/widgets/purchase_order_widget',
                 'container' => 'top-12',
             ];
-    }
+
+    return $widgets;
+}
+
+function purchase_request_add_dashboard_widget($widgets)
+{
+
+        $widgets[] = [
+                'path'      => 'purchase/pur_request_widget',
+                'container' => 'top-12',
+            ];
 
     return $widgets;
 }

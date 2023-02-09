@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $dimensions = $pdf->getPageDimensions();
 
-$html = '<h1>' . $expense->category_name . '</h1>';
+// $html = '<h1>' . $expense->category_name . '</h1>';
 
 if (!empty($expense->expense_name)) {
     $html .= '<h3>' . $expense->expense_name . '</h3>';

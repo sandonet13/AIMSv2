@@ -16,8 +16,8 @@
                         <div class="row">    
                             <div class="_buttons col-md-3">
                                 <?php if (has_permission('warehouse', '', 'create') || is_admin()) { ?>
-                                <a href="<?php echo admin_url('warehouse/manage_goods_receipt'); ?>"class="btn btn-info pull-left mright10 display-block">
-                                    <?php echo _l('stock_received_docket'); ?>
+                                <a href="<?php echo admin_url('warehouse/manage_goods_receipt'); ?>"class="btn btn-info">
+                                    <?php echo _l('Add Delivery'); ?>
                                 </a>
                                 <?php } ?>
                             </div>
@@ -45,10 +45,10 @@
                         _l('Buyer'),
                         _l('reference_purchase_order'),
                         _l('day_vouchers'),
-                        _l('total_tax_money'),
-                        _l('total_goods_money'),
-                        _l('value_of_inventory'),
-                        _l('total_money'),
+                        // _l('total_tax_money'),
+                        // _l('total_goods_money'),
+                        // _l('value_of_inventory'),
+                        // _l('total_money'),
                         _l('status_label'),
                         ),'table_manage_goods_receipt',['purchase_sm' => 'purchase_sm']); ?>
                         

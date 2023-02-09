@@ -28,11 +28,11 @@
                      <?php echo _l('estimate'); ?>
                      </a>
                   </li>
-                  <li role="presentation">
+                  <!-- <li role="presentation">
                      <a href="#tab_tasks" onclick="init_rel_tasks_table(<?php echo html_entity_decode($estimate->id); ?>,'pur_quotation'); return false;" aria-controls="tab_tasks" role="tab" data-toggle="tab">
                      <?php echo _l('tasks'); ?>
                      </a>
-                  </li> 
+                  </li>  -->
 
                   <li role="presentation" class="tab-separator">
                     <?php
@@ -311,7 +311,7 @@
                                     <td class="description" align="left;"><span ><strong><?php 
                                     $item = get_item_hp($es['item_code']); 
                                     if(isset($item) && !is_array($item)){
-                                       echo html_entity_decode($item->commodity_code.' - '.$item->description);
+                                       echo html_entity_decode($item->description);
                                     }else{
                                        echo html_entity_decode($es['item_name']);
                                     }
@@ -378,12 +378,46 @@
                            </tbody>
                         </table>
                      </div>                                          
-                     <?php if($estimate->terms != ''){ ?>
+                     <div class="col-md-6 col-sm-6">
+                     <table>
+                     <?php if($estimate->vendornote != ''){ ?>
                      <div class="col-md-12 mtop15">
-                        <p class="bold text-muted"><?php echo _l('terms_and_conditions'); ?></p>
-                        <p><?php echo html_entity_decode($estimate->terms); ?></p>
+                        <tr>
+                        <td style="width:50%;"><p class="bold text-muted"><?php echo _l('Note'); ?>:</p></td>
+                        <td style="width:50%;"><p><?php echo html_entity_decode($estimate->vendornote); ?></p></td>
+                        </tr>
                      </div>
                      <?php } ?>
+                                                            
+                     <?php if($estimate->terms != ''){ ?>
+                     <div class="col-md-12 mtop15">
+                        <tr>
+                        <td style="width:50%;"><p class="bold text-muted"><?php echo _l('Payment Terms'); ?>:</p></td>
+                        <td style="width:50%;"><p><?php echo html_entity_decode($estimate->terms); ?></p></td>
+                        </tr>
+                     </div>
+                     <?php } ?>
+
+                     <?php if($estimate->delivery_time != ''){ ?>
+                     <div class="col-md-12 mtop15">
+                        <tr>
+                        <td style="width:50%;"><p class="bold text-muted"><?php echo _l('Delivery Time'); ?>:</p></td>
+                        <td style="width:50%;"><p><?php echo html_entity_decode($estimate->delivery_time); ?></p></td>
+                        </tr>
+                     </div>
+                     <?php } ?>
+
+                     <?php if($estimate->inspection_note != ''){ ?>
+                     <div class="col-md-12 mtop15">
+                        <tr>
+                        <td style="width:50%;"><p class="bold text-muted"><?php echo _l('Inspection Note'); ?>:</p></td>
+                        <td style="width:50%;"><p><?php echo html_entity_decode($estimate->inspection_note); ?></p></td>
+                        </tr>
+                     </div>
+                     <?php } ?>
+                     
+                     </table>
+                     </div>
                   </div>
                </div>
             </div>

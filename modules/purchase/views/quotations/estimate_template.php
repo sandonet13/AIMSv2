@@ -281,10 +281,14 @@
    <div class="row">
       <div class="col-md-12 mtop15">
          <div class="panel-body bottom-transaction">
+            <?php $value = $estimate->delivery_time; ?>
+            <?php echo render_input('delivery_time','Delivery Time',$value,array(),'mtop15'); ?>
             <?php $value = (isset($estimate) ? $estimate->vendornote : get_purchase_option('vendor_note')); ?>
             <?php echo render_textarea('vendornote','estimate_add_edit_vendor_note',$value,array(),array(),'mtop15'); ?>
             <?php $value = (isset($estimate) ? $estimate->terms : get_purchase_option('terms_and_conditions')); ?>
             <?php echo render_textarea('terms','terms_and_conditions',$value,array(),array(),'mtop15'); ?>
+            <?php $value = $estimate->inspection_note; ?>
+            <?php echo render_textarea('inspection_note','Inspection Note',$value,array(),array(),'mtop15'); ?>
             <div class="btn-bottom-toolbar text-right">
               
               <button type="button" class="btn-tr save_detail btn btn-info mleft10 estimate-form-submit transaction-submit">

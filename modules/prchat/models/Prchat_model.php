@@ -1,10 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
 /*
 Module Name: Perfex CRM Chat
 Description: Chat Module for Perfex CRM
 Author: Aleksandar Stojanov
 Author URI: https://idevalex.com
 */
+
 class Prchat_model extends App_Model
 {
     /**
@@ -103,9 +105,11 @@ class Prchat_model extends App_Model
         return false;
     }
 
-    /** 
+    /**
      * Get users in json depending on group id
+     *
      * @param string @group_id
+     *
      * @return mixed
      */
     public function getUsersInJsonFormat($group_id)
@@ -129,9 +133,11 @@ class Prchat_model extends App_Model
         return false;
     }
 
-    /** 
+    /**
      * Get Current user chat status
-     * @param string @id
+     *
+     * @param bool $id
+     *
      * @return string
      */
     public function _get_chat_status($id = false)
@@ -139,14 +145,16 @@ class Prchat_model extends App_Model
         $this->db->where('user_id', ($id) ? $id : get_staff_user_id());
         $this->db->where('name', 'chat_status');
         $result = $this->db->get(db_prefix() . 'chatsettings')->row_array();
-        if ($result !== NULL) {
+        if ($result !== null) {
             return $result['value'];
         }
     }
 
     /**
      * Get logged in staff profile image.
-     * @param  string @id
+     *
+     * @param string @id
+     *
      * @return mixed
      */
     public function getUserImage($id)
@@ -164,7 +172,10 @@ class Prchat_model extends App_Model
 
     /**
      * Create message.
-     * @param  array @data
+     *
+     * @param $data
+     * @param $table
+     *
      * @return mixed
      */
     public function createMessage($data, $table)
@@ -178,7 +189,9 @@ class Prchat_model extends App_Model
 
     /**
      * Create group message.
-     * @param  array @data
+     *
+     * @param array @data
+     *
      * @return mixed
      */
     public function createGroupMessage($data)
@@ -192,7 +205,9 @@ class Prchat_model extends App_Model
 
     /**
      * Get staff firstname and lastname.
-     * @param  string @id
+     *
+     * @param string @id
+     *
      * @return mixed
      */
     public function getStaffInfo($id)
@@ -209,10 +224,11 @@ class Prchat_model extends App_Model
 
     /**
      * Get messages
-     * @param  string $from sender
-     * @param  string $to receiver
-     * @param  string $limit limit messages
-     * @param  string $offet offset
+     *
+     * @param string $from sender
+     * @param string $to receiver
+     * @param string $limit limit messages
+     * @param string $offset offset
      *
      * @return mixed
      */
@@ -223,7 +239,6 @@ class Prchat_model extends App_Model
         $query = $this->db->query($sql)->result();
 
         foreach ($query as &$chat) {
-            $chat->message = $chat->message;
             $chat->message = pr_chat_convertLinkImageToString($chat->message);
             $chat->message = check_for_links_lity($chat->message);
             $this->checkMessageForAudio($chat);
@@ -241,10 +256,11 @@ class Prchat_model extends App_Model
 
     /**
      * Get client messages
-     * @param  string $from sender
-     * @param  string $to receiver
-     * @param  string $limit limit messages
-     * @param  string $offet offset
+     *
+     * @param string $from sender
+     * @param string $to receiver
+     * @param string $limit limit messages
+     * @param string $offset offset
      *
      * @return mixed
      */
@@ -272,9 +288,10 @@ class Prchat_model extends App_Model
 
     /**
      * Get group messages
-     * @param  string $group_id group_id
-     * @param  string $limit limit messages
-     * @param  string $offet offset
+     *
+     * @param string $group_id group_id
+     * @param string $limit limit messages
+     * @param string $offset offset
      *
      * @return mixed
      */
@@ -287,7 +304,7 @@ class Prchat_model extends App_Model
             $created_by = $this->db->get_where(db_prefix() . 'chatgroups', ['id' => $group_id])->row('created_by_id');
 
             foreach ($query as &$chat) {
-                /** 
+                /**
                  *  If message not contains user_mentioned class and emoji class convert image link data-lity
                  *  This gives an incorrect image path when you have @firstname lastname mention and :D  (emoji )inside a message
                  */
@@ -339,9 +356,10 @@ class Prchat_model extends App_Model
 
     /**
      * Groups history for messages
-     * @param  string $group_id group_id
-     * @param  string $limit limit messages
-     * @param  string $offet offset
+     *
+     * @param string $group_id group_id
+     * @param string $limit limit messages
+     * @param string $offset offset
      *
      * @return mixed
      */
@@ -370,11 +388,12 @@ class Prchat_model extends App_Model
 
     /**
      * Get unread messages for the logged in user.
+     *
      * @return mixed
      */
     public function getUnread()
     {
-        $unreadMessages = array();
+        $unreadMessages = [];
 
         $staff_id = get_staff_user_id();
 
@@ -389,7 +408,7 @@ class Prchat_model extends App_Model
                 if (array_key_exists($sender_id, $unreadMessages)) {
                     $unreadMessages['' . $sender_id . '']['count_messages'] = $unreadMessages['' . $sender_id . '']['count_messages'] + 1;
                 } else {
-                    $unreadMessages['' . $sender_id . ''] = array('sender_id' => $sender['sender_id'], 'count_messages' => 1);
+                    $unreadMessages['' . $sender_id . ''] = ['sender_id' => $sender['sender_id'], 'count_messages' => 1];
                 }
             }
             if ($result) {
@@ -402,11 +421,12 @@ class Prchat_model extends App_Model
 
     /**
      * Get client unread messages for the logged in user / admin.
+     *
      * @return array
      */
     public function getClientUnreadMessages()
     {
-        $unreadMessages = array();
+        $unreadMessages = [];
 
         $staff_id = 'staff_' . get_staff_user_id();
 
@@ -425,7 +445,7 @@ class Prchat_model extends App_Model
                 if (array_key_exists($sender_id, $unreadMessages)) {
                     $unreadMessages['' . $sender_id . '']['count_messages'] = $unreadMessages['' . $sender_id . '']['count_messages'] + 1;
                 } else {
-                    $unreadMessages['' . $sender_id . ''] = array('sender_id' => $sender['sender_id'], 'count_messages' => 1);
+                    $unreadMessages['' . $sender_id . ''] = ['sender_id' => $sender['sender_id'], 'count_messages' => 1];
                     $unreadMessages['' . $sender_id . '']['client_data'] = getOwnClient($contact_id);
                 }
             }
@@ -442,11 +462,12 @@ class Prchat_model extends App_Model
 
     /**
      * Get client unread messages for the logged in user / admin.
+     *
      * @return mixed
      */
     public function getStaffUnreadMessages($pusher)
     {
-        $unreadMessages = array();
+        $unreadMessages = [];
 
         $contact_id = 'client_' . get_contact_user_id();
 
@@ -463,7 +484,7 @@ class Prchat_model extends App_Model
                 if (array_key_exists($sender_id, $unreadMessages)) {
                     $unreadMessages['' . $sender_id . '']['count_messages'] = $unreadMessages['' . $sender_id . '']['count_messages'] + 1;
                 } else {
-                    $unreadMessages['' . $sender_id . ''] = array('sender_id' => $sender['sender_id'], 'count_messages' => 1);
+                    $unreadMessages['' . $sender_id . ''] = ['sender_id' => $sender['sender_id'], 'count_messages' => 1];
                 }
             }
             if ($result) {
@@ -476,7 +497,9 @@ class Prchat_model extends App_Model
 
     /**
      * Update unread for sender.
+     *
      * @param string $id sender id
+     *
      * @return mixed
      */
     public function updateUnread($pusher, $id)
@@ -486,7 +509,7 @@ class Prchat_model extends App_Model
         $this->db->select('id as msg_id,sender_id, reciever_id, viewed_at');
         $this->db->from(db_prefix() . "chatmessages");
         $this->db->where("viewed = 0 AND reciever_id = {$staff_id} AND sender_id = {$id} OR reciever_id = {$id} AND sender_id = {$staff_id} AND viewed = 0");
-        $messages =  $this->db->get()->result();
+        $messages = $this->db->get()->result();
 
         if ($messages) {
             foreach ($messages as $message) {
@@ -510,10 +533,12 @@ class Prchat_model extends App_Model
      * Update unread for client sender.
      *
      * @param string $id sender id
-     * @param boolean
+     * @param        $pusher
+     * @param null   $to_client
+     *
      * @return mixed
      */
-    public function updateClientUnreadMessages($id, $to_client = null, $pusher)
+    public function updateClientUnreadMessages($id, $pusher,$to_client = null)
     {
         $contact_id = get_contact_user_id();
         $query = '';
@@ -526,19 +551,19 @@ class Prchat_model extends App_Model
             $staff_id = str_replace('staff_', '', $id);
 
             $this->db->where("sender_id = 'staff_{$staff_id}' AND reciever_id = 'client_{$contact_id}' AND viewed = 0");
-            $messages =  $this->db->get()->result();
+            $messages = $this->db->get()->result();
         } else {
             $staff_id = get_staff_user_id();
             $contact_id = str_replace('client_', '', $id);
 
             $this->db->where("sender_id = 'client_{$contact_id}' AND reciever_id = 'staff_{$staff_id}' AND viewed = 0");
-            $messages =  $this->db->get()->result();
+            $messages = $this->db->get()->result();
         }
 
         if ($messages) {
             foreach ($messages as $message) {
 
-                if ($to_client != NULL) {
+                if ($to_client != null) {
                     /** From staff to client */
                     $sql = 'UPDATE ' . db_prefix() . "chatclientmessages SET viewed = 1, viewed_at = '" . date('Y-m-d H:i:s') . "' WHERE (sender_id = 'staff_{$staff_id}' AND reciever_id = 'client_{$contact_id}' AND id = " . $message->msg_id . " AND viewed = 0)";
                     $query = $this->db->query($sql);
@@ -565,7 +590,7 @@ class Prchat_model extends App_Model
     /**
      * Set current chat theme.
      *
-     * @param string  $id the staff id
+     * @param string $id the staff id
      * @param string $theme_name 1 or 0 light or dark
      */
     public function updateChatTheme($id, $theme_name)
@@ -579,9 +604,9 @@ class Prchat_model extends App_Model
         if (!$exsists == null) {
             $this->db->where('user_id', $id);
             $this->db->where('name', $name);
-            $this->db->update(db_prefix() . 'chatsettings', array('name' => $name, 'value' => $theme_name));
+            $this->db->update(db_prefix() . 'chatsettings', ['name' => $name, 'value' => $theme_name]);
         } else {
-            $this->db->insert(db_prefix() . 'chatsettings', array('name' => $name, 'value' => $theme_name,  'user_id' => $id));
+            $this->db->insert(db_prefix() . 'chatsettings', ['name' => $name, 'value' => $theme_name, 'user_id' => $id]);
         }
         if ($this->db->affected_rows() != 0) {
             return $theme_name;
@@ -592,6 +617,7 @@ class Prchat_model extends App_Model
 
     /**
      * Reset toggled chat theme colors.
+     *
      * @param string $id user id
      *
      * @return boolean
@@ -600,8 +626,8 @@ class Prchat_model extends App_Model
     {
         $this->db->where('user_id', $id);
         $this->db->update(db_prefix() . 'chatsettings', [
-            'name' => 'chat_color',
-            'value' => '#1666B1',
+            'name'  => 'chat_color',
+            'value' => '#546bf1',
         ]);
 
         return true;
@@ -610,7 +636,7 @@ class Prchat_model extends App_Model
     /**
      * Set the chat color.
      *
-     * @param string  $id    the staff id
+     * @param string $id the staff id
      * @param string $color the color to set
      */
     public function setChatColor($color)
@@ -633,9 +659,9 @@ class Prchat_model extends App_Model
             if (!$exsists == null) {
                 $this->db->where('user_id', $id);
                 $this->db->where('name', $name);
-                $this->db->update(db_prefix() . 'chatsettings', array('name' => $name, 'value' => $color));
+                $this->db->update(db_prefix() . 'chatsettings', ['name' => $name, 'value' => $color]);
             } else {
-                $this->db->insert(db_prefix() . 'chatsettings', array('name' => $name, 'value' => $color, 'user_id' => $id));
+                $this->db->insert(db_prefix() . 'chatsettings', ['name' => $name, 'value' => $color, 'user_id' => $id]);
             }
             if ($this->db->affected_rows() != 0) {
                 $message['success'] = $color;
@@ -652,9 +678,9 @@ class Prchat_model extends App_Model
             if (!$exsists == null) {
                 $this->db->where('user_id', $id);
                 $this->db->where('name', $name);
-                $this->db->update(db_prefix() . 'chatsettings', array('chat_color' => $color));
+                $this->db->update(db_prefix() . 'chatsettings', ['chat_color' => $color]);
             } else {
-                $this->db->insert(db_prefix() . 'chatsettings', array('chat_color' => $color, 'user_id' => $id));
+                $this->db->insert(db_prefix() . 'chatsettings', ['chat_color' => $color, 'user_id' => $id]);
             }
             if ($this->db->affected_rows() != 0) {
                 $message['success'] = $color;
@@ -669,7 +695,9 @@ class Prchat_model extends App_Model
 
     /**
      * Delete group shared files and audio from folder.
+     *
      * @param string $group_id
+     *
      * @return boolean
      */
     public function deleteGroupSharedFiles($group_id)
@@ -727,20 +755,22 @@ class Prchat_model extends App_Model
             }
         }
         $this->db->where('id', $message_id);
-        return $this->db->delete($table, array('id' => $message_id));
+        return $this->db->delete($table, ['id' => $message_id]);
     }
 
 
     /**
      * Delete chat messages including pictures and files.
-     * @param string $id         the staff id
+     *
+     * @param string $id the staff id
      * @param string $contact_id the contact_id
+     *
      * @return boolean
      */
     public function deleteMessage($id, $mixed_id)
     {
 
-        if (strpos($mixed_id, 'group_id') !== false) {
+        if ($mixed_id && strpos($mixed_id, 'group_id') !== false) {
             $mixed_id = str_replace('group_id', '', $mixed_id);
             $possible_file = $this->db->select('message')->where('group_id', $mixed_id)->where('id', $id)->get(db_prefix() . 'chatgroupmessages')->row();
 
@@ -752,7 +782,7 @@ class Prchat_model extends App_Model
                 if (is_dir(PR_CHAT_MODULE_GROUPS_UPLOAD_FOLDER)) {
                     unlink(PR_CHAT_MODULE_GROUPS_UPLOAD_FOLDER . '/' . $file_name);
                 }
-                $this->db->delete(db_prefix() . 'chatgroupsharedfiles', array('group_id' => $mixed_id, 'file_name' => $file_name));
+                $this->db->delete(db_prefix() . 'chatgroupsharedfiles', ['group_id' => $mixed_id, 'file_name' => $file_name]);
             }
 
             $this->db->where('id', $id);
@@ -781,8 +811,8 @@ class Prchat_model extends App_Model
                     }
                 }
 
-                $this->db->delete(db_prefix() . 'chatsharedfiles', array('sender_id' => get_staff_user_id(), 'reciever_id' => $mixed_id, 'file_name' => $file_name));
-                $this->db->delete(db_prefix() . 'chatsharedfiles', array('sender_id' => $mixed_id, 'reciever_id' => get_staff_user_id(), 'file_name' => $file_name));
+                $this->db->delete(db_prefix() . 'chatsharedfiles', ['sender_id' => get_staff_user_id(), 'reciever_id' => $mixed_id, 'file_name' => $file_name]);
+                $this->db->delete(db_prefix() . 'chatsharedfiles', ['sender_id' => $mixed_id, 'reciever_id' => get_staff_user_id(), 'file_name' => $file_name]);
             }
 
             $this->db->where('id', $id);
@@ -796,11 +826,12 @@ class Prchat_model extends App_Model
      * Handle deleting audio files for staff and staff groups
      *
      * @param object $possible_file
+     *
      * @return string
      */
     private function handleAudioDeleteFile($possible_file)
     {
-        /** 
+        /**
          * This is when deleting from groups it returns object
          */
         if (isset($possible_file->message)) {
@@ -836,9 +867,11 @@ class Prchat_model extends App_Model
 
     /**
      * Delete chat conversation including pictures and files (works for clients and staff members).
-     * @param string $id    staff or client id
+     *
+     * @param string $id staff or client id
      * @param string $table name for deletion directions
-     * @return json
+     *
+     * @return json|array
      */
     public function deleteMutualConversation($id, $table)
     {
@@ -878,8 +911,8 @@ class Prchat_model extends App_Model
                     if (is_dir(PR_CHAT_MODULE_UPLOAD_FOLDER)) {
                         @unlink(PR_CHAT_MODULE_UPLOAD_FOLDER . '/' . $file_name);
                     }
-                    $this->db->delete(db_prefix() . 'chatsharedfiles', array('sender_id' => get_staff_user_id(), 'reciever_id' => $id, 'file_name' => $file_name));
-                    $this->db->delete(db_prefix() . 'chatsharedfiles', array('sender_id' => $id, 'reciever_id' => get_staff_user_id(), 'file_name' => $file_name));
+                    $this->db->delete(db_prefix() . 'chatsharedfiles', ['sender_id' => get_staff_user_id(), 'reciever_id' => $id, 'file_name' => $file_name]);
+                    $this->db->delete(db_prefix() . 'chatsharedfiles', ['sender_id' => $id, 'reciever_id' => get_staff_user_id(), 'file_name' => $file_name]);
                 }
             }
 
@@ -900,10 +933,126 @@ class Prchat_model extends App_Model
         return $response;
     }
 
+
+    /**
+     * Delete chat conversation including pictures and files (works for clients and staff members and groups).
+     *
+     * @param $type 'staff, clients, groups or all'
+     *
+     * @return bool
+     */
+    public function purgeConversations($type)
+    {
+        $response['success'] = false;
+
+        if ($type == 'all') {
+            try {
+                $this->db->truncate(db_prefix() . 'chatmessages');
+                $this->db->truncate(db_prefix() . 'chatclientmessages');
+                $this->db->truncate(db_prefix() . 'chatgroupmessages');
+                $this->db->truncate(db_prefix() . 'chatgroupsharedfiles');
+                $this->db->truncate(db_prefix() . 'chatsharedfiles');
+
+                $folder_path = PR_CHAT_MODULE_UPLOAD_FOLDER;
+
+                $folders = glob($folder_path . '/*');
+
+                foreach ($folders as $folder) {
+
+                    if (is_dir($folder)) {
+                        $files = list_files($folder);
+
+                        foreach ($files as $fileTodelete) {
+                            if (strpos($folder, 'index.html') !== true) {
+                                @unlink($folder . '/' . $fileTodelete);
+                            }
+                        }
+                    }
+                    if (strpos($folder, 'index.html') != true) {
+                        {
+                            @unlink($folder);
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                return $response['error'] = $e->getMessage();
+            }
+
+            return $response['success'] = true;
+        }
+
+        if ($type == 'staff') $table = db_prefix() . 'chatmessages';
+        if ($type == 'clients') $table = db_prefix() . 'chatclientmessages';
+        if ($type == 'groups') $table = db_prefix() . 'chatgroupmessages';
+
+        $sharedFilesTable = db_prefix() . 'chatsharedfiles';
+
+        if ($type == 'groups') {
+            $sharedFilesTable = db_prefix() . 'chatgroupsharedfiles';
+
+        }
+
+        $where = "time_sent < DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+
+        $this->db->select('*');
+        $this->db->from($table);
+
+        $this->db->where($where);
+
+        $possible_files = $this->db->get()->result_array();
+
+        if ($possible_files) {
+            foreach ($possible_files as $file) {
+                if (prchat_checkMessageIfFileExists($file['message'])) {
+
+                    $file_name = getImageFullName($file['message']);
+
+                    if ($file_name == 'audio&amp;gt;') {
+                        $file['message'] = str_replace('&amp;lt;audio controls src=&quot;', "", $file['message']);
+                        $file['message'] = str_replace("&quot; type=&quot;audio/ogg&quot;&amp;gt;&amp;lt;/audio&amp;gt;", "", $file['message']);
+                        $file_name = pathinfo($file['message'], PATHINFO_BASENAME);
+
+                        if (strlen($file_name)) {
+                            if (is_dir(PR_CHAT_MODULE_UPLOAD_FOLDER . '/audio')) {
+                                @unlink(PR_CHAT_MODULE_UPLOAD_FOLDER . '/audio/' . $file_name);
+                            }
+                        }
+                    }
+
+                    if (is_dir(PR_CHAT_MODULE_UPLOAD_FOLDER)) {
+                        @unlink(PR_CHAT_MODULE_UPLOAD_FOLDER . '/' . $file_name);
+                    }
+
+                    if ($type == 'groups') {
+                        $this->db->delete($sharedFilesTable, ['sender_id' => $file['sender_id'], 'file_name' => $file_name]);
+                    } else {
+                        $this->db->delete($sharedFilesTable, ['sender_id' => $file['reciever_id'], 'reciever_id' => $file['sender_id'], 'file_name' => $file_name]);
+                        $this->db->delete($sharedFilesTable, ['sender_id' => $file['sender_id'], 'reciever_id' => $file['reciever_id'], 'file_name' => $file_name]);
+                    }
+                }
+            }
+
+            $this->db->select('*');
+            $this->db->from($table);
+            $this->db->where($where);
+
+
+            $response['success'] = $this->db->delete();
+
+        } else {
+            return $response;
+        }
+
+        return $response;
+
+    }
+
     /**
      * Handles shared files between two users.
+     *
      * @param string $own_id session id
-     * @param string $id the contact shared files id
+     * @param        $contact_id
+     *
      * @return string
      */
     public function get_shared_files_and_create_template($own_id, $contact_id)
@@ -934,7 +1083,7 @@ class Prchat_model extends App_Model
 
         $html = '';
         $html .= '<ul class="nav nav-tabs" role="tablist">';
-        $html .= '<li class="active"><a href="#photos" role="tab" data-toggle="tab"><i class="fa fa-file-image-o icon_shared_files" aria-hidden="true"></i>' . _l('chat_photos_text') . '</a></li>';
+        $html .= '<li class="active"><a href="#photos" role="tab" data-toggle="tab"><i class="fa-regular fa-file-image icon_shared_files" aria-hidden="true"></i>' . _l('chat_photos_text') . '</a></li>';
         $html .= '<li><a href="#files" role="tab" data-toggle="tab"><i class="fa fa-file-o icon_shared_files" aria-hidden="true"></i>' . _l('chat_files_text') . '</a></li>';
         $html .= '</ul>';
 
@@ -967,7 +1116,9 @@ class Prchat_model extends App_Model
 
     /**
      * Handles shared files between usersin group.
+     *
      * @param string $group_id
+     *
      * @return string
      */
     public function get_group_shared_files_and_create_template($group_id)
@@ -999,7 +1150,7 @@ class Prchat_model extends App_Model
 
         $html = '';
         $html .= '<ul class="nav nav-tabs" role="tablist">';
-        $html .= '<li class="active"><a href="#group_photos" role="tab" data-toggle="tab"><i class="fa fa-file-image-o icon_shared_files" aria-hidden="true"></i>' . _l('chat_photos_text') . '</a></li>';
+        $html .= '<li class="active"><a href="#group_photos" role="tab" data-toggle="tab"><i class="fa-regular fa-file-image icon_shared_files" aria-hidden="true"></i>' . _l('chat_photos_text') . '</a></li>';
         $html .= '<li><a href="#group_files" role="tab" data-toggle="tab"><i class="fa fa-file-o icon_shared_files" aria-hidden="true"></i>' . _l('chat_files_text') . '</a></li>';
         $html .= '</ul>';
 
@@ -1032,9 +1183,11 @@ class Prchat_model extends App_Model
 
     /**
      * globalMessage Sends global message to selected members
+     *
      * @param array    $members
      * @param string   $message
      * @param instance $pusher
+     *
      * @return boolean
      */
     public function globalMessage($members, $message, $pusher)
@@ -1051,11 +1204,11 @@ class Prchat_model extends App_Model
 
                 $this->chat_model->createMessage(
                     [
-                        'sender_id' => get_staff_user_id(),
+                        'sender_id'   => get_staff_user_id(),
                         'reciever_id' => $member_id,
-                        'message' => htmlspecialchars($message),
-                        'time_sent' => date('Y-m-d H:i:s'),
-                        'viewed' => 0,
+                        'message'     => htmlspecialchars($message),
+                        'time_sent'   => date('Y-m-d H:i:s'),
+                        'viewed'      => 0,
                     ],
                     db_prefix() . 'chatmessages'
                 );
@@ -1065,9 +1218,9 @@ class Prchat_model extends App_Model
                     'send-event',
                     [
                         'message' => pr_chat_convertLinkImageToString($message),
-                        'from' => get_staff_user_id(),
-                        'to' => $member_id,
-                        'global' => true,
+                        'from'    => get_staff_user_id(),
+                        'to'      => $member_id,
+                        'global'  => true,
                     ]
                 );
             }
@@ -1079,9 +1232,11 @@ class Prchat_model extends App_Model
 
     /**
      * Announcement Event to clients
+     *
      * @param array    $clients
      * @param string   $message
      * @param instance $pusher
+     *
      * @return boolean
      */
     public function announcementToClients($clients, $message, $pusher)
@@ -1098,10 +1253,10 @@ class Prchat_model extends App_Model
 
                 $this->chat_model->createMessage(
                     [
-                        'sender_id' => 'staff_' . $staffUserId,
+                        'sender_id'   => 'staff_' . $staffUserId,
                         'reciever_id' => 'client_' . $client_id,
-                        'message' => htmlspecialchars($message),
-                        'time_sent' => date('Y-m-d H:i:s')
+                        'message'     => htmlspecialchars($message),
+                        'time_sent'   => date('Y-m-d H:i:s')
                     ],
                     db_prefix() . 'chatclientmessages'
                 );
@@ -1110,10 +1265,10 @@ class Prchat_model extends App_Model
                     'presence-clients',
                     'send-event',
                     [
-                        'message' => pr_chat_convertLinkImageToString($message),
-                        'from' =>  'staff_' . $staffUserId,
-                        'from_name' =>  get_staff_full_name($staffUserId),
-                        'to' => 'client_' . $client_id,
+                        'message'     => pr_chat_convertLinkImageToString($message),
+                        'from'        => 'staff_' . $staffUserId,
+                        'from_name'   => get_staff_full_name($staffUserId),
+                        'to'          => 'client_' . $client_id,
                         'massMessage' => true
                     ]
                 );
@@ -1125,16 +1280,17 @@ class Prchat_model extends App_Model
 
     /**
      * Function that handles new chat group creation.
+     *
      * @param array    $insertData
      * @param array    $data
      * @param instance $pusher
      */
     public function addChatGroup($insertData, $data, $pusher)
     {
-        $exists = $this->db->get_where(TABLE_CHATGROUPS, array('group_name' => $insertData['group_name']))->row('group_name');
         $own_id = $this->session->userdata('staff_user_id');
 
         $this->db->insert(TABLE_CHATGROUPS, $insertData);
+
         $insert_id = $this->db->insert_id();
 
         $presence_data = $data;
@@ -1157,6 +1313,7 @@ class Prchat_model extends App_Model
 
     /**
      * Function that fetches all logged in user chat groups
+     *
      * @return json
      */
     public function getMyGroups()
@@ -1182,6 +1339,7 @@ class Prchat_model extends App_Model
 
     /**
      * Function that fetches all logged in user chat groups
+     *
      * @return json
      */
     public function getChatGroups()
@@ -1202,10 +1360,12 @@ class Prchat_model extends App_Model
 
     /**
      * Function that is responsible when deleting a selected group.
+     *
      * @param string   $group_id
      * @param string   $group_name
      * @param instance $pusher
-     * @return json
+     *
+     * @return void
      */
     public function deleteGroup($group_id, $group_name, $pusher)
     {
@@ -1244,6 +1404,7 @@ class Prchat_model extends App_Model
 
     /**
      * Function that handles when adding new members to chat groups.
+     *
      * @param string   $group_name
      * @param string   $group_id
      * @param array    $members
@@ -1262,9 +1423,9 @@ class Prchat_model extends App_Model
 
         $presence_data = [
             'group_name' => $group_name,
-            'result' => 'success',
-            'group_id' => $group_id,
-            'user_ids' => $member_ids,
+            'result'     => 'success',
+            'group_id'   => $group_id,
+            'user_ids'   => $member_ids,
         ];
 
         if ($this->db->affected_rows() != 0) {
@@ -1278,8 +1439,10 @@ class Prchat_model extends App_Model
 
     /**
      * Function that fetches all chat group members.
+     *
      * @param string @group_id
-     * @return json
+     *
+     * @return void
      */
     public function getGroupUsers($group_id)
     {
@@ -1298,12 +1461,13 @@ class Prchat_model extends App_Model
 
     /**
      * Function that fetches all members connected with specific group.
+     *
      * @param string $group_id
+     *
      * @return array
      */
     public function getCurrentGroupUsers($group_id)
     {
-        $users = '';
 
         $group_id = $this->input->post('group_id');
         $this->db->select('member_id, lastname, firstname');
@@ -1316,12 +1480,16 @@ class Prchat_model extends App_Model
         if ($this->db->affected_rows() !== 0) {
             return $users;
         }
+
+        return [];
     }
 
     /**
      * Private function that checks if specific group is created by logged in user.
+     *
      * @param string $group_id
      * @param string $user_id
+     *
      * @return mixed
      */
     private function isGroupCreatedBy($group_id, $user_id)
@@ -1337,12 +1505,14 @@ class Prchat_model extends App_Model
 
     /**
      * Function that removes user from specific group
+     *
      * @param string   $group_name
-     * @param string      $group_id
-     * @param string      $user_id
-     * @param string      $own_id
-     * @param instance $pusher
-     * @return json
+     * @param string   $group_id
+     * @param string   $user_id
+     * @param string   $own_id
+     * @param object $pusher
+     *
+     * @return void
      */
     public function removeChatGroupUser($group_name, $group_id, $user_id, $own_id, $pusher)
     {
@@ -1374,10 +1544,12 @@ class Prchat_model extends App_Model
 
     /**
      * Function that handles when user leaves chat group.
-     * @param string      $group_id
-     * @param string      $member_id
+     *
+     * @param string   $group_id
+     * @param string   $member_id
      * @param instance $pusher
-     * @return json
+     *
+     * @return void
      */
     public function chatMemberLeaveGroup($group_id, $member_id, $pusher)
     {
@@ -1390,9 +1562,9 @@ class Prchat_model extends App_Model
         $deleted = $this->db->delete(TABLE_CHATGROUPMEMBERS);
 
         $presence_data = [
-            'group_name' => $group_name,
-            'group_id' => $group_id,
-            'member_id' => $member_id,
+            'group_name'     => $group_name,
+            'group_id'       => $group_id,
+            'member_id'      => $member_id,
             'user_full_name' => $userFullName,
         ];
 
@@ -1404,8 +1576,10 @@ class Prchat_model extends App_Model
 
     /**
      * Record clients and customer admins message into database.
+     *
      * @param array @message_data
-     * @return boolean
+     *
+     * @return bool
      */
     public function recordClientMessage($message_data)
     {
@@ -1416,9 +1590,11 @@ class Prchat_model extends App_Model
         return false;
     }
 
-    /** 
+    /**
      * Live ajax search for clients
+     *
      * @param string @search
+     *
      * @return array
      */
     public function searchClients($search)
@@ -1444,9 +1620,11 @@ class Prchat_model extends App_Model
         return $query;
     }
 
-    /** 
+    /**
      * Live ajax search for staff
+     *
      * @param string @search
+     *
      * @return array
      */
     public function searchStaff($search)
@@ -1472,9 +1650,11 @@ class Prchat_model extends App_Model
         return $this->db->get(db_prefix() . 'staff', 10, $offset)->result_array();
     }
 
-    /** 
+    /**
      * Get customer  company name
+     *
      * @param string @client_id
+     *
      * @return object
      */
     public function getClientCompanyName($client_id)
@@ -1487,11 +1667,13 @@ class Prchat_model extends App_Model
     }
 
 
-    /** 
+    /**
      * Get staff message history (client ? staff )
+     *
      * @param string @user_id
      * @param string @table
-     * @return array 
+     *
+     * @return array
      */
     public function getMessagesHistoryBetween($user_id, $table)
     {
@@ -1521,7 +1703,7 @@ class Prchat_model extends App_Model
             /**
              * New line break blows return json so need to replace with spaces
              */
-            if (strpos($chat['message'], "\n") !== FALSE) {
+            if (strpos($chat['message'], "\n") !== false) {
                 $chat['message'] = preg_replace('/\s+/', ' ', trim($chat['message']));
             }
 
@@ -1540,10 +1722,12 @@ class Prchat_model extends App_Model
 
     /**
      * Export messages to CSV file
+     *
      * @param string $to
+     *
      * @return void
      */
-    function initiateExportToCSV($to)
+    public function initiateExportToCSV($to)
     {
         $table = 'chatmessages';
 
@@ -1590,7 +1774,7 @@ class Prchat_model extends App_Model
         // Create new csv file
         $file = fopen('php://output', 'w');
 
-        $header = array(
+        $header = [
             "" . _l('chat_header_message_id') . "",
             "" . _l('chat_header_from') . "",
             "" . _l('chat_header_send_to') . "",
@@ -1599,7 +1783,7 @@ class Prchat_model extends App_Model
             "" . _l('chat_header_deleted') . "",
             "" . _l('chat_viewed_at_datetime') . "",
             "" . _l('chat_header_datetime') . "",
-        );
+        ];
 
 
         if ($table == 'chatclientmessages') {
@@ -1623,13 +1807,14 @@ class Prchat_model extends App_Model
     }
 
 
-
-    /** 
+    /**
      * Handle Messages and get ready for support ticket conversation
-     * @param string $userid
+     *
+     * @param $user_id
+     *
      * @return array
      */
-    function getMessagesForTicketConversion($user_id)
+    public function getMessagesForTicketConversion($user_id)
     {
         $to = get_staff_user_id();
         $contact_full_name = '';
@@ -1662,19 +1847,21 @@ class Prchat_model extends App_Model
         }
     }
 
-    /** 
+    /**
      * Handle chat support ticket conversation
-     * @param array $data
+     *
+     * @param array  $data
      * @param string $subject
      * @param string $department
      * @param string $assigned
-     * @return json
+     *
+     * @return bool|\json
      */
-    function chatHandleSupportTicketCreation($data, $subject, $department, $assigned)
+    public function chatHandleSupportTicketCreation($data, $subject, $department, $assigned)
     {
         $html = '';
 
-        if ($data === NULL) {
+        if ($data === null) {
             echo json_encode(['message' => 'no_message']);
             return false;
         }
@@ -1694,11 +1881,11 @@ class Prchat_model extends App_Model
         $client_id = str_replace('client_', '', $data[0]['client_id']);
 
         $update_data = [
-            'subject' => $subject,
-            'admin' => get_staff_user_id(),
-            'message' => $html,
-            'userid' => get_contact_customer_user_id($client_id),
-            'contactid' => $client_id,
+            'subject'    => $subject,
+            'admin'      => get_staff_user_id(),
+            'message'    => $html,
+            'userid'     => get_contact_customer_user_id($client_id),
+            'contactid'  => $client_id,
             'department' => $department,
         ];
 
@@ -1711,7 +1898,7 @@ class Prchat_model extends App_Model
         if ($this->tickets_model->add($update_data)) {
             echo json_encode(
                 [
-                    'message' => 'success',
+                    'message'   => 'success',
                     'client_id' => $client_id,
                     'ticket_id' => chat_get_tickets_last_inserted_row()
                 ]
@@ -1721,9 +1908,11 @@ class Prchat_model extends App_Model
         }
     }
 
-    /** 
+    /**
      * Update chat status
+     *
      * @param string
+     *
      * @return array
      */
     public function handleChatStatus($status)
@@ -1741,21 +1930,23 @@ class Prchat_model extends App_Model
         }
         if ($this->db->affected_rows() != 0) {
             return [
-                'status' => $status,
+                'status'  => $status,
                 'user_id' => $user_id
             ];
         }
 
         return [
-            'status' => 'same',
+            'status'  => 'same',
             'user_id' => $user_id
         ];
     }
 
-    /** 
+    /**
      * Handles mention event in groups chat
+     *
      * @param array @data
      * @param object Pusher
+     *
      * @return void
      */
     public function handleMentionEvent($data, $pusher)
@@ -1769,30 +1960,31 @@ class Prchat_model extends App_Model
             $notify_users[] = $user['user_id'];
 
             add_notification([
-                'description'     => _l('chat_in_group') . ' ' . $data['channel'] . ' ' . $staff_fullname . ' ' . _l('chat_mentioned_you'),
-                'touserid'        => $user['user_id'],
-                'fromuserid'      => $data['from'],
-                'fromcompany'     => true,
-                'link'            => 'prchat/Prchat_Controller/chat_full_view',
+                'description' => _l('chat_in_group') . ' ' . $data['channel'] . ' ' . $staff_fullname . ' ' . _l('chat_mentioned_you'),
+                'touserid'    => $user['user_id'],
+                'fromuserid'  => $data['from'],
+                'fromcompany' => true,
+                'link'        => 'prchat/Prchat_Controller/chat_full_view',
             ]);
         }
         pusher_trigger_notification(array_unique($notify_users));
 
-        $pusher->trigger('presence-' . $data['channel'], 'mention-event', array(
+        $pusher->trigger('presence-' . $data['channel'], 'mention-event', [
             'group_name' => $data['channel'],
-            'from' => $data['from'],
-            'users' => $data['users'],
-            'userImage' => $userImage,
-            'name' => $staff_fullname
-        ));
+            'from'       => $data['from'],
+            'users'      => $data['users'],
+            'userImage'  => $userImage,
+            'name'       => $staff_fullname
+        ]);
     }
 
 
     /**
      * Handle base64 audio data from recording
      *
-     * @param string $audioData
-     * @return json
+     * @param $audioB64Data
+     *
+     * @return void
      */
     public function handleAudioData($audioB64Data)
     {
@@ -1819,15 +2011,13 @@ class Prchat_model extends App_Model
      * Trigger new message seen event
      *
      * @param object $pusher
-     * @param array $messages
+     * @param array  $messages
+     *
      * @return void
      */
     public function setMessageAsViewed($pusher, $messages)
     {
-        $pusher->trigger(
-            'user_messages',
-            'message_seen',
-            $messages
-        );
+        $pusher->trigger('user_messages', 'message_seen', $messages);
     }
+
 }

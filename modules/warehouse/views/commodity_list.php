@@ -21,17 +21,17 @@
                         <?php if (has_permission('warehouse', '', 'create') || is_admin() || has_permission('warehouse', '', 'edit') ) { ?>
 
                           
-                        <a href="#" onclick="new_commodity_item(); return false;" class="btn btn-info pull-left display-block mr-4 button-margin-r-b" data-toggle="sidebar-right" data-target=".commodity_list-add-edit-modal">
+                        <a href="#" onclick="new_commodity_item(); return false;" class="btn btn-info mr-4 button-margin-r-b" data-toggle="sidebar-right" data-target=".commodity_list-add-edit-modal">
                             <?php echo _l('add'); ?>
                         </a>
 
-                        <a href="<?php echo admin_url('warehouse/import_xlsx_commodity'); ?>" class="btn btn-success pull-left display-block  mr-4 button-margin-r-b" title="<?php echo _l('import_items') ?> ">
+                        <a href="<?php echo admin_url('warehouse/import_xlsx_commodity'); ?>" class="btn btn-success  mr-4 button-margin-r-b" title="<?php echo _l('import_items') ?> ">
                             <?php echo _l('import_items'); ?>
                         </a>
 
                         <a href="#" id="dowload_items"  class="btn btn-warning pull-left  mr-4 button-margin-r-b hide"><?php echo _l('dowload_items'); ?></a>
 
-                        <a href="<?php echo admin_url('warehouse/import_opening_stock'); ?>" class="btn btn-default pull-left display-block  mr-4 button-margin-r-b" title="<?php echo _l('import_opening_stock') ?> ">
+                        <a href="<?php echo admin_url('warehouse/import_opening_stock'); ?>" class="btn btn-default  mr-4 button-margin-r-b" title="<?php echo _l('import_opening_stock') ?> ">
                             <?php echo _l('import_opening_stock'); ?>
                         </a>
 
@@ -279,7 +279,7 @@
 
                      <a href="#"  onclick="staff_export_item(); return false;" data-toggle="modal" data-table=".table-table_commodity_list" data-target="#leads_export_item" class=" hide bulk-actions-btn table-btn"><?php echo _l('export_item'); ?></a>
 
-                     <a href="#"  onclick="print_barcode_bulk_actions(); return false;" data-toggle="modal" data-table=".table-table_commodity_list" data-target="#print_barcode_item" class=" hide print_barcode-bulk-actions-btn table-btn"><?php echo _l('print_barcode'); ?></a>
+                     <!-- <a href="#"  onclick="print_barcode_bulk_actions(); return false;" data-toggle="modal" data-table=".table-table_commodity_list" data-target="#print_barcode_item" class=" hide print_barcode-bulk-actions-btn table-btn"><?php echo _l('print_barcode'); ?></a> -->
 
                      <!-- search all simple product and variation product -->
                      <div class="col-md-12">
@@ -305,13 +305,13 @@
                                           _l('tags'),
                                           _l('inventory_number'),
                                           _l('unit_name'),
-                                          _l('rate'),
-                                          _l('purchase_price'),
-                                          _l('tax_1'),
-                                          _l('tax_2'),
+                                          // _l('rate'),
+                                          _l('Price'),
+                                          _l('Tax'),
+                                          // _l('tax_2'),
                                           _l('status'),                         
-                                          _l('minimum_stock'),                         
-                                          _l('maximum_stock'),
+                                          // _l('minimum_stock'),                         
+                                          // _l('maximum_stock'),
                                           _l('final_price'),                         
                                         );
 
@@ -467,26 +467,26 @@
                             </div>
 
                             <div class="row">
-                               <div class="col-md-6">
+                               <!-- <div class="col-md-6">
                                      <?php echo render_input('commodity_barcode', 'commodity_barcode','','text'); ?>
-                                </div>
-                              <div class="col-md-3">
+                                </div> -->
+                              <div class="col-md-6">
                                 <a href="#" class="pull-right display-block input_method"><i class="fa fa-question-circle skucode-tooltip"  data-toggle="tooltip" title="" data-original-title="<?php echo _l('commodity_sku_code_tooltip'); ?>"></i></a>
                                 <?php echo render_input('sku_code', 'sku_code','',''); ?>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-6">
                                 <?php echo render_input('sku_name', 'sku_name'); ?>
                               </div>
                             </div>
 
                             <div class="row">
                               <div class="col-md-12">
-                                  <div class="form-group" id="tags_value">
+                                  <!-- <div class="form-group" id="tags_value">
                                     <div id="inputTagsWrapper">
                                        <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
                                        <input type="text" class="tagsinput" id="tags" name="tags" value="" data-role="tagsinput">
                                     </div>
-                                 </div>
+                                 </div> -->
 
                               </div>
                             </div>  
@@ -505,10 +505,10 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                      <?php echo render_select('commodity_type',$commodity_types,array('commodity_type_id','commondity_name'),'commodity_type'); ?>
 
-                                </div>
+                                </div> -->
                                  <div class="col-md-6">
                                      <?php echo render_select('unit_id',$units,array('unit_type_id','unit_name'),'units'); ?>
                                 </div>
@@ -526,19 +526,19 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                   <?php 
                                     $attr = array();
                                    
                                    ?>
                                      <?php echo render_input('profif_ratio','_profit_rate_p','','number',$attr); ?>
-                                </div>
-                                <div class="col-md-3">
+                                </div> -->
+                                <!-- <div class="col-md-3">
                                      <?php echo render_select('tax',$taxes,array('id','name'),'tax_1'); ?>
                                 </div>
                                 <div class="col-md-3">
                                      <?php echo render_select('tax2',$taxes,array('id','name'),'tax_2'); ?>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="row">

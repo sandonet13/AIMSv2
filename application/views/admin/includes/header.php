@@ -22,12 +22,12 @@
                     </ul>
 
                 </div>
-                <ul class="nav navbar-nav visible-md visible-lg">
+                <!-- <ul class="nav navbar-nav visible-md visible-lg">
                     <?php
                     $quickActions = collect($this->app->get_quick_actions_links())->reject(function ($action) {
                         return isset($action['permission']) && !has_permission($action['permission'], '', 'create');
                     });
-                ?>
+                    ?>
                     <?php if ($quickActions->isNotEmpty()) { ?>
                     <li class="icon tw-relative ltr:tw-mr-1.5 rtl:tw-ml-1.5" title="<?php echo _l('quick_create'); ?>"
                         data-toggle="tooltip" data-placement="bottom">
@@ -76,7 +76,7 @@
                         </ul>
                     </li>
                     <?php } ?>
-                </ul>
+                </ul> -->
             </div>
 
             <div class="mobile-menu tw-shrink-0 ltr:tw-ml-4 rtl:tw-mr-4">

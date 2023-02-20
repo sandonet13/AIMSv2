@@ -517,20 +517,10 @@ class purchase extends AdminController
         $data['vendors'] = $this->purchase_model->get_vendor();
         $data['departments'] = $this->departments_model->get();
         $data['vendor_contacts'] = $this->purchase_model->get_contacts();
-        $this->load->view('budget_planning/manage', $data);
-    }
-
-    public function budget_planning(){
-        $this->load->model('departments_model');
-
-        $data['title'] = _l('budget_planning');
-        $data['vendors'] = $this->purchase_model->get_vendor();
-        $data['departments'] = $this->departments_model->get();
-        $data['vendor_contacts'] = $this->purchase_model->get_contacts();
         $this->load->view('purchase_request/manage', $data);
     }
 
-
+    
 
     /**
      * { add update purchase request }
@@ -740,13 +730,6 @@ class purchase extends AdminController
      */
     public function table_pur_request(){
     	 $this->app->get_table_data(module_views_path('purchase', 'purchase_request/table_pur_request'));
-    }
-
-    /**
-     * { table budget planning }
-     */
-    public function table_budget_planning(){
-    	 $this->app->get_table_data(module_views_path('purchase', 'budget_planning/table_budget_planning'));
     }
 
     /**

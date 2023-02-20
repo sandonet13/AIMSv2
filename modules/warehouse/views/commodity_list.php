@@ -624,7 +624,7 @@
                               </div>
                           </div>
 
-                          <div class="col-md-3 col-sm-6">
+                          <!-- <div class="col-md-3 col-sm-6">
                            <div class="form-group">
                             <div class="checkbox checkbox-primary">
                               <input  type="checkbox" id="can_be_sold" name="can_be_sold" value="can_be_sold" >
@@ -648,7 +648,7 @@
                               <label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
                             </div>
                           </div>
-                        </div>  
+                        </div>   -->
                         </div>  
 
                         

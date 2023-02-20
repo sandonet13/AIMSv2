@@ -228,10 +228,10 @@
                         <?php $days_owed = (isset($pur_order) ? $pur_order->days_owed : '');
                          echo render_input('days_owed','days_owed',$days_owed,'number'); ?>
                       </div> -->
-                      <!-- <div class="col-md-6 pright0">
+                      <div class="col-md-6 pright0">
                         <?php $delivery_date = (isset($pur_order) ? _d($pur_order->delivery_date) : '');
                          echo render_date_input('delivery_date','delivery_date',$delivery_date); ?>
-                      </div> -->
+                      </div>
                       
                    </div>  
                 </div>

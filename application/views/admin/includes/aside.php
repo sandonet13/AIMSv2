@@ -1,10 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <aside id="menu" class="sidebar sidebar">
     <ul class="nav metis-menu" id="side-menu">
-        <li class="tw-mt-[63px] sm:tw-mt-0 -tw-mx-2 tw-overflow-hidden sm:tw-bg-neutral-900/50">
+        <li style="padding-left:10%;margin-bottom:-20px;font-family:helvetica;padding-top:7px;">
             <div id="logo" class="tw-py-2 tw-px-2 tw-h-[63px] tw-flex tw-items-center">
-                <?php echo get_company_logo(get_admin_uri() . '/', '!tw-mt-0')?>
+            <!-- <img src="https://system.audemars.co.id/modules/warehouse/uploads/item_img/logo.png" style="height:100%;"></img> -->
+            <p style="color:white;font-size:30px;">AUDEMARS</p>
             </div>
+        </li>
+        <li style="padding-left:35%;color:white;font-family:helvetica;padding-bottom:7px;">
+            INDONESIA
         </li>
         <?php
          hooks()->do_action('before_render_aside_menu');

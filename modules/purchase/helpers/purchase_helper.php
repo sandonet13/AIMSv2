@@ -1736,7 +1736,7 @@ function handle_po_logo()
 /**
  * Gets the po logo.
  */
-function get_po_logo($width = 120, $class = '', $type = 'pdf'){
+function get_po_logo($width = 150, $class = '', $type = 'pdf'){
     $CI           = & get_instance();
     $CI->db->where('rel_id', 0);
     $CI->db->where('rel_type','po_logo');

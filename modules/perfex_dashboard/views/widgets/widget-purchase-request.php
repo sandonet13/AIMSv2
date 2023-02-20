@@ -40,7 +40,7 @@ $fn_get_data = function () {
 $widget_data = $fn_get_data();
 // echo json_encode($widget_data);
 ?>
-
+<br>
 <div class="widget widget-new-customers widget-<?= $widget['id'] ?>" data-widget-id="<?= $widget['id'] ?>">
   <div class="">
     <div class="panel_s">
@@ -75,13 +75,13 @@ $widget_data = $fn_get_data();
                   <td><?= $widget_row['pur_rq_name'] ?></td>
                   <td><?= $widget_row['purchase_type'] ?></td>
                   <?php if ($widget_row['status'] == 1) { ?>
-                  <td><span class="inline-block label label-success" id="status_span_<?= $widget_row['id'] ?>" task-status-table="pending">Pending</td>
+                  <td><span class="inline-block label label-warning" id="status_span_<?= $widget_row['id'] ?>" task-status-table="pending">Pending</td>
                   <?php } ?>
                   <?php if ($widget_row['status'] == 2) { ?>
                   <td><span class="inline-block label label-success" id="status_span_<?= $widget_row['id'] ?>" task-status-table="approved">Approved</td>
                   <?php } ?>
                   <?php if ($widget_row['status'] == 3) { ?>
-                  <td><span class="inline-block label label-success" id="status_span_<?= $widget_row['id'] ?>" task-status-table="rejected">Rejected</td>
+                  <td><span class="inline-block label label-danger" id="status_span_<?= $widget_row['id'] ?>" task-status-table="rejected">Rejected</td>
                   <?php } ?>
                   <td><?= time_ago($widget_row['request_date']) ?></td>
                 </tr>

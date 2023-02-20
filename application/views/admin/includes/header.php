@@ -117,10 +117,10 @@
                                 <?php echo _l('nav_my_profile'); ?>
                             </a>
                         </li>
-                        <li class="header-my-timesheets"><a href="<?php echo admin_url('staff/timesheets'); ?>">
+                        <!-- <li class="header-my-timesheets"><a href="<?php echo admin_url('staff/timesheets'); ?>">
                                 <?php echo _l('my_timesheets'); ?>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="header-edit-profile"><a href="<?php echo admin_url('staff/edit_profile'); ?>">
                                 <?php echo _l('nav_edit_profile'); ?>
                             </a>
@@ -157,7 +157,7 @@
                 </li>
                 <?php } ?>
 
-                <li class="icon header-todo">
+                <!-- <li class="icon header-todo">
                     <a href="<?php echo admin_url('todo'); ?>" data-toggle="tooltip"
                         title="<?php echo _l('nav_todo_items'); ?>" data-placement="bottom" class="">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -170,6 +170,12 @@
                             <?php echo $current_user->total_unfinished_todos; ?>
                         </span>
                     </a>
+                </li> -->
+
+                
+                <li class="icon dropdown tw-relative tw-block notifications-wrapper header-notifications rtl:tw-ml-3"
+                    data-toggle="tooltip" title="<?php echo _l('nav_notifications'); ?>" data-placement="bottom">
+                    <?php $this->load->view('admin/includes/notifications'); ?>
                 </li>
 
                 <li class="icon header-user-profile" data-toggle="tooltip" title="<?php echo get_staff_full_name(); ?>"
@@ -181,9 +187,9 @@
                     <ul class="dropdown-menu animated fadeIn">
                         <li class="header-my-profile"><a
                                 href="<?php echo admin_url('profile'); ?>"><?php echo _l('nav_my_profile'); ?></a></li>
-                        <li class="header-my-timesheets"><a
+                        <!-- <li class="header-my-timesheets"><a
                                 href="<?php echo admin_url('staff/timesheets'); ?>"><?php echo _l('my_timesheets'); ?></a>
-                        </li>
+                        </li> -->
                         <li class="header-edit-profile"><a
                                 href="<?php echo admin_url('staff/edit_profile'); ?>"><?php echo _l('nav_edit_profile'); ?></a>
                         </li>
@@ -206,13 +212,14 @@
                             </ul>
                         </li>
                         <?php } ?>
+                        
                         <li class="header-logout">
                             <a href="#" onclick="logout(); return false;"><?php echo _l('nav_logout'); ?></a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="icon header-timers timer-button tw-relative ltr:tw-mr-1.5 rtl:tw-ml-1.5"
+                <!-- <li class="icon header-timers timer-button tw-relative ltr:tw-mr-1.5 rtl:tw-ml-1.5"
                     data-placement="bottom" data-toggle="tooltip" data-title="<?php echo _l('my_timesheets'); ?>">
                     <a href="#" id="top-timers" class="top-timers !tw-px-0 tw-group" data-toggle="dropdown">
                         <span
@@ -232,12 +239,7 @@
                     <ul class="dropdown-menu animated fadeIn started-timers-top width300" id="started-timers-top">
                         <?php $this->load->view('admin/tasks/started_timers', ['startedTimers' => $startedTimers]); ?>
                     </ul>
-                </li>
-
-                <li class="icon dropdown tw-relative tw-block notifications-wrapper header-notifications rtl:tw-ml-3"
-                    data-toggle="tooltip" title="<?php echo _l('nav_notifications'); ?>" data-placement="bottom">
-                    <?php $this->load->view('admin/includes/notifications'); ?>
-                </li>
+                </li> -->
 
                 <?php hooks()->do_action('admin_navbar_end'); ?>
             </ul>

@@ -184,7 +184,7 @@
                     </div>
                 </div>
                 <?php echo form_close(); ?>
-                <h4 class="tw-font-semibold tw-text-lg tw-text-neutral-700 mtop30">
+                <!-- <h4 class="tw-font-semibold tw-text-lg tw-text-neutral-700 mtop30">
                     <?php echo _l('staff_two_factor_authentication'); ?>
                 </h4>
                 <?php echo form_open('admin/staff/update_two_factor', ['id' => 'two_factor_auth_form']); ?>
@@ -228,7 +228,7 @@
                         </button>
                     </div>
                 </div>
-                <?php echo form_close(); ?>
+                <?php echo form_close(); ?> -->
             </div>
         </div>
     </div>

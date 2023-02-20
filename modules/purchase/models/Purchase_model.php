@@ -1029,6 +1029,7 @@ class Purchase_model extends App_Model
      */
     public function add_pur_request($data){
         $data['request_date'] = date('Y-m-d H:i:s');
+        $data['due_date'] = to_sql_date($data['due_date']);
         $check_appr = $this->get_approve_setting('pur_request');
         $data['status'] = 1;
         if($check_appr && $check_appr != false){
@@ -1103,6 +1104,7 @@ class Purchase_model extends App_Model
                     $dt_data['pur_request'] = $insert_id;
                     $dt_data['item_code'] = $rqd['item_code'];
                     $dt_data['unit_id'] = isset($rqd['unit_id']) ? $rqd['unit_id'] : null;
+                    $dt_data['item_description'] = $rqd['item_description'];
                     $dt_data['unit_price'] = $rqd['unit_price'];
                     $dt_data['into_money'] = $rqd['into_money'];
                     $dt_data['total'] = $rqd['total'];
@@ -1151,8 +1153,18 @@ class Purchase_model extends App_Model
 
             }
 
+            $data_log = [];
+            $data_log['rel_id'] = $insert_id;
+            $data_log['rel_type'] = 'pur_request';
+            $data_log['staffid'] = get_staff_user_id();
+            $data_log['date'] = date('Y-m-d H:i:s');
+            $data_log['note'] = "pur_request";
+            $this->add_activity_log($data_log);
+
             return $insert_id;
         }
+
+
         return false;
     }
 
@@ -1171,6 +1183,7 @@ class Purchase_model extends App_Model
         $data['subtotal'] = reformat_currency_pur($data['subtotal'], $data['currency']);
 
         $data['to_currency'] = $data['currency'];
+        $data['due_date'] = to_sql_date($data['due_date']);
 
         $new_purchase_request = [];
         if (isset($data['newitems'])) {
@@ -2807,6 +2820,7 @@ class Purchase_model extends App_Model
      * @return     boolean   
      */
     public function send_request_approve($data){
+        $pur_request = $this->get_purchase_request($pur_request_id);
         if(!isset($data['status'])){
             $data['status'] = '';
         }
@@ -2895,6 +2909,17 @@ class Purchase_model extends App_Model
             return false;
         }
     }
+
+
+    // public function get_approve_setting_manual($id = ''){
+    //     if($id == ''){
+    //         return $this->db->get(db_prefix().'pur_approval_setting')->result_array();
+    //     }else{
+    //         $this->db->where('id',$id);
+    //         return $this->db->get(db_prefix().'pur_approval_setting')->row();
+    //     }
+    // }
+
 
     /**
      * { delete approval details }
@@ -3246,14 +3271,13 @@ class Purchase_model extends App_Model
      */
     public function get_pur_request_pdf_html($pur_request_id){
         $this->load->model('departments_model');
-
         $pur_request = $this->get_purchase_request($pur_request_id);
         $project = $this->projects_model->get($pur_request->project);
         $project_name = '';
         if($project && isset($project->name)){
             $project_name = $project->name;
         }
-
+        // $approve_setting_manual = $this->get_approve_setting_manual($pur_request_id);
         $tax_data = $this->get_html_tax_pur_request($pur_request_id);
 
         if($pur_request->currency != 0){
@@ -3264,15 +3288,20 @@ class Purchase_model extends App_Model
         
 
         $pur_request_detail = $this->get_pur_request_detail($pur_request_id);
-        // echo count($pur_request_detail);
+        // echo json_encode($approve_setting_manual);
+        // echo 'anjayyy';
         $company_name = get_option('invoice_company_name'); 
         $dpm_name = $this->departments_model->get($pur_request->department)->name;
         $address = get_option('invoice_company_address'); 
         $day = date('d',strtotime($pur_request->request_date));
         $month = date('m',strtotime($pur_request->request_date));
         $year = date('Y',strtotime($pur_request->request_date));
+        $day_d = date('d',strtotime($pur_request->due_date));
+        $month_d = date('m',strtotime($pur_request->due_date));
+        $year_d = date('Y',strtotime($pur_request->due_date));
         $list_approve_status = $this->get_list_approval_details($pur_request_id,'pur_request');
-        // $hal = $this->PageNo();
+        // echo json_encode($list_approve_status);
+        
 
 
     $html = '<table class="table">
@@ -3358,26 +3387,33 @@ class Purchase_model extends App_Model
           <tr>
                 <td style="width: 15%" class="font_500"><h4>PR Number:</h4></td>
                 <td style="width: 57%">'.$pur_request->pur_rq_code.'</td>
-                <td style="width: 15%" class="font_500"><h4>Date:</h4></td>
-                <td style="width: 15%">'.$day. '-' .$month.'-'.$year.'</td>
+                <td style="width: 15%" class="font_500"><h4>Date Created:</h4></td>
+                <td>'.$day. '-' .$month.'-'.$year.'</td>
 
             </tr>
           <tr>
-            <td class="font_500"><h4>'. _l('type').':</h4></td>
+            <td style="width: 15%" class="font_500"><h4>'. _l('type').':</h4></td>
             <td>'. _l($pur_request->type).'</td>
+            <td class="font_500"><h4>'. _l('Due Date').':</h4></td>
+            <td>'.$day_d. '-' .$month_d.'-'.$year_d.'</td>
+          </tr>
+          <tr>
+                <td class="font_500"><h4>'. _l('Description').':</h4></td>
+                <td>'. _l($pur_request->rq_description).'</td>
           </tr>
         </tbody>
       </table>
       <br><br>
       ';
 
-      $html .=  '<table class="table pur_request-item">
+      $html .=  '<table class="table pur_request-item" nobr="true">
             <thead>
-              <tr class="border_tr">
-                <th align="left" class="thead-dark">'._l('No').'</th>
+              <tr>
+                <th align="left" style="width:5%;" class="thead-dark">'._l('No').'</th>
                 <th align="left" class="thead-dark">'._l('items').'</th>
+                <th align="left" style="width:28%;" class="thead-dark">'._l('item_description').'</th>
                 <th align="right" class="thead-dark">'._l('purchase_unit_price').'</th>
-                <th align="right" class="thead-dark">'._l('purchase_quantity').'</th>
+                <th align="right" style="width:5%;" class="thead-dark">'._l('Qty').'</th>
                 <th align="right" class="thead-dark">'._l('unit').'</th>
 
                 <--! <th align="right" class="thead-dark">'._l('into_money').'</th>-->';
@@ -3388,13 +3424,19 @@ class Purchase_model extends App_Model
                 <th align="left" class="thead-dark">'._l('remarks').'</th>
               </tr>
             </thead>
-          <tbody>';
+          <tbody >';
 
       $tmn = 0;  
       $_total = 0;
-      $counter = 1;  
+      $counter = 1;
+    //   $custom_fields = get_custom_fields('staff');
+    //     foreach ($custom_fields as $field) {
+    //         $fields['{' . $field['name'] . '}'] = get_custom_field_value(1, $field['id'], 'staff');
+    //     }
+    //     $lalala = get_custom_field_value(1, $field['id'], 'staff');
+        // echo json_encode($pur_request_detail);
+
       foreach($pur_request_detail as $row){
-        // echo json_encode($row);
         $items = $this->get_items_by_id($row['item_code']);
         $units = $this->get_units_by_id($row['unit_id']);
         
@@ -3402,34 +3444,35 @@ class Purchase_model extends App_Model
            
             $unit_name = isset($units->unit_name) ? $units->unit_name : '';
 
-            $html .= '<tr class="border_tr">
-                <td align="left">'. $counter .'</td>
-                <td align="left">'.$items->description.'</td>
+            $html .= '<tr style="border: 1px solid black;border-collapse: collapse;" >
+                <td align="left" style="width:5%;border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
+                <td align="left" style="border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$items->description.'</td>
+                <td align="left" style="width:28%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_description'].'</td>
 
-                <td align="right">'.app_format_money($row['unit_price'],$base_currency).'</td>
-                <td align="right">'.app_format_number($row['quantity'],'').' '.$unit_name.'</td>
-                <td align="right">'.$items->unit.'</td>' ;
+                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency).'</td>
+                <td align="right" style="width:5%;border: 1px solid black;border-collapse: collapse;">'.app_format_number($row['quantity'],'').' '.$unit_name.'</td>
+                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.$items->unit.'</td>' ;
                 if(get_option('show_purchase_tax_column')){    
                     $html .= '<td align="right">'.app_format_money($row['tax_value'],$base_currency).'</td>';
                 }
-                $html .= '<td align="right">'.app_format_money($row['total'],$base_currency).'</td>
-                <td align="right">'.$pur_request->rq_description.'</td>
+                $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['total'],$base_currency).'</td>
+                <td align="left" style="border: 1px solid black;border-collapse: collapse;">'.$row['remarks'].'</td>
               </tr>';
               $counter++;
         }else{
             $unit_name = isset($units->unit_name) ? $units->unit_name : '';
-            $html .= '<tr class="border_tr">'.
-            '<td align="left">'. $counter .'</td>
-            <td align="left">'.$row['item_text'].'</td>
+            $html .= '<tr class="border_tr" >'.
+            '<td align="left" style="border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
+            <td align="left" style="border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_text'].'</td>
 
-                <td align="right">'.app_format_money($row['unit_price'],$base_currency).'</td>
-                <td align="right">'.$row['quantity'].'</td>
-                <td align="right">'.$items->unit.'</td>';
+                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency).'</td>
+                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.$row['quantity'].'</td>
+                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.$items->unit.'</td>';
                 if(get_option('show_purchase_tax_column')){    
                     $html .= '<td align="right">'.app_format_money($row['tax_value'],$base_currency).'</td>';
                 }
-                $html .= '<td align="right">'.app_format_money($row['total'],$base_currency).'</td>
-                <td align="left">'.$row['remarks'].'</td>
+                $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['total'],$base_currency).'</td>
+                <td align="left" style="border: 1px solid black;border-collapse: collapse;">'.$row['remarks'].'</td>
               </tr>';
               $counter++;
             //   echo $counter;
@@ -3461,6 +3504,19 @@ class Purchase_model extends App_Model
                     '. app_format_money($_total, $base_currency).'
                  </td>
               </tr>';
+              if($pur_request->bank_details){    
+                $html .= '
+                <tr>
+                <td style="text-align:left;width:50%">Dana dapat ditransfer ke nomor rekening:
+                </td>
+                </tr>
+                <tr>
+                <td style="text-align:left;width:50%"><b>'
+                    . $pur_request->bank_details .
+                '</b></td>
+                </tr>';
+                    }
+                    // echo json_encode($pur_request->requester); 
 
       $html .= ' </tbody></table>';
 
@@ -3468,45 +3524,430 @@ class Purchase_model extends App_Model
       <br>
       <br>
       <br>
-      <table class="table">
-        <tbody>
+      <table class="table" nobr="true">
+        <tbody>';
+
+
+        if(count($list_approve_status) == 0){            
+        $html .= '<tr><br><br><br><br><br></tr>
         <tr>
-            <td style="text-align: left;width:50%"><h4>'. _l('Approved by').'</h4></td>
-        </tr>
-        <tr><br></tr>
-          <tr>';
+        <!-- <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+        <td style="text-align: center;width:25%"><h4>Irvan Sandoval</h4></td>
+        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+        <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+        </tr>';
+
+        }
+
+
      if(count($list_approve_status) > 0){
       
         foreach ($list_approve_status as $value) {
-     $html .= '<tr><td class="text-left">';
-        if($value['action'] == 'sign'){
-            // $html .= '<h4>Approved By</h4>';
-            if($value['approve'] == 2){ 
-                $html .= '<img src="'.FCPATH.'modules/purchase/uploads/pur_request/signature/'.$pur_request->id.'/signature_'.$value['id'].'.png" class="img_style">';
-            }
-            // $html .= '</br></br></br>';
-            // $html .= '<h4>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h4>';
+        // if($value['action'] == 'sign'){
+        //     if($value['approve'] == 2){
+        //         if($dpm_name == 'Project'){
+        //                 if($value['staffid'] == $pur_request->requester){
+        //                 }
+        //                 elseif($value['staffid'] == 13 || $value['staffid'] == 3){
+        //                 continue;
+        //                 }
+        //         };
+        //         if($dpm_name == 'Manufacture'){
+        //             if($value['staffid'] == $pur_request->requester){
+        //             }
+        //             elseif($value['staffid'] == 8 || $value['staffid'] == 3){
+        //             continue;
+        //             }
+        //         };
+        //         if($dpm_name == 'HR'){
+        //             if($value['staffid'] == $pur_request->requester){
+        //             }
+        //             elseif($value['staffid'] == 8 || $value['staffid'] == 13){
+        //             continue;
+        //             }
+        //         };
+                // if($dpm_name == 'Manufacture'){
+                //     if($value['staffid'] == 8 || $value['staffid'] == 3){
+                //     continue;
+                //     }
+                // };
+                // if($dpm_name == 'HR'){
+                //     if($value['staffid'] == 8 || $value['staffid'] == 13){
+                //     continue;
+                //     }
+                // };
 
-                
-        }else{ 
-        $html .= '<h4>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h4>';
-              if($value['approve'] == 2){ 
-        $html .= '<img src="'.FCPATH .'modules/purchase/uploads/approval/approved.png" class="img_style">';
-             }elseif($value['approve'] == 3){
-        $html .= '<img src="'.FCPATH.'modules/purchase/uploads/approval/rejected.png" class="img_style">';
-             }
-              
+                // }
+
+                // $html .= '  
+                //             <tr><td></td></tr>
+                //             <td style="text-align: center;width:25%"><img style="height:50px;" src="'.FCPATH.'modules/purchase/uploads/pur_request/signature/'.$pur_request->id.'/signature_'.$value['id'].'.png"><h4>' .get_staff_full_name($value['staffid']). '</h4>' . get_custom_field_value($value['staffid'], 1, 'staff') . '</td>
+
+                //             ';
+
+
+                    
                 }
-       $html .= '</td></tr>';
-        }
-       
-        $html .= '<tr><br></tr>
-                                    <tr></tr>
-                                    <td style="text-align: left;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>';
+    
+        
+        // echo json_encode($list_approve_status);
+       if($pur_request->department == 3 && ($pur_request->purchase_type == 'Jasa' || $pur_request->purchase_type == 'Jasa')){
+            $html .= '
+            <tr>
+            <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+              <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+              <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+          </tr>
+            <tr><td></td></tr>
+                        <tr><br></tr>
+                        <tr><br></tr>
+                        <tr><br></tr>
+                                        <tr>
+                                            <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(8) .'</h4></td>
+                                                <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+
+
+                                        </tr>
+                                        <tr>
+                                        <!-- <td style="text-align: center;width:25%"><h4>'
+                                            . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                            '</td> -->
+                                        <td style="text-align: center;width:25%">'
+                                            . get_custom_field_value(1, 1, 'staff') .
+                                            '</td>
+                                        <td style="text-align: center;width:25%">'
+                                            . get_custom_field_value(8, 1, 'staff') .
+                                            '</td>
+                                            <td style="text-align: center;width:50%">'
+                                            . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                            '</td>
+                                        </tr>';
+
+       }elseif($pur_request->department == 3 && ($pur_request->purchase_type == 'Pembiayaan')){
+        $html .= '
+        <tr>
+        <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+          <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+          <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+      </tr>
+        <tr><td></td></tr>
+                    <tr><br></tr>
+                    <tr><br></tr>
+                    <tr><br></tr>
+                                    <tr>
+                                        <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(8) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+
+
+
+                                    </tr>
+                                    <tr>
+                                    <!-- <td style="text-align: center;width:25%"><h4>'
+                                        . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                        '</td> -->
+                                    <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value(1, 1, 'staff') .
+                                        '</td>
+                                    <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value(8, 1, 'staff') .
+                                        '</td>
+                                        <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                        '</td>
+                                    </tr>';
+
+   }elseif($pur_request->department == 5 && ($pur_request->purchase_type == 'Barang' || $pur_request->purchase_type == 'Jasa')){
+    $html .= '
+    <tr>
+    <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+      <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+      <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+  </tr>
+    <tr><td></td></tr>
+                <tr><br></tr>
+                <tr><br></tr>
+                <tr><br></tr>
+                                <tr>
+                                    <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(13) .'</h4></td>
+                                        <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+
+
+                                </tr>
+                                <tr>
+                                <!-- <td style="text-align: center;width:25%"><h4>'
+                                    . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                    '</td> -->
+                                <td style="text-align: center;width:25%">'
+                                    . get_custom_field_value(1, 1, 'staff') .
+                                    '</td>
+                                <td style="text-align: center;width:25%">'
+                                    . get_custom_field_value(13, 1, 'staff') .
+                                    '</td>
+                                    <td style="text-align: center;width:50%">'
+                                    . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                    '</td>
+                                </tr>';
+
+        }elseif($pur_request->department == 5 && ($pur_request->purchase_type == 'Pembiayaan')){
+        $html .= '
+        <tr>
+        <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+        <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+        <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+        </tr>
+        <tr><td></td></tr>
+                    <tr><br></tr>
+                    <tr><br></tr>
+                    <tr><br></tr>
+                                    <tr>
+                                        <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(13) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                            <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+
+
+
+                                    </tr>
+                                    <tr>
+                                    <!-- <td style="text-align: center;width:25%"><h4>'
+                                        . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                        '</td> -->
+                                    <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value(1, 1, 'staff') .
+                                        '</td>
+                                    <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value(13, 1, 'staff') .
+                                        '</td>
+                                        <td style="text-align: center;width:25%">'
+                                        . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                        '</td>
+                                    </tr>';
+
+        }elseif($pur_request->department == 2 && ($pur_request->purchase_type == 'Barang' || $pur_request->purchase_type == 'Jasa')){
+            $html .= '
+            <tr>
+            <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+              <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+              <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+          </tr>
+            <tr><td></td></tr>
+                        <tr><br></tr>
+                        <tr><br></tr>
+                        <tr><br></tr>
+                                        <tr>
+                                            <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(3) .'</h4></td>
+                                                <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+        
+        
+                                        </tr>
+                                        <tr>
+                                        <!-- <td style="text-align: center;width:25%"><h4>'
+                                            . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                            '</td> -->
+                                        <td style="text-align: center;width:25%">'
+                                            . get_custom_field_value(1, 1, 'staff') .
+                                            '</td>
+                                        <td style="text-align: center;width:25%">'
+                                            . get_custom_field_value(3, 1, 'staff') .
+                                            '</td>
+                                            <td style="text-align: center;width:50%">'
+                                            . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                            '</td>
+                                        </tr>';
+        
+                }elseif($pur_request->department == 2 && ($pur_request->purchase_type == 'Pembiayaan')){
+                    $html .= '
+                    <tr>
+                    <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+                    <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+                    <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                    </tr>
+                    <tr><td></td></tr>
+                                <tr><br></tr>
+                                <tr><br></tr>
+                                <tr><br></tr>
+                                                <tr>
+                                                    <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(3) .'</h4></td>
+                                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                                        <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+            
+            
+            
+                                                </tr>
+                                                <tr>
+                                                <!-- <td style="text-align: center;width:25%"><h4>'
+                                                    . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                                    '</td> -->
+                                                <td style="text-align: center;width:25%">'
+                                                    . get_custom_field_value(1, 1, 'staff') .
+                                                    '</td>
+                                                <td style="text-align: center;width:25%">'
+                                                    . get_custom_field_value(3, 1, 'staff') .
+                                                    '</td>
+                                                    <td style="text-align: center;width:25%">'
+                                                    . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                                    '</td>
+                                                </tr>';
+            
+                    }elseif($pur_request->department == 1 && ($pur_request->purchase_type == 'Barang' || $pur_request->purchase_type == 'Jasa')){
+                        $html .= '
+                        <tr>
+                        <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+                          <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+                          <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                      </tr>
+                        <tr><td></td></tr>
+                                    <tr><br></tr>
+                                    <tr><br></tr>
+                                    <tr><br></tr>
+                                                    <tr>
+                                                        <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                            <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                            <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                    
+                    
+                                                    </tr>
+                                                    <tr>
+                                                    <!-- <td style="text-align: center;width:25%"><h4>'
+                                                        . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                                        '</td> -->
+                                                    <td style="text-align: center;width:25%">'
+                                                        . get_custom_field_value(1, 1, 'staff') .
+                                                        '</td>
+                                                    <td style="text-align: center;width:25%">'
+                                                        . get_custom_field_value(1, 1, 'staff') .
+                                                        '</td>
+                                                        <td style="text-align: center;width:50%">'
+                                                        . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                                        '</td>
+                                                    </tr>';
+                    
+                            }elseif($pur_request->department == 1 && ($pur_request->purchase_type == 'Pembiayaan')){
+                                $html .= '
+                                <tr>
+                                <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+                                <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+                                <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                                </tr>
+                                <tr><td></td></tr>
+                                            <tr><br></tr>
+                                            <tr><br></tr>
+                                            <tr><br></tr>
+                                                            <tr>
+                                                                <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                                                    <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+                        
+                        
+                        
+                                                            </tr>
+                                                            <tr>
+                                                            <!-- <td style="text-align: center;width:25%"><h4>'
+                                                                . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                                                '</td> -->
+                                                            <td style="text-align: center;width:25%">'
+                                                                . get_custom_field_value(1, 1, 'staff') .
+                                                                '</td>
+                                                            <td style="text-align: center;width:25%">'
+                                                                . get_custom_field_value(1, 1, 'staff') .
+                                                                '</td>
+                                                                <td style="text-align: center;width:25%">'
+                                                                . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                                                '</td>
+                                                            </tr>';
+                        
+                                }elseif($pur_request->department == 4 && ($pur_request->purchase_type == 'Barang' || $pur_request->purchase_type == 'Jasa')){
+                                    $html .= '
+                                    <tr>
+                                    <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+                                      <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+                                      <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                                  </tr>
+                                    <tr><td></td></tr>
+                                                <tr><br></tr>
+                                                <tr><br></tr>
+                                                <tr><br></tr>
+                                                                <tr>
+                                                                    <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                                        <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(10) .'</h4></td>
+                                                                        <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                
+                                
+                                                                </tr>
+                                                                <tr>
+                                                                <!-- <td style="text-align: center;width:25%"><h4>'
+                                                                    . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                                                    '</td> -->
+                                                                <td style="text-align: center;width:25%">'
+                                                                    . get_custom_field_value(1, 1, 'staff') .
+                                                                    '</td>
+                                                                <td style="text-align: center;width:25%">'
+                                                                    . get_custom_field_value(10, 1, 'staff') .
+                                                                    '</td>
+                                                                    <td style="text-align: center;width:50%">'
+                                                                    . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                                                    '</td>
+                                                                </tr>';
+                                
+                                        }elseif($pur_request->department == 4 && ($pur_request->purchase_type == 'Pembiayaan')){
+                                            $html .= '
+                                            <tr>
+                                            <!--  <td style="text-align: center;width:25%"><h4>'. _l('Dibuat oleh').'</h4></td> -->
+                                            <td style="text-align: center;width:50%"><h4>'. _l('Diketahui oleh').'</h4></td>
+                                            <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                                        <tr><br></tr>
+                                                        <tr><br></tr>
+                                                        <tr><br></tr>
+                                                                        <tr>
+                                                                            <!--   <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($pur_request->requester).'</h4></td> -->
+                                                                                <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(1) .'</h4></td>
+                                                                                <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(10) .'</h4></td>
+                                                                                <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
+                                                                                <td style="text-align: center;width:25%"><h4>Charles Teo</h4></td>
+                                    
+                                    
+                                    
+                                                                        </tr>
+                                                                        <tr>
+                                                                        <!-- <td style="text-align: center;width:25%"><h4>'
+                                                                            . get_custom_field_value($pur_request->requester, 1, 'staff') .
+                                                                            '</td> -->
+                                                                        <td style="text-align: center;width:25%">'
+                                                                            . get_custom_field_value(1, 1, 'staff') .
+                                                                            '</td>
+                                                                        <td style="text-align: center;width:25%">'
+                                                                            . get_custom_field_value(10, 1, 'staff') .
+                                                                            '</td>
+                                                                            <td style="text-align: center;width:25%">'
+                                                                            . get_custom_field_value($value['staffid'], 1, 'staff') .
+                                                                            '</td>
+                                                                        </tr>';
+                                    
+                                            };
+                                    
+
+
     
      } 
-            $html .= '<--! <td class="td_ali_font"><h3>'.mb_strtoupper(_l('purchase_requestor')).'</h3></td>
-            <td class="td_ali_font"><h3>'.mb_strtoupper(_l('purchase_treasurer')).'</h3></td> --></tr>
+            $html .= '
         </tbody>
       </table>';
       $html .=  '<link href="' . FCPATH.'modules/purchase/assets/css/pur_order_pdf.css' . '"  rel="stylesheet" type="text/css" />';
@@ -4321,18 +4762,19 @@ class Purchase_model extends App_Model
       $html .=  '<table class="table purorder-item">
         <thead>
           <tr>
-            <th class="thead-dark" style="width: 10%;">'._l('No').'</th>
-            <th class="thead-dark" style="width: 30%;">'._l('items').'</th>
-            <th class="thead-dark" style="width: 15%;" align="right">'._l('purchase_unit_price').'</th>
-            <th class="thead-dark" style="width: 15%;" align="right">'._l('purchase_quantity').'</th>';
+            <th class="thead-dark" style="width:5%;">'._l('No').'</th>
+            <th class="thead-dark" style="">'._l('items').'</th>
+            <th class="thead-dark" style="width:25%;">'._l('item_description').'</th>
+            <th class="thead-dark" style="" align="right">'._l('purchase_unit_price').'</th>
+            <th class="thead-dark" style="width:10%;" align="right">'._l('Qty').'</th>';
          
-            if(get_option('show_purchase_tax_column') == 1){ 
+            if(get_option('show_purchase_tax_column') == 0){ 
 
-                $html .= '<th class="thead-dark" align="right" style="width: 10%;">'._l('tax').'</th>';
+                $html .= '<th class="thead-dark" align="right" style="">'._l('tax').'</th>';
             }
  
-            $html .= '<th class="thead-dark" align="right" style="width: 15%;">'._l('discount').'</th>
-            <th class="thead-dark" align="right" style="width: 15%;">'._l('total').'</th>
+            $html .= '<th class="thead-dark" align="right" style="">'._l('discount').'</th>
+            <th class="thead-dark" align="right" style="">'._l('total').'</th>
           </tr>
           </thead>
           <tbody>';
@@ -4346,18 +4788,19 @@ class Purchase_model extends App_Model
         $units = $this->get_units_by_id($row['unit_id']);
         $unit_name = isset($units->unit_name) ? $units->unit_name : '';
         
-        $html .= '<tr nobr="true" class="sortable">
-            <td style="width: 10%">'. $counter .'</td>
-            <td style="width: 30%;"><strong>'.$des_html.'</strong><br><span>'.$row['description'].'</span></td>
-            <td style="width: 15%;"align="right">'.app_format_money($row['unit_price'],$base_currency->symbol).'</td>
-            <td style="width: 15%;" align="right">'.app_format_number($row['quantity'],'').' '. $unit_name.'</td>';
+        $html .= '<tr nobr="true" class="sortable" >
+            <td style="width:5%;border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
+            <td style="border: 1px solid black;border-collapse: collapse;font-size:80%">'.$des_html.'</td>
+            <td align="left" style="width:25%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['description'].'</td>
+            <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency->symbol).'</td>
+            <td align="right" style="width:10%;border: 1px solid black;border-collapse: collapse;right">'.app_format_number($row['quantity'],'').' '. $unit_name.'</td>';
          
-            if(get_option('show_purchase_tax_column') == 1){  
-                $html .= '<td align="right" style="width: 10%;">'.app_format_money($row['total'] - $row['into_money'],$base_currency->symbol).'</td>';
+            if(get_option('show_purchase_tax_column') == 0){  
+                $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['total'] - $row['into_money'],$base_currency->symbol).'</td>';
             }
        
-            $html .= '<td align="right" style="width: 15%;">'.app_format_money($row['discount_money'],$base_currency->symbol).'</td>
-            <td align="right" style="width: 15%;">'.app_format_money($row['total_money'],$base_currency->symbol).'</td>
+            $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['discount_money'],$base_currency->symbol).'</td>
+            <td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['total_money'],$base_currency->symbol).'</td>
           </tr>';
           $counter++;
         $t_mn += $row['total_money'];
@@ -4414,7 +4857,7 @@ class Purchase_model extends App_Model
     //                     <h4>'. _l('terms_and_conditions').':</h4><p>'. $pur_order->terms .'</p>
                        
     //                  </div>';
-                     $html .= '<table nobr="true">
+                     $html .= '<table nobr="true" >
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Terbilang').':</h4></td>
                                     <td style="width:50%"><p>'. $pur_order->terbilang .'</p></td>
@@ -4469,36 +4912,37 @@ class Purchase_model extends App_Model
                                     <tr><br></tr>
                                     <tr><br></tr>
                                     <tr>
-                                    <td style="text-align: center;width:50%"><h4>'. _l('PT. Audemars Indonesia').'</h4></td>
-                                    <td style="text-align: center;"><h4>'. $vendor_name.'</h4></td>
+                                    <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
+                                    <td style="text-align: center;"><h4>Diketahui oleh</h4></td>
                                     </tr>
                                     <tr><br></tr>
                                     <tr><br></tr>';
                                     foreach ($list_approve_status as $value) {
-                                        $html .= '<tr><td class="td_appr">';
-                                           if($value['action'] == 'sign'){
-                                               // $html .= '<h3>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h3>';
-                                               if($value['approve'] == 2){ 
-                                                   $html .= '<img src="'.FCPATH. 'modules/purchase/uploads/pur_order/signature/'.$pur_order->id.'/signature_'.$value['id'].'.png" class="img_style">';
-                                               }
+                                        // $html .= '<tr><td class="td_appr">';
+                                        //    if($value['action'] == 'sign'){
+                                        //        // $html .= '<h3>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h3>';
+                                        //        if($value['approve'] == 2){ 
+                                        //            $html .= '<img src="'.FCPATH. 'modules/purchase/uploads/pur_order/signature/'.$pur_order->id.'/signature_'.$value['id'].'.png" class="img_style">';
+                                        //        }
                                                    
-                                           }else{ 
-                                           $html .= '<h3>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h3>';
-                                                 if($value['approve'] == 2){ 
-                                           $html .= '<img src="'.FCPATH.'modules/purchase/uploads/approval/approved.png" class="img_style">';
-                                                }elseif($value['approve'] == 3){
-                                           $html .= '<img src="'.FCPATH.'modules/purchase/uploads/approval/rejected.png" class="img_style">';
-                                                }
+                                        //    }else{ 
+                                        //    $html .= '<h3>'.mb_strtoupper(get_staff_full_name($value['staffid'])).'</h3>';
+                                        //          if($value['approve'] == 2){ 
+                                        //    $html .= '<img src="'.FCPATH.'modules/purchase/uploads/approval/approved.png" class="img_style">';
+                                        //         }elseif($value['approve'] == 3){
+                                        //    $html .= '<img src="'.FCPATH.'modules/purchase/uploads/approval/rejected.png" class="img_style">';
+                                        //         }
                                                  
-                                                   }
-                                          $html .= '</td></tr>';
+                                        //            }
+                                        //   $html .= '</td></tr>';
                                            }
 
-                                $html .= '<tr><br></tr>
-                                    <tr><br></tr>
-                                    <td style="text-align: center;width:50%"><h4>'. get_staff_full_name($value['staffid']) .'</h4></td>
-                                    <td style="text-align: center;"><h4>'. $pur_order->contact_name .'</h4></td>
-
+                                $html .= '
+                                    <tr><td></td></tr>
+                                    <tr><td></td></tr>
+                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4><br>' . get_custom_field_value($value['staffid'], 1, 'staff') . '</td>
+                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(18) .'</h4><br>' . get_custom_field_value(18, 1, 'staff') . '</td>
+                                    <td style="text-align: center;width:50%"><h4>'. get_staff_full_name(19) .'</h4><br>' . get_custom_field_value(19, 1, 'staff') . '</td>
                                 </table>';
       if(count($list_approve_status) > 0){
           $html .= '<br>
@@ -9774,12 +10218,13 @@ class Purchase_model extends App_Model
      * @param      array   $unit_data  The unit data
      * @param      string  $name       The name
      */
-    public function create_purchase_request_row_template($name = '', $item_code = '', $item_text = '', $unit_price = '', $quantity = '', $unit_name = '', $into_money = '', $item_key = '', $tax_value = '', $total = '', $remarks = '', $tax_name = '', $tax_rate = '', $tax_id = '', $is_edit = false, $currency_rate = 1, $to_currency = ''){
+    public function create_purchase_request_row_template($name = '', $item_code = '', $item_text = '', $item_description = '', $unit_price = '', $quantity = '', $unit_name = '', $into_money = '', $item_key = '', $tax_value = '', $total = '', $remarks = '', $tax_name = '', $tax_rate = '', $tax_id = '', $is_edit = false, $currency_rate = 1, $to_currency = ''){
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
         $name_item_text = 'item_text';
+        $name_item_description = 'item_description';
         $name_unit_id = 'unit_id';
         $name_unit_name = 'unit_name';
         $name_unit_price = 'unit_price';
@@ -9815,6 +10260,7 @@ class Purchase_model extends App_Model
                     <td class="dragger"><input type="hidden" class="order" name="' . $name . '[order]"><input type="hidden" class="ids" name="' . $name . '[id]" value="' . $item_key . '"></td>';
             $name_item_code = $name . '[item_code]';
             $name_item_text = $name . '[item_text]';
+            $name_item_description = $name . '[item_description]';
             $name_unit_id = $name . '[unit_id]';
             $name_unit_name = $name . '[unit_name]';
             $name_unit_price = $name . '[unit_price]';
@@ -9863,6 +10309,7 @@ class Purchase_model extends App_Model
 
 
         $row .= '<td class="">' . render_textarea($name_item_text, '', $item_text, ['rows' => 2, 'placeholder' => _l('pur_item_name')] ) . '</td>';
+        $row .= '<td class="">' . render_textarea($name_item_description, '', $item_description, ['rows' => 2, 'placeholder' => _l('item_description')] ) . '</td>';
         $row .= '<td class="rate">' . render_input($name_unit_price, '', $unit_price, 'number', $array_rate_attr, [], 'no-margin', $text_right_class) ;
         if( $unit_price != ''){
             $original_price = round( ($unit_price/$currency_rate), 2);
@@ -10128,7 +10575,7 @@ class Purchase_model extends App_Model
         $items = $this->db->get(db_prefix() . 'items')->result_array();
 
         foreach ($items as $key => $item) {
-            $items[$key]['subtext'] = strip_tags(mb_substr($item['subtext'], 0, 200)) . '...';
+            $items[$key]['subtext'] = strip_tags(mb_substr($item['subtext'], 0, 5000)); //disinilah tempat lahir beta
             if($type == 'rate'){
                 $items[$key]['name']    = '(' . app_format_number($item['rate']) . ') ' .$item['commodity_code'];
             }else{
@@ -10159,7 +10606,7 @@ class Purchase_model extends App_Model
         $this->db->select($rateCurrencyColumns . '' . db_prefix() . 'items.id as itemid,rate,
             t1.taxrate as taxrate,t1.id as taxid,t1.name as taxname,
             t2.taxrate as taxrate_2,t2.id as taxid_2,t2.name as taxname_2,
-            CONCAT(commodity_code,"_",description) as code_description,long_description,group_id,' . db_prefix() . 'items_groups.name as group_name,unit,'.db_prefix().'ware_unit_type.unit_name as unit_name, purchase_price, unit_id, guarantee');
+            CONCAT(commodity_code,"_",description) as code_description,long_description,group_id,description as item_name,' . db_prefix() . 'items_groups.name as group_name,unit,'.db_prefix().'ware_unit_type.unit_name as unit_name, purchase_price, unit_id, guarantee');
         $this->db->from(db_prefix() . 'items');
         $this->db->join('' . db_prefix() . 'taxes t1', 't1.id = ' . db_prefix() . 'items.tax', 'left');
         $this->db->join('' . db_prefix() . 'taxes t2', 't2.id = ' . db_prefix() . 'items.tax2', 'left');

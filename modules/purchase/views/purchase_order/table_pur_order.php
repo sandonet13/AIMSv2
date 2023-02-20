@@ -164,14 +164,14 @@ foreach ($rResult as $aRow) {
         }
 
         if($aColumns[$i] == 'total'){
-            $_data = app_format_money($aRow['total'], $base_currency->symbol);
+            $_data = app_format_money($aRow['total'], $base_currency->symbol); 
         }elseif($aColumns[$i] == 'pur_order_number'){
 
             $numberOutput = '';
     
             $numberOutput = '<a href="' . admin_url('purchase/purchase_order/' . $aRow['id']) . '"  onclick="init_pur_order(' . $aRow['id'] . '); return false;" >'.$aRow['pur_order_number']. '</a>';
             
-            $numberOutput .= '<div class="row-options">';
+            $numberOutput .= '<div class="row-options">'; 
 
             if (has_permission('purchase_orders', '', 'view')) {
                 $numberOutput .= ' <a href="' . admin_url('purchase/purchase_order/' . $aRow['id']) . '" onclick="init_pur_order(' . $aRow['id'] . '); return false;" >' . _l('view') . '</a>';

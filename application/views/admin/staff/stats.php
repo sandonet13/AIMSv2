@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="staff_logged_time" data-toggle="tooltip" data-title="<?php echo _l('task_timesheets'); ?>"
+<!-- <div class="staff_logged_time" data-toggle="tooltip" data-title="<?php echo _l('task_timesheets'); ?>"
     data-placement="top">
     <dl class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-5 tw-gap-3 sm:tw-gap-5">
         <div class="tw-border tw-border-solid tw-border-neutral-200 tw-rounded-md tw-bg-white">
@@ -67,4 +67,4 @@
             </div>
         </div>
     </dl>
-</div>
+</div> -->

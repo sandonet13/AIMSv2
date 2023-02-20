@@ -1050,9 +1050,9 @@ warehouse_type_value = warehouse_type;
 
     $('#commodity_list-add-edit input[id="without_checking_warehouse"]').removeAttr("checked");
 
-    $('#commodity_list-add-edit input[id="can_be_sold"]').prop('checked', true);
+    $('#commodity_list-add-edit input[id="can_be_sold"]').prop('checked', false);
     $('#commodity_list-add-edit input[id="can_be_purchased"]').prop('checked', true);
-    $('#commodity_list-add-edit input[id="can_be_manufacturing"]').prop('checked', true);
+    $('#commodity_list-add-edit input[id="can_be_manufacturing"]').prop('checked', false);
     $('#commodity_list-add-edit input[id="can_be_inventory"]').prop('checked', true);
 
     $('#tags_value').find('ul li.tagit-choice').remove();

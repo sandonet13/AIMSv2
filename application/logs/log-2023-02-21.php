@@ -218,3 +218,80 @@ ERROR - 2023-02-21 00:17:13 --> Could not find the language line "Manufacture"
 ERROR - 2023-02-21 00:17:13 --> Could not find the language line "Due Date"
 ERROR - 2023-02-21 00:17:13 --> Could not find the language line "PDF Download/Print"
 ERROR - 2023-02-21 00:17:13 --> Could not find the language line "Bank Details"
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: Too many login failures (errflg=2) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:21:40 --> Severity: Notice --> Unknown: Too many login failures (errflg=2) Unknown 0
+ERROR - 2023-02-21 00:22:36 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:22:36 --> Could not find the language line "Purchase Request"
+ERROR - 2023-02-21 00:22:37 --> Severity: Notice --> Undefined offset: 7 C:\xampp\htdocs\application\helpers\datatables_helper.php 181
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Renovasi Peralatan Workshop"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Purchase Type"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Renovasi Peralatan Workshop"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Manufacture"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Due Date"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "PDF Download/Print"
+ERROR - 2023-02-21 00:22:49 --> Could not find the language line "Bank Details"
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: Too many login failures (errflg=2) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAILED] Authentication failed. (errflg=1) Unknown 0
+ERROR - 2023-02-21 00:27:40 --> Severity: Notice --> Unknown: Too many login failures (errflg=2) Unknown 0
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Items"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Total PR"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Total PO"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Total PO Value"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "5 Last Purchase Request"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "PR Number"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "PR Name"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Purchase Type"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Status"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Created At"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "5 Last Purchase Order"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "PO Number"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Vendor"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Order Date"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Status"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Total"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Total Tax"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Delivery Date"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Delivery Status"
+ERROR - 2023-02-21 00:29:24 --> Could not find the language line "Created At"
+ERROR - 2023-02-21 00:29:41 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:29:44 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:29:48 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:29:59 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:03 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:08 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:12 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:15 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Purchase Quotation Added QT-000001"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Items"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Total PR"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Total PO"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Total PO Value"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "5 Last Purchase Request"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "PR Number"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "PR Name"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Purchase Type"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Status"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Created At"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "5 Last Purchase Order"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "PO Number"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Vendor"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Order Date"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Status"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Total"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Total Tax"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Delivery Date"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Delivery Status"
+ERROR - 2023-02-21 00:30:21 --> Could not find the language line "Created At"

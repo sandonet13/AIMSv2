@@ -103,6 +103,16 @@
                       <table class="table border table-striped martop0">
                     <tbody>
                     <tr class="project-overview">
+                    <td class="bold" width="30%"><?php echo _l('projects'); ?></td>
+                    <?php $using = ''; foreach($projects as $s) { ?>
+                                <?php if($s['id'] == $pur_request->project){ ?>
+                                    
+                                  <?php $using = $s['name']; } ?>
+                                
+                    <?php } ?>
+                    <td><?php echo $using; ?></td>
+                       </tr>
+                    <tr class="project-overview">
                           <td class="bold" width="30%"><?php echo _l('Purchase Type'); ?></td>
                           <td><?php echo html_entity_decode($pur_request->purchase_type); ?></td>
                        </tr>
@@ -136,6 +146,8 @@
                                 echo _l('Marketing');
                               }elseif($pur_request->department == 5){
                                 echo _l('Manufacture');
+                              }elseif($pur_request->department == 6){
+                                echo _l('HSE');
                               }
                           ?></td>
                        </tr>
@@ -183,6 +195,17 @@
                           <td class="bold"><?php echo _l('rq_description'); ?></td>
                           <td><?php echo html_entity_decode($pur_request->rq_description); ?></td>
                        </tr>
+                       <?php if($pur_request->rab_ref) { ?>
+                       <tr class="project-overview">
+                          <td class="bold"><?php echo _l('rab_ref'); ?></td>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 1){ echo html_entity_decode('<td>Investasi Alat</td>'); }?>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 2){ echo html_entity_decode('<td>Perlengkapan Pendukung Manufaktur</td>'); }?>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 3){ echo html_entity_decode('<td>Perlengkapan Pendukung Operasional</td>'); }?>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 4){ echo html_entity_decode('<td>Persiapan Project</td>'); }?>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 5){ echo html_entity_decode('<td>Operasional Project</td>'); }?>
+                          <?php if(isset($pur_request) && $pur_request->rab_ref == 6){ echo html_entity_decode('<td>Biaya - Biaya</td>'); }?>
+                       </tr>
+                       <?php } ?>
                        <?php if($pur_request->bank_details) { ?>
                        <tr class="project-overview">
                           <td class="bold"><?php echo _l('Bank Details'); ?></td>

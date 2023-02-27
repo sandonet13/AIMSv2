@@ -1,5 +1,8 @@
 <?php
 $lang['purchase']  = 'Purchase';
+$lang['paid_status']  = 'Paid Status';
+$lang['purchase_type']  = 'Purchase Type';
+$lang['rab_ref']  = 'RAB Ref';
 $lang['create_new_estimate_po']  = 'Create Quotation';
 $lang['vendor']  = 'Vendors';
 $lang['products_services']  = 'Products/Services';

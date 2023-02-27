@@ -3,12 +3,12 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 $aColumns = [
-     
     'pur_rq_code',
     'pur_rq_name',
     'requester',
     'department', 
     'request_date',
+    'purchase_type',
     'status',
     'project',
     'id',
@@ -133,7 +133,8 @@ foreach ($rResult as $aRow) {
 
             $name .= '<a href="' . admin_url('purchase/view_pur_request/' . $aRow['id'] ).'" >' . _l('view') . '</a>';
 
-            if ( (has_permission('purchase_request', '', 'edit') || is_admin()) &&  $aRow['status'] != 2) {
+            // if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2) &&  $aRow['status'] != 2) {
+            if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2)) {
                 $name .= ' | <a href="' . admin_url('purchase/pur_request/' . $aRow['id'] ).'" >' . _l('edit') . '</a>';
             }
 

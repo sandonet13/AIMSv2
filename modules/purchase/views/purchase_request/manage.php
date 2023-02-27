@@ -40,6 +40,7 @@
                         _l('requester'),
                         _l('department'),
                         _l('request_date'),
+                        _l('purchase_type'),
                         _l('status'),
                         _l('po_no'),
                         // _l('options'),

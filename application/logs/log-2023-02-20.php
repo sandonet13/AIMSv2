@@ -11099,3 +11099,23 @@ ERROR - 2023-02-20 23:57:38 --> Severity: Notice --> Unknown: [AUTHENTICATIONFAI
 ERROR - 2023-02-20 23:57:38 --> Severity: Notice --> Unknown: Too many login failures (errflg=2) Unknown 0
 ERROR - 2023-02-20 17:58:44 --> 404 Page Not Found: /index
 ERROR - 2023-02-20 18:02:47 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 18:33:17 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 18:57:28 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 19:30:50 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/budget
+ERROR - 2023-02-20 19:30:51 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/budget
+ERROR - 2023-02-20 19:30:51 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/budget
+ERROR - 2023-02-20 19:32:09 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/vendors-items
+ERROR - 2023-02-20 19:32:16 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/vendorsitems
+ERROR - 2023-02-20 19:40:19 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 19:52:59 --> 404 Page Not Found: admin/Budgets/index
+ERROR - 2023-02-20 20:04:36 --> 404 Page Not Found: ../../modules/purchase/controllers/Purchase/budget
+ERROR - 2023-02-20 20:18:39 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 21:04:18 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 21:44:16 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 21:50:10 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 22:32:35 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 22:44:21 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 22:46:20 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 23:14:38 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 23:52:13 --> 404 Page Not Found: /index
+ERROR - 2023-02-20 23:55:42 --> 404 Page Not Found: /index

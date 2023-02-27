@@ -607,6 +607,7 @@ class purchase extends AdminController
     	$data['departments'] = $this->departments_model->get();
     	$data['units'] = $this->purchase_model->get_units();
 
+        
         // Old script  $data['items'] = $this->purchase_model->get_items();
     	$data['ajaxItems'] = false;
 
@@ -629,6 +630,7 @@ class purchase extends AdminController
     public function view_pur_request($id){
     	$this->load->model('departments_model');
         $this->load->model('currencies_model');
+        $this->load->model('projects_model');
 
         $send_mail_approve = $this->session->userdata("send_mail_approve");
         if((isset($send_mail_approve)) && $send_mail_approve != ''){
@@ -640,6 +642,7 @@ class purchase extends AdminController
         $manual_setting = $this->purchase_model->get_approve_setting('pur_request');
 
     	$data['pur_request_detail'] = $this->purchase_model->get_pur_request_detail($id);
+        $data['projects'] = $this->projects_model->get();
 		$data['pur_request'] = $this->purchase_model->get_purchase_request($id);
 		$data['title'] = $data['pur_request']->pur_rq_name;
 		$data['departments'] = $this->departments_model->get();
@@ -3266,6 +3269,8 @@ class purchase extends AdminController
         $data['commodity_groups'] = $this->purchase_model->get_commodity_group_add_commodity();
         $this->load->view('vendor_items/manage', $data);
     }
+    
+    
 
     /**
      *  vendor item table

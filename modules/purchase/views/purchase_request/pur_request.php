@@ -111,6 +111,17 @@
                         </select>
                         <br><br>
                     </div>
+                    <?php if ( is_admin() ) { ?>
+                    <div class="col-md-3 form-group">
+                            <label for="paid_status"><?php echo _l('paid_status'); ?></label>
+                              <select name="paid_status" id="paid_status" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                                <option value="Unpaid" <?php if(isset($pur_request) && $pur_request->paid_status == 'Unpaid'){ echo 'selected';} ?>><?php echo _l('Unpaid'); ?></option>
+                                <option value="Paid" <?php if(isset($pur_request) && $pur_request->paid_status == 'Paid'){ echo 'selected';} ?>><?php echo _l('Paid'); ?></option>
+                              </select>
+                              <br><br>
+                          </div>
+                    <?php } ?>
+
 
                     <!-- <div class="col-md-3 form-group ">
                       <label for="sale_invoice"><?php echo _l('sale_invoice'); ?></label>
@@ -156,10 +167,25 @@
                               <br><br>
                           </div>
 
+                          <div class="col-md-3 form-group">
+                            <label for="rab_ref"><?php echo _l('rab_ref'); ?></label>
+                              <select name="rab_ref" id="rab_ref" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                                <option value=""></option>
+                                <option value="1" <?php if(isset($pur_request) && $pur_request->rab_ref == 1){ echo 'selected';} ?>><?php echo _l('Investasi Alat'); ?></option>
+                                <option value="2" <?php if(isset($pur_request) && $pur_request->rab_ref == 2){ echo 'selected';} ?>><?php echo _l('Perlengkapan Pendukung Manufaktur'); ?></option>
+                                <option value="3" <?php if(isset($pur_request) && $pur_request->rab_ref == 3){ echo 'selected';} ?>><?php echo _l('Perlengkapan Pendukung Operasional'); ?></option>
+                                <option value="4" <?php if(isset($pur_request) && $pur_request->rab_ref == 4){ echo 'selected';} ?>><?php echo _l('Persiapan Project'); ?></option>
+                                <option value="5" <?php if(isset($pur_request) && $pur_request->rab_ref == 5){ echo 'selected';} ?>><?php echo _l('Operasional Project'); ?></option>
+                                <option value="6" <?php if(isset($pur_request) && $pur_request->rab_ref == 6){ echo 'selected';} ?>><?php echo _l('Biaya - Biaya'); ?></option>
+                              </select>
+                              <br><br>
+                          </div>
+
                     <div class="col-md-3">
                       <?php $bank_details = ( isset($pur_request) ? $pur_request->bank_details : '');
                       echo render_textarea('bank_details','Bank Details (Isi jika bersifat pengajuan langsung)',$bank_details); ?>
                     </div>
+
                     
                     <!-- <div class="col-md-3 form-group">
                       <label for="send_to_vendors"><?php echo _l('pur_send_to_vendors'); ?></label>

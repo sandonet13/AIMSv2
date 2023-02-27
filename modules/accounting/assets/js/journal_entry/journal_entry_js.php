@@ -89,8 +89,8 @@
                 ],
       colHeaders: [
 	    '<?php echo _l('acc_account'); ?>',
-	    '<?php echo _l('debit'); ?>',
 	    '<?php echo _l('credit'); ?>',
+	    '<?php echo _l('debit'); ?>',
 	    '<?php echo _l('description'); ?>'
 	  ],
       data: data,
@@ -132,16 +132,17 @@
         }
       });
       
-	    if(total_debit.toFixed(2) == total_credit.toFixed(2)){
-	    	if(total_debit > 0){
+	    // if(total_debit.toFixed(2) == total_credit.toFixed(2)){
+	    	if(total_debit >= 0){
 	    		$('input[name="amount"]').val(total_debit.toFixed(2));
 	    		$('#journal-entry-form').submit();
-	    	}else{
+	    	}
+        else{
 	    		alert('<?php echo _l('you_must_fill_out_at_least_two_detail_lines'); ?>');
 	    	}
-	    }else{
-            alert('<?php echo _l('please_balance_debits_and_credits'); ?>');
-	    }
+	    // }else{
+      //       alert('<?php echo _l('please_balance_debits_and_credits'); ?>');
+	    // }
 	});
 })(jQuery);
 

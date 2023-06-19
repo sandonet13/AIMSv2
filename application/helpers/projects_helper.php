@@ -92,21 +92,21 @@ function app_init_project_tabs()
         'linked_to_customer_option' => ['view_gantt'],
     ]);
 
-    $CI->app_tabs->add_project_tab('project_tickets', [
-        'name'     => _l('project_tickets'),
-        'icon'     => 'fa fa-life-ring',
-        'view'     => 'admin/projects/project_tickets',
-        'position' => 40,
-        'visible'  => (get_option('access_tickets_to_none_staff_members') == 1 && !is_staff_member()) || is_staff_member(),
-    ]);
+    // $CI->app_tabs->add_project_tab('project_tickets', [
+    //     'name'     => _l('project_tickets'),
+    //     'icon'     => 'fa fa-life-ring',
+    //     'view'     => 'admin/projects/project_tickets',
+    //     'position' => 40,
+    //     'visible'  => (get_option('access_tickets_to_none_staff_members') == 1 && !is_staff_member()) || is_staff_member(),
+    // ]);
 
-    $CI->app_tabs->add_project_tab('project_contracts', [
-        'name'     => _l('contracts'),
-        'icon'     => 'fa-solid fa-file-contract',
-        'view'     => 'admin/projects/project_contracts',
-        'position' => 45,
-        'visible'  => has_permission('contracts', '', 'view') || has_permission('contracts', '', 'view_own'),
-    ]);
+    // $CI->app_tabs->add_project_tab('project_contracts', [
+    //     'name'     => _l('contracts'),
+    //     'icon'     => 'fa-solid fa-file-contract',
+    //     'view'     => 'admin/projects/project_contracts',
+    //     'position' => 45,
+    //     'visible'  => has_permission('contracts', '', 'view') || has_permission('contracts', '', 'view_own'),
+    // ]);
 
     $CI->app_tabs->add_project_tab('sales', [
         'name'     => _l('sales_string'),
@@ -119,53 +119,53 @@ function app_init_project_tabs()
             || (has_permission('proposals', '', 'view_own') || (get_option('allow_staff_view_proposals_assigned') == 1 && staff_has_assigned_proposals())),
     ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_invoices',
-        'name'     => _l('project_invoices'),
-        'view'     => 'admin/projects/project_invoices',
-        'position' => 15,
-        'visible'  => (has_permission('invoices', '', 'view') || has_permission('invoices', '', 'view_own') || (get_option('allow_staff_view_invoices_assigned') == 1 && staff_has_assigned_invoices())),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_invoices',
+    //     'name'     => _l('project_invoices'),
+    //     'view'     => 'admin/projects/project_invoices',
+    //     'position' => 15,
+    //     'visible'  => (has_permission('invoices', '', 'view') || has_permission('invoices', '', 'view_own') || (get_option('allow_staff_view_invoices_assigned') == 1 && staff_has_assigned_invoices())),
+    // ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_estimates',
-        'name'     => _l('estimates'),
-        'view'     => 'admin/projects/project_estimates',
-        'position' => 10,
-        'visible'  => (has_permission('estimates', '', 'view') || has_permission('estimates', '', 'view_own') || (get_option('allow_staff_view_estimates_assigned') == 1 && staff_has_assigned_estimates())),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_estimates',
+    //     'name'     => _l('estimates'),
+    //     'view'     => 'admin/projects/project_estimates',
+    //     'position' => 10,
+    //     'visible'  => (has_permission('estimates', '', 'view') || has_permission('estimates', '', 'view_own') || (get_option('allow_staff_view_estimates_assigned') == 1 && staff_has_assigned_estimates())),
+    // ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_expenses',
-        'name'     => _l('project_expenses'),
-        'view'     => 'admin/projects/project_expenses',
-        'position' => 25,
-       'visible'   => has_permission('expenses', '', 'view') || has_permission('expenses', '', 'view_own'),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_expenses',
+    //     'name'     => _l('project_expenses'),
+    //     'view'     => 'admin/projects/project_expenses',
+    //     'position' => 25,
+    //    'visible'   => has_permission('expenses', '', 'view') || has_permission('expenses', '', 'view_own'),
+    // ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_credit_notes',
-        'name'     => _l('credit_notes'),
-        'view'     => 'admin/projects/project_credit_notes',
-        'position' => 30,
-        'visible'  => has_permission('credit_notes', '', 'view') || has_permission('credit_notes', '', 'view_own'),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_credit_notes',
+    //     'name'     => _l('credit_notes'),
+    //     'view'     => 'admin/projects/project_credit_notes',
+    //     'position' => 30,
+    //     'visible'  => has_permission('credit_notes', '', 'view') || has_permission('credit_notes', '', 'view_own'),
+    // ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_subscriptions',
-        'name'     => _l('subscriptions'),
-        'view'     => 'admin/projects/project_subscriptions',
-        'position' => 20,
-        'visible'  => has_permission('subscriptions', '', 'view') || has_permission('subscriptions', '', 'view_own'),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_subscriptions',
+    //     'name'     => _l('subscriptions'),
+    //     'view'     => 'admin/projects/project_subscriptions',
+    //     'position' => 20,
+    //     'visible'  => has_permission('subscriptions', '', 'view') || has_permission('subscriptions', '', 'view_own'),
+    // ]);
 
-    $CI->app_tabs->add_project_tab_children_item('sales', [
-        'slug'     => 'project_proposals',
-        'name'     => _l('proposals'),
-        'view'     => 'admin/projects/project_proposals',
-        'position' => 5,
-        'visible'  => (has_permission('proposals', '', 'view') || has_permission('proposals', '', 'view_own') || (get_option('allow_staff_view_proposals_assigned') == 1 && staff_has_assigned_proposals())),
-    ]);
+    // $CI->app_tabs->add_project_tab_children_item('sales', [
+    //     'slug'     => 'project_proposals',
+    //     'name'     => _l('proposals'),
+    //     'view'     => 'admin/projects/project_proposals',
+    //     'position' => 5,
+    //     'visible'  => (has_permission('proposals', '', 'view') || has_permission('proposals', '', 'view_own') || (get_option('allow_staff_view_proposals_assigned') == 1 && staff_has_assigned_proposals())),
+    // ]);
 
     $CI->app_tabs->add_project_tab('project_notes', [
         'name'     => _l('project_notes'),

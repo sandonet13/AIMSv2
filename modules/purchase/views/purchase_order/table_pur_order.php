@@ -10,19 +10,18 @@ $aColumns = [
     'pur_order_number',
     'vendor',
     'order_date',
-    'type',
     'project',
     'department',
     'pur_order_name',
-    'subtotal',
-    'total_tax',
+    // 'subtotal',
+    // 'total_tax',
     'total',
-    '(SELECT GROUP_CONCAT(name SEPARATOR ",") FROM ' . db_prefix() . 'taggables JOIN ' . db_prefix() . 'tags ON ' . db_prefix() . 'taggables.tag_id = ' . db_prefix() . 'tags.id WHERE rel_id = ' . db_prefix() . 'pur_orders.id and rel_type="pur_order" ORDER by tag_order ASC) as tags', 
+    // '(SELECT GROUP_CONCAT(name SEPARATOR ",") FROM ' . db_prefix() . 'taggables JOIN ' . db_prefix() . 'tags ON ' . db_prefix() . 'taggables.tag_id = ' . db_prefix() . 'tags.id WHERE rel_id = ' . db_prefix() . 'pur_orders.id and rel_type="pur_order" ORDER by tag_order ASC) as tags', 
     'approve_status',
-    'delivery_date',
     'delivery_status',
     'number',
-    'expense_convert',
+    'delivery_date',
+    // 'expense_convert',
     ];
 
 if(isset($vendor) || isset($project)){
@@ -306,18 +305,21 @@ foreach ($rResult as $aRow) {
             }
             $delivery_status .= '</span>';
             $_data = $delivery_status;
-        }elseif($aColumns[$i] == 'delivery_date'){
+        }else if($aColumns[$i] == 'delivery_date'){
             $_data = _d($aRow['delivery_date']);
         }else if($aColumns[$i] == 'number'){
             $paid = $aRow['total'] - purorder_inv_left_to_pay($aRow['id']);
 
-            $percent = 0;
+            $percent = 20;
 
             if($aRow['total'] > 0){
 
                 $percent = ($paid / $aRow['total'] ) * 100;
 
+            }else if($aRow['total'] == 0){
+                $percent = 20;
             }
+
 
             
 

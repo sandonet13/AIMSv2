@@ -34,7 +34,7 @@
 
         <td>
             <?php if (has_permission('warehouse', '', 'edit') || is_admin()) { ?>
-              <a href="#" onclick="edit_commodity_type(this,<?php echo html_entity_decode($com_type['commodity_type_id']); ?>); return false;" data-commondity_code="<?php echo html_entity_decode($com_type['commondity_code']); ?>" data-commondity_name="<?php echo html_entity_decode($com_type['commondity_name']); ?>" data-order="<?php echo html_entity_decode($com_type['order']); ?>" data-display="<?php echo html_entity_decode($com_type['display']); ?>" data-note="<?php echo html_entity_decode($com_type['note']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i>
+              <a href="#" onclick="edit_commodity_type(this,<?php echo html_entity_decode($com_type['commodity_type_id']); ?>); return false;" data-commondity_code="<?php echo html_entity_decode($com_type['commondity_code']); ?>" data-commondity_name="<?php echo html_entity_decode($com_type['commondity_name']); ?>" data-order="<?php echo html_entity_decode($com_type['order']); ?>" data-display="<?php echo html_entity_decode($com_type['display']); ?>" data-note="<?php echo html_entity_decode($com_type['note']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i>
             </a>
             <?php } ?>
 

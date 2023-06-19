@@ -22,7 +22,7 @@
       <td><?php echo html_entity_decode($vc['category_name']); ?></td>
       <td><?php echo html_entity_decode($vc['description']); ?></td>
       <td>
-        <a href="#" onclick="edit_vendor_cate(this,<?php echo html_entity_decode($vc['id']); ?>); return false" data-name="<?php echo html_entity_decode($vc['category_name']); ?>" data-description="<?php echo html_entity_decode($vc['description']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i></a>
+        <a href="#" onclick="edit_vendor_cate(this,<?php echo html_entity_decode($vc['id']); ?>); return false" data-name="<?php echo html_entity_decode($vc['category_name']); ?>" data-description="<?php echo html_entity_decode($vc['description']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i></a>
 
           <a href="<?php echo admin_url('purchase/delete_vendor_category/' . $vc['id']); ?>" class="btn btn-danger btn-icon _delete"><i class="fa fa-remove"></i></a>
       </td>

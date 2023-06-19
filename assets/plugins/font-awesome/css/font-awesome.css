@@ -380,7 +380,7 @@
   content: "\f043";
 }
 .fa-edit:before,
-.fa-pencil-square-o:before {
+.fa-pencil-square:before {
   content: "\f044";
 }
 .fa-share-square-o:before {
@@ -1457,7 +1457,7 @@
 .fa-database:before {
   content: "\f1c0";
 }
-.fa-file-pdf-o:before {
+.fa-file-pdf:before {
   content: "\f1c1";
 }
 .fa-file-word-o:before {

@@ -164,7 +164,7 @@
 
                         <td class="bold"><?php echo _l('PDF Download/Print'); ?></td>
                         <td><div class="btn-group">
-                           <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
+                           <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
                            <ul class="dropdown-menu dropdown-menu-right">
                               <li class="hidden-xs"><a href="<?php echo admin_url('purchase/pur_request_pdf/'.$pur_request->id.'?output_type=I'); ?>"><?php echo _l('view_pdf'); ?></a></li>
                               <li class="hidden-xs"><a href="<?php echo admin_url('purchase/pur_request_pdf/'.$pur_request->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('view_pdf_in_new_window'); ?></a></li>
@@ -217,6 +217,7 @@
                 </table>
               </div>
 
+
                   
 
                   
@@ -226,17 +227,19 @@
                     <hr class="hr_style" />
                     
                     <div class="table-responsive">
-                           <table class="table items items-preview estimate-items-preview" data-type="estimate">
+                           <table class="table items items-preview estimate-items-preview" data-type="estimate" id="view_pur">
                               <thead>
                                  <tr>
-                               
+                                  <th width="2%" align="left"><?php echo _l('No'); ?></th>
+                                  <th width="2%" align="left"><?php echo _l('item_code'); ?></th>
                                   <th width="25%" align="left"><?php echo _l('debit_note_table_item_heading'); ?></th>
                                   <th width="25%" align="left"><?php echo _l('description'); ?></th>
                                   <th width="10%" align="right" class="qty"><?php echo _l('purchase_quantity'); ?></th>
+                                  <th width="10%" align="left"><?php echo _l('unit'); ?></th>
                                   <th width="10%" align="right"><?php echo _l('unit_price'); ?></th>
                                   
                                   <th width="10%" align="right"><?php echo _l('subtotal_before_tax'); ?></th>
-                                  <th width="15%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
+                                  <th width="10%" align="right"><?php echo _l('debit_note_table_tax_heading'); ?></th>
                                   <th width="10%" align="right"><?php echo _l('tax_value'); ?></th>
                                   <th width="10%" align="right"><?php echo _l('debit_note_total'); ?></th>
                                   <th width="10%" align="right"><?php echo _l('remarks'); ?></th>
@@ -249,12 +252,16 @@
                                  if(count($pur_request_detail) > 0){
                                     $count = 1;
                                     $t_mn = 0;
+                                    $counter = 1;
                                  foreach($pur_request_detail as $es) { 
+                                  $items = get_item_hp($es['item_code'])->unit_id;
+                                  $unit_name = get_unit_type_item($items)->unit_name;
                                     $_subtotal += $es['into_money'];
                                     $_total += $es['total'];
                                   ?>
                                  <tr nobr="true" class="sortable">
-                                    
+                                 <td align="left"><?php echo html_entity_decode($counter); ?></td>
+                                 <td align="left"><?php echo html_entity_decode($es['item_code']); ?></td>
                                     <td class="description" align="left;"><span><strong><?php 
                                     // $item = get_item_hp($es['item_code']); 
                                     // if(isset($item) && isset($item->commodity_code) && isset($item->description)){
@@ -263,8 +270,11 @@
                                        echo html_entity_decode($es['item_text']);
                                     // }
                                     ?></strong></td>
-                                    <td align="left"  width="12%"><?php echo html_entity_decode($es['item_description']); ?></td>
-                                    <td align="right"  width="12%"><?php echo html_entity_decode($es['quantity']); ?></td>
+                                    
+                                    
+                                    <td align="left"><?php echo html_entity_decode($es['item_description']); ?></td>
+                                    <td align="right"><?php echo html_entity_decode($es['quantity']); ?></td>
+                                    <td align="right"><?php echo html_entity_decode($unit_name); ?></td>
                                     <td align="right"><?php echo app_format_money($es['unit_price'],$base_currency); ?></td>
                                     <td align="right"><?php echo app_format_money($es['into_money'],$base_currency); ?></td>
                                     <td align="right"><?php 
@@ -296,9 +306,10 @@
                                     
                                  </tr>
                               <?php 
-                              
+                              $counter++;
                               } } ?>
                               </tbody>
+                              
                            </table>
                         </div>
 

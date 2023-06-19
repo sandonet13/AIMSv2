@@ -58,7 +58,7 @@ foreach ($rResult as $aRow) {
 			$_data ='';
 
 			if(has_permission('manufacturing','','edit')) {
-				$_data .=	'<a href="#" onclick="add_edit_unit_measure('. $aRow['unit_type_id'] .',\'updated\'); return false;" class="btn btn-default btn-icon" data-toggle="sidebar-right" ><i class="fa fa-pencil-square-o"></i></a>';
+				$_data .=	'<a href="#" onclick="add_edit_unit_measure('. $aRow['unit_type_id'] .',\'updated\'); return false;" class="btn btn-default btn-icon" data-toggle="sidebar-right" ><i class="fa fa-pencil-square"></i></a>';
 			} 
 
 			if(has_permission('manufacturing','','delete')) {

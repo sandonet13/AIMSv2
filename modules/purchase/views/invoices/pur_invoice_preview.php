@@ -132,7 +132,7 @@
 		                  <div class="mtop10"></div>
 		               	</div>
 		               	<div class="pull-right">
-		               		<a href="<?php echo admin_url('purchase/pur_invoice/'.$pur_invoice->id); ?>" data-toggle="tooltip" title="<?php echo _l('edit_invoice'); ?>" class="btn btn-default btn-with-tooltip mright5" data-placement="bottom"><i class="fa fa-pencil-square-o"></i></a>
+		               		<a href="<?php echo admin_url('purchase/pur_invoice/'.$pur_invoice->id); ?>" data-toggle="tooltip" title="<?php echo _l('edit_invoice'); ?>" class="btn btn-default btn-with-tooltip mright5" data-placement="bottom"><i class="fa fa-pencil-square"></i></a>
 		               		
 		               	   <?php if(purinvoice_left_to_pay($pur_invoice->id) > 0){ ?>
 			               	<a href="#" onclick="add_payment(<?php echo html_entity_decode($pur_invoice->id); ?>); return false;" class="btn btn-success pull-right"><i class="fa fa-plus-square"></i>&nbsp;<?php echo ' '._l('payment'); ?></a>

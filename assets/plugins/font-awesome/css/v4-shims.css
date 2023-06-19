@@ -120,11 +120,11 @@
 .fa.fa-map-marker:before {
   content: "\f3c5"; }
 
-.fa.fa-pencil-square-o {
+.fa.fa-pencil-square {
   font-family: 'Font Awesome 6 Free';
   font-weight: 400; }
 
-.fa.fa-pencil-square-o:before {
+.fa.fa-pencil-square:before {
   content: "\f044"; }
 
 .fa.fa-edit {
@@ -1115,11 +1115,11 @@
   font-family: 'Font Awesome 6 Brands';
   font-weight: 400; }
 
-.fa.fa-file-pdf-o {
+.fa.fa-file-pdf {
   font-family: 'Font Awesome 6 Free';
   font-weight: 400; }
 
-.fa.fa-file-pdf-o:before {
+.fa.fa-file-pdf:before {
   content: "\f1c1"; }
 
 .fa.fa-file-word-o {

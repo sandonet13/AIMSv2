@@ -836,7 +836,7 @@
                     <?php } ?>
                 </h5>
             </div>
-            <?php if ($task->current_user_is_creator || has_permission('tasks', '', 'edit')) { ?>
+            <!-- <?php if ($task->current_user_is_creator || has_permission('tasks', '', 'edit')) { ?>
             <div class="task-info task-info-hourly-rate">
                 <h5 class="tw-inline-flex tw-items-center tw-space-x-1.5">
                     <i class="fa-regular fa-clock fa-fw fa-lg task-info-icon pull-left"></i>
@@ -849,8 +849,8 @@
                   ?>
                     </span>
                 </h5>
-            </div>
-            <div class="task-info task-info-billable">
+            </div> -->
+            <!-- <div class="task-info task-info-billable">
                 <h5 class="tw-inline-flex tw-items-center tw-space-x-1.5">
                     <i class="fa fa-credit-card fa-fw fa-lg task-info-icon pull-left"></i>
                     <?php echo _l('task_billable'); ?>: <span class="tw-text-neutral-800">
@@ -863,7 +863,7 @@
                 <?php if ($task->rel_type == 'project' && $task->project_data->billing_type == 1) {
                       echo '<br /><span class="tw-ml-5 tw-text-sm">(' . _l('project') . ' ' . _l('project_billing_type_fixed_cost') . ')</span>';
                   } ?>
-            </div>
+            </div> -->
             <?php if ($task->billable == 1
             && $task->billed == 0
             && ($task->rel_type != 'project' || ($task->rel_type == 'project' && $task->project_data->billing_type != 1))

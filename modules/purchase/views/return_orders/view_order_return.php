@@ -51,7 +51,7 @@
 								<div class="pull-right">
 	
 									<div class="btn-group">
-										<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
+										<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
 										<ul class="dropdown-menu dropdown-menu-right">
 											<li class="hidden-xs"><a href="<?php echo admin_url('purchase/order_return_pdf/'.$order_return->id.'?output_type=I'); ?>"><?php echo _l('view_pdf'); ?></a></li>
 											<li class="hidden-xs"><a href="<?php echo admin_url('purchase/order_return_pdf/'.$order_return->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('view_pdf_in_new_window'); ?></a></li>
@@ -373,7 +373,7 @@
 			                           <?php if(has_permission('purchase_order_return','','edit')) { ?>
 			                           <a href="#" onclick="edit_refund(<?php echo $refund['id']; ?>); return false;"
 			                              class="pull-right mright5">
-			                           <i class="fa fa-pencil-square-o"></i>
+			                           <i class="fa fa-pencil-square"></i>
 			                           </a>
 			                           <?php } ?>
 			                           <?php echo $refund['note']; ?>

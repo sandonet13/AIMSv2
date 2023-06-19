@@ -1,4 +1,9 @@
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
+  $(document).ready(function () {
+    $('#pur_request').DataTable();
+});
+
 var hot;
 
 (function($) {
@@ -14,7 +19,7 @@ function validate_purrequest_form(selector) {
     selector = typeof(selector) == 'undefined' ? '#add_edit_pur_request-form' : selector;
 
     appValidateForm($(selector), {
-        pur_rq_code:'required', pur_rq_name:'required', department:'required', currency:'required'
+        pur_rq_code:'required', pur_rq_name:'required', department:'required', currency:'required', purchase_type:'required', project:'required'
     });
 }
 

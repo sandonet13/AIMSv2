@@ -7,7 +7,7 @@
                <h3 class="no-mbot bold pull-left">
                   <?php if($project->settings->edit_tasks == 1 && $view_task->is_added_from_contact == 1 && $view_task->addedfrom == get_contact_user_id()){ ?>
                   <a href="<?php echo site_url('clients/project/'.$project->id.'?group=edit_task&taskid='.$view_task->id); ?>">
-                  <i class="fa fa-pencil-square-o"></i>
+                  <i class="fa fa-pencil-square"></i>
                   </a>
                   <?php } ?> <?php echo $view_task->name; ?>
                </h3>
@@ -256,7 +256,7 @@
                <i class="fa fa-times text-danger"></i>
                </a>
                <a href="#" onclick="edit_task_comment(<?php echo $comment['id']; ?>); return false;" class="pull-right mright5">
-               <i class="fa fa-pencil-square-o"></i>
+               <i class="fa fa-pencil-square"></i>
                </a>
                <div data-edit-comment="<?php echo $comment['id']; ?>" class="hide">
                   <textarea rows="5" class="form-control mtop10 mbot10"><?php echo clear_textarea_breaks($comment['content']); ?></textarea>

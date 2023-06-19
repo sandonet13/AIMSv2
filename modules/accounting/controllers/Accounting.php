@@ -1103,7 +1103,7 @@ class Accounting extends AdminController
                 $_html .= form_hidden('currency_to', $currency->name);
                 $_html .= form_hidden('exchange_rate', $amount);
                 $_html .= form_hidden('payment_amount', $payment->amount);
-                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square-o"></i></a><br></div></div>';
+                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square"></i></a><br></div></div>';
                 $html .=   '<tr class="project-overview">
                                 <td class="bold">'. _l('amount_after_convert').'</td>
                                 <td class="amount_after_convert">'.app_format_money(round($amount*$payment->amount, 2), $currency->name).'</td>
@@ -1123,7 +1123,7 @@ class Accounting extends AdminController
                 $html .= form_hidden('currency_from', $invoice->currency_name);
                 $html .= form_hidden('currency_to', $currency->name);
                 $html .= form_hidden('exchange_rate', $amount);
-                $html .= '<h4>'._l('currency_converter').'</h4><div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square-o"></i></a><br></div></div>';
+                $html .= '<h4>'._l('currency_converter').'</h4><div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square"></i></a><br></div></div>';
                 
             }
             $debit = get_option('acc_payment_deposit_to');
@@ -1184,7 +1184,7 @@ class Accounting extends AdminController
                 $_html .= form_hidden('exchange_rate', $amount);
                 $_html .= form_hidden('expense_amount', $expense->amount);
 
-                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$expense->currency_data->name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square-o"></i></a><br></div></div>';
+                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$expense->currency_data->name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square"></i></a><br></div></div>';
 
                 $html .=   '<tr class="project-overview">
                                 <td class="bold">'. _l('amount_after_convert').'</td>
@@ -1277,7 +1277,7 @@ class Accounting extends AdminController
                 $_html .= form_hidden('exchange_rate', $amount);
                 $_html .= form_hidden('payment_amount', $invoice->total);
 
-                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square-o"></i></a><br></div></div>';
+                $_html .= '<div class="row"><div class="col-md-12"><label class="currency_converter_label th font-medium mbot15 pull-left">1 '.$invoice->currency_name.' = '.$amount.' '.$currency->name.'</label><a href="#" onclick="return false;" data-placement="bottom" data-toggle="popover" data-content="'. htmlspecialchars($edit_template) .'" data-html="true" data-original-title class="pull-left mleft5 font-medium-xs"><i class="fa fa-pencil-square"></i></a><br></div></div>';
 
                 $html .=   '<tr class="project-overview">
                                 <td class="bold">'. _l('amount_after_convert').'</td>

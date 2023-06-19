@@ -14,7 +14,7 @@
 
           	<div class="row">
              <div class="col-md-12">
-              <h4 class="no-margin font-bold"><i class="fa <?php if(isset($pur_invoice)){ echo 'fa-pencil-square-o';}else{ echo 'fa-plus';} ?>" aria-hidden="true"></i> <?php echo _l($title); ?> <?php if(isset($pur_invoice)){ echo ' '.html_entity_decode($pur_invoice->invoice_number); } ?></h4>
+              <h4 class="no-margin font-bold"><i class="fa <?php if(isset($pur_invoice)){ echo 'fa-pencil-square';}else{ echo 'fa-plus';} ?>" aria-hidden="true"></i> <?php echo _l($title); ?> <?php if(isset($pur_invoice)){ echo ' '.html_entity_decode($pur_invoice->invoice_number); } ?></h4>
               <hr />
              </div>
             </div>

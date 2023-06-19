@@ -30,7 +30,7 @@
 					<td><?php echo html_entity_decode($categorie['category_name']); ?></td>
 					<td>
 						<?php if (has_permission('manufacturing', '', 'edit') || is_admin()) { ?>
-							<a href="#" onclick="edit_category(this,<?php echo html_entity_decode($categorie['id']); ?>); return false;" data-category_name="<?php echo html_entity_decode($categorie['category_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i>
+							<a href="#" onclick="edit_category(this,<?php echo html_entity_decode($categorie['id']); ?>); return false;" data-category_name="<?php echo html_entity_decode($categorie['category_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i>
 							</a>
 						<?php } ?>
 

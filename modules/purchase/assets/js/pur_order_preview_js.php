@@ -1,5 +1,15 @@
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
+
 var pur_order_id = '<?php echo html_entity_decode($estimate->id); ?>';
+$(document).ready(function() {
+    $('#pur_order_preview').DataTable( {
+        dom: "lfBrtip",
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
 (function($) {
   "use strict"; 
    var data_send_mail = {};

@@ -31,7 +31,7 @@
  <div class="row">
    <div class="col-md-12">
     <hr class="hr-10" />
-    <a href="#" class="edit_shipping_billing_info" data-toggle="modal" data-target="#billing_and_shipping_details"><i class="fa fa-pencil-square-o"></i></a>
+    <a href="#" class="edit_shipping_billing_info" data-toggle="modal" data-target="#billing_and_shipping_details"><i class="fa fa-pencil-square"></i></a>
     <?php 
      include_once(module_views_path('purchase', 'debit_notes/billing_and_shipping_template.php')); ?>
 

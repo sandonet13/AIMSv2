@@ -147,6 +147,7 @@
                             <?php $value = $pur_order->contact_num; ?>
                               <?php echo render_input('contact_num','Contact Phone Vendor',$value,array(),'mtop15'); ?>
                           </div>
+                          
                         </div>
                       
                      
@@ -232,7 +233,18 @@
                         <?php $delivery_date = (isset($pur_order) ? _d($pur_order->delivery_date) : '');
                          echo render_date_input('delivery_date','delivery_date',$delivery_date); ?>
                       </div>
-                      
+                      <div class="col-md-6 form-group">
+                          <label for="payment_mode"><?php echo _l('payment_mode'); ?></label>
+                            <select name="payment_mode" id="payment_mode" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
+                              <option value=""></option>
+                              <option value="Full Payment" <?php if(isset($pur_order) && $pur_order->payment_mode == 'Full Payment'){ echo 'selected';} ?>><?php echo _l('Full Payment'); ?></option>
+                              <option value="Down Payment" <?php if(isset($pur_order) && $pur_order->payment_mode == 'Down Payment'){ echo 'selected';} ?>><?php echo _l('Down Payment'); ?></option>
+                            </select>
+                      </div>
+                      <div class="col-md-6 form-group">
+                            <?php $value = $pur_order->refer_to; ?>
+                              <?php echo render_input('refer_to','Referred to',$value,array(),'mtop15'); ?>
+                          </div>
                    </div>  
                 </div>
 
@@ -294,6 +306,7 @@
                     <th width="7%" align="right"><?php echo _l('discount').'(%)'; ?></th>
                     <th width="10%" align="right"><?php echo _l('discount'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
                     <th width="10%" align="right"><?php echo _l('total'); ?><span class="th_currency"><?php echo '('.$po_currency->name.')'; ?></span></th>
+                    <th width="10%" align="right" class="partno"><?php echo _l('Part No.'); ?></th>
                     <th align="center"><i class="fa fa-cog"></i></th>
                   </tr>
                 </thead>

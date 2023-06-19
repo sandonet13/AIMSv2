@@ -299,20 +299,21 @@
                                           _l('_images'),
                                           _l('commodity_code'),
                                           _l('commodity_name'),
+                                          _l('description'),
+                                          _l('unit_name'),
                                           _l('sku_code'),
                                           _l('group_name'),
                                           _l('warehouse_name'),
                                           _l('tags'),
                                           _l('inventory_number'),
-                                          _l('unit_name'),
                                           // _l('rate'),
                                           _l('Price'),
-                                          _l('Tax'),
+                                          // _l('Tax'),
                                           // _l('tax_2'),
-                                          _l('status'),                         
+                                          // _l('status'),                         
                                           // _l('minimum_stock'),                         
                                           // _l('maximum_stock'),
-                                          _l('final_price'),                         
+                                          // _l('final_price'),                         
                                         );
 
                       $cf = get_custom_fields('items',array('show_on_table'=>1));
@@ -624,7 +625,7 @@
                               </div>
                           </div>
 
-                          <!-- <div class="col-md-3 col-sm-6">
+                          <div class="col-md-3 col-sm-6">
                            <div class="form-group">
                             <div class="checkbox checkbox-primary">
                               <input  type="checkbox" id="can_be_sold" name="can_be_sold" value="can_be_sold" >
@@ -648,7 +649,7 @@
                               <label for="can_be_manufacturing"><?php echo _l('can_be_manufacturing'); ?></label>
                             </div>
                           </div>
-                        </div>   -->
+                        </div>  
                         </div>  
 
                         

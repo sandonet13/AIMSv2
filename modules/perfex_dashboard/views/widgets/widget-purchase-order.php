@@ -72,10 +72,6 @@ $base_currency = get_base_currency_pur();
             <?php if (count($widget_data) > 0) { ?>
               <?php foreach ($widget_data as $widget_row) { ?>
                 <tr>
-                  <!-- <td>
-                    <a href="<?= admin_url('staff/profile/' . $widget_row['requester']) ?>"> <?= staff_profile_image($widget_row['requester'], ['staff-profile-image-small',]) ?> </a>
-                    <a href="<?= admin_url('staff/profile/' . $widget_row['requester']) ?>"> <?= get_staff_full_name($widget_row['requester']) ?> </a>
-                  </td> -->
                   <td><a href="<?= admin_url('purchase/view_pur_request/' . $widget_row['id']) ?>"><?= $widget_row['pur_order_number'] ?></a></td>
                   <td><a href="<?= admin_url('purchase/vendor/' . $widget_row['vendor']) ?>"><?= $widget_row['company'] ?></a></td>
                   <td><?= $widget_row['order_date'] ?></td>

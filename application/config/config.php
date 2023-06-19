@@ -409,7 +409,7 @@ $config['encryption_key'] = APP_ENC_KEY;
 */
 $config['sess_driver']             = SESS_DRIVER;
 $config['sess_cookie_name']        = (defined('APP_SESSION_COOKIE_NAME') ? APP_SESSION_COOKIE_NAME : 'sp_session');
-$config['sess_expiration']         = (defined('APP_SESSION_EXPIRATION') ? APP_SESSION_EXPIRATION : 28800);
+$config['sess_expiration']         = (defined('APP_SESSION_EXPIRATION') ? APP_SESSION_EXPIRATION : 86400);
 $config['sess_save_path']          = SESS_SAVE_PATH;
 $config['sess_match_ip']           = (defined('APP_SESSION_MATCH_IP') ? APP_SESSION_MATCH_IP : false);
 $config['sess_time_to_update']     = (defined('APP_SESSION_TIME_TO_UPDATE') ? APP_SESSION_TIME_TO_UPDATE : 300);

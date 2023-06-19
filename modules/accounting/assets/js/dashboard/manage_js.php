@@ -78,81 +78,81 @@ function dashboard_custom_view(value, $lang, custom_input_name, clear_other_filt
         $('#bank_accounts').html(response.bank_accounts);
         $('#convert_status').html(response.convert_status);
 
-        const chart = Highcharts.chart('profit_and_loss', {
-            colors: [ '#119EFA','#84c529','#626f80'],
-            chart: {
-                inverted: true,
-                polar: false
-            },
-            title: {
-                text: '<?php echo _l('profit_and_loss'); ?>'
-            },
+        // const chart = Highcharts.chart('profit_and_loss', {
+        //     colors: [ '#119EFA','#84c529','#626f80'],
+        //     chart: {
+        //         inverted: true,
+        //         polar: false
+        //     },
+        //     title: {
+        //         text: '<?php echo _l('profit_and_loss'); ?>'
+        //     },
             
-            tooltip: {
-                pointFormat: '<span ></span><b>{point.y}</b><br/>',
-            },
-            yAxis: {
-                title: {
-                    text: '<?php echo html_entity_decode($currency->name); ?>'
-                }
-            },
-            xAxis: {
-                categories: ['<?php echo _l('acc_net_income'); ?>', '<?php echo _l('acc_income'); ?>', '<?php echo _l('expenses'); ?>']
-            },
-            credits: {
-              enabled: false
-            },
-            plotOptions: {
-                series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true,
-                }
-            }
-            },
-            series: [{
-                type: 'column',
-                colorByPoint: true,
-                data: response.profit_and_loss_chart,
-                showInLegend: false
-            }]
-        });
+        //     tooltip: {
+        //         pointFormat: '<span ></span><b>{point.y}</b><br/>',
+        //     },
+        //     yAxis: {
+        //         title: {
+        //             text: '<?php echo html_entity_decode($currency->name); ?>'
+        //         }
+        //     },
+        //     xAxis: {
+        //         categories: ['<?php echo _l('acc_net_income'); ?>', '<?php echo _l('acc_income'); ?>', '<?php echo _l('expenses'); ?>']
+        //     },
+        //     credits: {
+        //       enabled: false
+        //     },
+        //     plotOptions: {
+        //         series: {
+        //         borderWidth: 0,
+        //         dataLabels: {
+        //             enabled: true,
+        //         }
+        //     }
+        //     },
+        //     series: [{
+        //         type: 'column',
+        //         colorByPoint: true,
+        //         data: response.profit_and_loss_chart,
+        //         showInLegend: false
+        //     }]
+        // });
 
-    Highcharts.chart('expenses_chart', {
+    // Highcharts.chart('expenses_chart', {
         
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: '<?php echo _l("expense_account_overview"); ?>'
-        },
-        credits: {
-          enabled: false
-        },
-        tooltip: {
-            pointFormat: '<b>{point.amount} <?php echo html_entity_decode($currency->name); ?></b>'
-        },
+    //     chart: {
+    //         plotBackgroundColor: null,
+    //         plotBorderWidth: null,
+    //         plotShadow: false,
+    //         type: 'pie'
+    //     },
+    //     title: {
+    //         text: '<?php echo _l("expense_account_overview"); ?>'
+    //     },
+    //     credits: {
+    //       enabled: false
+    //     },
+    //     tooltip: {
+    //         pointFormat: '<b>{point.amount} <?php echo html_entity_decode($currency->name); ?></b>'
+    //     },
         
-        plotOptions: {
-            pie: {
-                dataLabels: {
-                    enabled: true,
-                    formatter: function() {
-                        console.log(this);
-                        return '<b>'+this.key+'</b>: '+Highcharts.numberFormat(this.point.amount,2)+ ' <?php echo html_entity_decode($currency->name); ?>';
-                    }
-                },
+    //     plotOptions: {
+    //         pie: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 formatter: function() {
+    //                     console.log(this);
+    //                     return '<b>'+this.key+'</b>: '+Highcharts.numberFormat(this.point.amount,2)+ ' <?php echo html_entity_decode($currency->name); ?>';
+    //                 }
+    //             },
 
-            }
-        },
-        series: [{
-            colorByPoint: true,
-            data: response.expenses_chart,
-        }]
-    });
+    //         }
+    //     },
+    //     series: [{
+    //         colorByPoint: true,
+    //         data: response.expenses_chart,
+    //     }]
+    // });
 
     Highcharts.chart('sales_chart', {
         colors: [ '#99ff66','#84c529','#ffcc99','#ef370dc7'],
@@ -203,40 +203,40 @@ function dashboard_custom_view(value, $lang, custom_input_name, clear_other_filt
 
     });
 
-    Highcharts.chart('income_chart', {
-        colors: [ '#626f80','#ef370dc7','#84c529','#119EFA'],
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: '<?php echo _l("acc_income"); ?>'
-        },
-        credits: {
-              enabled: false
-            },
-        yAxis: {
-            min: 0,
-            title: {
-                text: ''
-            }
-        },
-        xAxis: {
-            categories: ['']
-        },
-        tooltip: {
-            pointFormat: '<span >{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-            shared: true
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                dataLabels: {
-                    enabled: true
-                }
-            },
-        },
-        series: response.income_chart
-    });
+    // Highcharts.chart('income_chart', {
+    //     colors: [ '#626f80','#ef370dc7','#84c529','#119EFA'],
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         text: '<?php echo _l("acc_income"); ?>'
+    //     },
+    //     credits: {
+    //           enabled: false
+    //         },
+    //     yAxis: {
+    //         min: 0,
+    //         title: {
+    //             text: ''
+    //         }
+    //     },
+    //     xAxis: {
+    //         categories: ['']
+    //     },
+    //     tooltip: {
+    //         pointFormat: '<span >{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+    //         shared: true
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             stacking: 'normal',
+    //             dataLabels: {
+    //                 enabled: true
+    //             }
+    //         },
+    //     },
+    //     series: response.income_chart
+    // });
 
     //hide boxloading
     $('#box-loading').html('');

@@ -1,4 +1,14 @@
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
 <script>
+
+// $(document).ready(function() {
+//     $('#pur_order').DataTable( {
+//         dom: "lfBrtip",
+//         buttons: [
+//             'copy', 'csv', 'excel', 'pdf', 'print'
+//         ]
+//     } );
+// } );
 
 $(function(){
   "use strict";
@@ -317,7 +327,7 @@ function pur_calculate_total(from_discount_money){
                 }
             });
     }
-    var after_tax = _amount + item_tax;
+    var after_tax = _amount;
 
     $(this).find('td._total').html(format_money(after_tax));
     $(this).find('td._total_after_tax input').val(after_tax);
@@ -335,7 +345,7 @@ function pur_calculate_total(from_discount_money){
         item_discount = parseFloat(item_discount_money);
       }
 
-      item_total_payment = parseFloat(item_amount) + parseFloat(item_tax) - parseFloat(item_discount);
+      item_total_payment = parseFloat(item_amount) - parseFloat(item_discount);
       // Append value to item
       total_discount_calculated += item_discount;
       $(this).find('td.discount_money input').val(item_discount);
@@ -424,12 +434,13 @@ function pur_add_item_to_preview(id) {
     clear_item_preview_values();
 
     $('.main input[name="item_code"]').val(response.itemid);
-    $('.main textarea[name="item_name"]').val(response.code_description);
-    $('.main textarea[name="description"]').val(response.long_description);
+    $('.main textarea[name="item_name"]').val(response.item_name);
+    $('.main textarea[name="item_description"]').val(response.long_description);
     $('.main input[name="unit_price"]').val(response.purchase_price);
     $('.main input[name="unit_name"]').val(response.unit_name);
     $('.main input[name="unit_id"]').val(response.unit_id);
     $('.main input[name="quantity"]').val(1);
+    $('.main textarea[name="partno"]').val(response.partno);
 
     $('.selectpicker').selectpicker('refresh');
 
@@ -484,7 +495,7 @@ function pur_add_item_to_table(data, itemid) {
   var item_key = lastAddedItemKey ? lastAddedItemKey += 1 : $("body").find('.invoice-items-table tbody .item').length + 1;
   lastAddedItemKey = item_key;
   $("body").append('<div class="dt-loader"></div>');
-  pur_get_item_row_template('newitems[' + item_key + ']',data.item_name, data.description, data.quantity, data.unit_name, data.unit_price, data.taxname, data.item_code, data.unit_id, data.tax_rate, data.discount, itemid, currency_rate, to_currency).done(function(output){
+  pur_get_item_row_template('newitems[' + item_key + ']',data.item_name, data.item_description, data.quantity, data.unit_name, data.unit_price, data.taxname, data.item_code, data.unit_id, data.tax_rate, data.partno, data.discount, itemid, currency_rate, to_currency).done(function(output){
     table_row += output;
 
     $('.invoice-item table.invoice-items-table.items tbody').append(table_row);
@@ -509,7 +520,7 @@ function pur_get_item_preview_values() {
 
   var response = {};
   response.item_name = $('.invoice-item .main textarea[name="item_name"]').val();
-  response.description = $('.invoice-item .main textarea[name="description"]').val();
+  response.item_description = $('.invoice-item .main textarea[name="item_description"]').val();
   response.quantity = $('.invoice-item .main input[name="quantity"]').val();
   response.unit_name = $('.invoice-item .main input[name="unit_name"]').val();
   response.unit_price = $('.invoice-item .main input[name="unit_price"]').val();
@@ -518,6 +529,7 @@ function pur_get_item_preview_values() {
   response.unit_id = $('.invoice-item .main input[name="unit_id"]').val();
   response.tax_rate = $('.invoice-item .main input[name="tax_rate"]').val();
   response.discount = $('.invoice-item .main input[name="discount"]').val();
+  response.partno = $('.invoice-item .main input[name="partno"]').val();
 
 
   return response;
@@ -558,7 +570,7 @@ function pur_delete_item(row, itemid,parent) {
   }
 }
 
-function pur_get_item_row_template(name, item_name, description, quantity, unit_name, unit_price, taxname,  item_code, unit_id, tax_rate, discount, item_key, currency_rate, to_currency)  {
+function pur_get_item_row_template(name, item_name, item_description, quantity, unit_name, unit_price, taxname, partno, item_code, unit_id, tax_rate, discount, item_key, currency_rate, to_currency)  {
   "use strict";
 
   jQuery.ajaxSetup({
@@ -568,7 +580,7 @@ function pur_get_item_row_template(name, item_name, description, quantity, unit_
   var d = $.post(admin_url + 'purchase/get_purchase_order_row_template', {
     name: name,
     item_name : item_name,
-    item_description : description,
+    item_description : item_description,
     quantity : quantity,
     unit_name : unit_name,
     unit_price : unit_price,
@@ -579,6 +591,7 @@ function pur_get_item_row_template(name, item_name, description, quantity, unit_
     discount : discount,
     item_key : item_key,
     currency_rate: currency_rate,
+    partno : partno,
     to_currency: to_currency
   });
   jQuery.ajaxSetup({

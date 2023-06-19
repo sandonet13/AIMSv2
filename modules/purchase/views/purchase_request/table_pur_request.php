@@ -37,7 +37,7 @@ if(isset($project)){
     array_push($where, ' AND '.db_prefix().'pur_request.project = '.$project);
 }
 
-$result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, ['id','name','pur_rq_code']);
+$result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, ['id','name','pur_rq_code','paid_status']);
 
 $output  = $result['output'];
 $rResult = $result['rResult'];
@@ -133,10 +133,18 @@ foreach ($rResult as $aRow) {
 
             $name .= '<a href="' . admin_url('purchase/view_pur_request/' . $aRow['id'] ).'" >' . _l('view') . '</a>';
 
-            // if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2) &&  $aRow['status'] != 2) {
-            if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2)) {
+            if  (has_permission('purchase_request', '', 'edit')  &&  $aRow['status'] != 2 && $aRow['requester'] == get_staff_user_id() ) {
+            // if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2)) {
                 $name .= ' | <a href="' . admin_url('purchase/pur_request/' . $aRow['id'] ).'" >' . _l('edit') . '</a>';
+            }elseif(is_admin()){
+                $name .= '';
             }
+
+            if ( is_admin()) {
+                // if ( (has_permission('purchase_request', '', 'edit') || is_admin() && $approve_status != 2)) {
+                    $name .= ' | <a href="' . admin_url('purchase/pur_request/' . $aRow['id'] ).'" >' . _l('Super Edit') . '</a>';
+                    // $name .= get_staff_user_id();
+                }
 
             if (has_permission('purchase_request', '', 'delete') || is_admin()) {
                 $name .= ' | <a href="' . admin_url('purchase/delete_pur_request/' . $aRow['id']) . '" class="text-danger _delete">' . _l('delete') . '</a>';
@@ -148,7 +156,7 @@ foreach ($rResult as $aRow) {
         }elseif($aColumns[$i] == 'id'){
             if($aRow['status'] == 2){
                 // $_data = '<div class="btn-group mright5" data-toggle="tooltip" title="'._l('request_quotation_tooltip').'">
-                //            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-file-pdf-o"></i><span class="caret"></span></a>
+                //            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-file-pdf"></i><span class="caret"></span></a>
                 //            <ul class="dropdown-menu dropdown-menu-right">
                 //               <li class="hidden-xs"><a href="'. admin_url('purchase/request_quotation_pdf/'.$aRow['id'].'?output_type=I').'">'. _l('view_pdf').'</a></li>
                 //               <li class="hidden-xs"><a href="'. admin_url('purchase/request_quotation_pdf/'.$aRow['id'].'?output_type=I').'" target="_blank">'. _l('view_pdf_in_new_window').'</a></li>
@@ -167,7 +175,19 @@ foreach ($rResult as $aRow) {
         }elseif($aColumns[$i] == 'project'){
 
             $_data = get_po_html_by_pur_request($aRow['id']);
-        }
+        }elseif($aColumns[$i] == 'purchase_type' && $aRow['purchase_type'] == 'Pembiayaan'){
+            $name = '<span class="label label-info" id="">'._l($aRow['purchase_type']). '</span>  ';
+            if($aRow['paid_status'] == 'Paid'){
+            $name .= '<span class="label label-success" id="">'._l($aRow['paid_status']). '</span>';
+            }elseif($aRow['paid_status'] == 'Unpaid'){
+                $name .= '<span class="label label-danger" id="">'._l($aRow['paid_status']). '</span>';
+                }
+
+            $_data = $name;
+        }elseif($aRow['purchase_type'] == 'Barang' || $aRow['purchase_type'] == 'Jasa'){
+            $name = '<span class="label label-info" id="">'._l($aRow['purchase_type']). '</span>';
+            $_data = $name;
+            }
 
 
         $row[] = $_data;

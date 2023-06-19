@@ -7,7 +7,7 @@
                 <?php if (has_permission('tasks', '', 'create')) { ?>
                 <a href="#" onclick="new_task(<?php if ($this->input->get('project_id')) {
     echo "'" . admin_url('tasks/task?rel_id=' . $this->input->get('project_id') . '&rel_type=project') . "'";
-} ?>); return false;" class="btn btn-primary pull-left new">
+} ?>); return false;" class="btn btn-primary pull-left new" style="padding-right:9px;">
                     <i class="fa-regular fa-plus tw-mr-1"></i>
                     <?php echo _l('new_task'); ?>
                 </a>

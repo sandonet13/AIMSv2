@@ -38,11 +38,11 @@ $fn_get_data = function () {
 $widget_data = $fn_get_data();
 ?>
 
+
 <div class="widget widget-finance-total-orders widget-<?= $widget['id'] ?>" data-widget-id="<?= $widget['id'] ?>">
   <div class="widget-dragger"></div>
   <div class="card-counter success">
-    <i class="fa fa-shopping-basket"></i>
-    <span class="count-numbers"><?= $widget_data[0]['TOTAL_ROWS'] ?></span>
-    <span class="count-name"><?= _l('Total PR') ?></span>
+    <h5 class="count-numbers"><?= $widget_data[0]['TOTAL_ROWS'] ?></h5>
+    <p class="count-name"><?= _l('Total PR') ?></p>
   </div>
 </div>

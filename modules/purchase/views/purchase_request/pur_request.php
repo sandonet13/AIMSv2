@@ -157,6 +157,7 @@
                     
 
                     <div class="col-md-3 form-group">
+                    <small class="req text-danger">* </small>
                             <label for="type"><?php echo _l('Purchase Type'); ?></label>
                               <select name="purchase_type" id="purchase_type" class="selectpicker" data-live-search="true" data-width="100%" data-none-selected-text="<?php echo _l('ticket_settings_none_assigned'); ?>">
                                 <option value=""></option>
@@ -252,6 +253,8 @@
                         
 
                       </div>
+                      
+
                       <div class="table-responsive s_table ">
                         <table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
                           <thead>

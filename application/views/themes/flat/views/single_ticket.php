@@ -45,7 +45,7 @@
                                     <span class="label pull-right bold" style="background:<?php echo $ticket->statuscolor; ?>">
                                         <?php echo ticket_status_translate($ticket->ticketstatusid); ?>
                                         <?php if(get_option('allow_customer_to_change_ticket_status') == 1){ ?>
-                                        <i class="fa fa-pencil-square-o pointer toggle-change-ticket-status"></i></span>
+                                        <i class="fa fa-pencil-square pointer toggle-change-ticket-status"></i></span>
                                         <?php } ?>
                                     </div>
                                     <?php if(can_change_ticket_status_in_clients_area()){ ?>

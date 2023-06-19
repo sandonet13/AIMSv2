@@ -67,7 +67,7 @@
                   <a href="<?php echo site_url('clients/project/'.$project->id.'?group=project_tasks&taskid='.$task['id']); ?>" class="task_milestone pull-left<?php if($task['status'] == Tasks_model::STATUS_COMPLETE){echo ' line-throught text-muted';} ?>"><?php echo $task['name']; ?></a>
                   <?php if($project->settings->edit_tasks == 1 && $task['is_added_from_contact'] == 1 && $task['addedfrom'] == get_contact_user_id()){ ?>
                   <a href="<?php echo site_url('clients/project/'.$project->id.'?group=edit_task&taskid='.$task['id']); ?>" class="pull-right">
-                  <small><i class="fa fa-pencil-square-o"></i></small>
+                  <small><i class="fa fa-pencil-square"></i></small>
                   </a>
                   <?php } ?>
                   <br />
@@ -122,7 +122,7 @@
          <tr>
             <td>
                <?php if($project->settings->edit_tasks == 1 && $task['is_added_from_contact'] == 1 && $task['addedfrom'] == get_contact_user_id()){ ?>
-               <a href="<?php echo site_url('clients/project/'.$project->id.'?group=edit_task&taskid='.$task['id']); ?>"><i class="fa fa-pencil-square-o"></i></a>
+               <a href="<?php echo site_url('clients/project/'.$project->id.'?group=edit_task&taskid='.$task['id']); ?>"><i class="fa fa-pencil-square"></i></a>
                <?php } ?>
                <a href="<?php echo site_url('clients/project/'.$project->id.'?group=project_tasks&taskid='.$task['id']); ?>">
                <?php echo $task['name']; ?></a>

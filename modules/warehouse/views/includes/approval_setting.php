@@ -43,7 +43,7 @@
 
             <?php if (is_admin() || has_permission('warehouse', '', 'edit') ) { ?>
 
-		     <a href="#" onclick="edit_approval_setting(this,<?php echo html_entity_decode($value['id']); ?>); return false" data-name="<?php echo html_entity_decode($value['name']); ?>" data-related="<?php echo html_entity_decode($value['related']); ?>" data-setting='<?php echo html_entity_decode($value['setting']); ?>' class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i></a>
+		     <a href="#" onclick="edit_approval_setting(this,<?php echo html_entity_decode($value['id']); ?>); return false" data-name="<?php echo html_entity_decode($value['name']); ?>" data-related="<?php echo html_entity_decode($value['related']); ?>" data-setting='<?php echo html_entity_decode($value['setting']); ?>' class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i></a>
 		 	<?php } ?>
 
             <?php if (is_admin() || has_permission('warehouse', '', 'delete') ) { ?>

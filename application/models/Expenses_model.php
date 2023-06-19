@@ -62,7 +62,7 @@ class Expenses_model extends App_Model
                     }
                 }
             }
-
+            // echo json_encode($expense);
             return $expense;
         }
         $this->db->order_by('date', 'desc');

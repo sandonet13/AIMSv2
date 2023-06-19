@@ -1,5 +1,6 @@
 <?php
 $lang['purchase']  = 'Purchase';
+$lang['item_code']  = 'Item Code';
 $lang['paid_status']  = 'Paid Status';
 $lang['purchase_type']  = 'Purchase Type';
 $lang['rab_ref']  = 'RAB Ref';
@@ -257,7 +258,7 @@ $lang['purchase_contract']  = 'Purchase contract';
 $lang['po_description']  = 'PO Description';
 $lang['po_value']  = 'PO Value';
 $lang['tax_value']  = 'Tax Value';
-$lang['po_value_included_tax']  = 'PO value inclued tax';
+$lang['po_value_included_tax']  = 'PO value included tax';
 $lang['approval_status']  = 'Approval status';
 $lang['delivery_status']  = 'Delivery status';
 $lang['undelivered']  = 'Undelivered';

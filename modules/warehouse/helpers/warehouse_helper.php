@@ -933,7 +933,7 @@ function wh_render_custom_fields($belongs_to, $rel_id = false, $where = [], $ite
             if ($is_admin
                 && ($items_add_edit_preview == false && $items_applied == false)
                 && (!defined('CLIENTS_AREA') || hooks()->apply_filters('show_custom_fields_edit_link_on_clients_area', false))) {
-                $fields_html .= '<a href="' . admin_url('custom_fields/field/' . $field['id']) . '" tabindex="-1" target="_blank" class="custom-field-inline-edit-link"><i class="fa fa-pencil-square-o"></i></a>';
+                $fields_html .= '<a href="' . admin_url('custom_fields/field/' . $field['id']) . '" tabindex="-1" target="_blank" class="custom-field-inline-edit-link"><i class="fa fa-pencil-square"></i></a>';
             }
 
             if ($rel_id !== false) {

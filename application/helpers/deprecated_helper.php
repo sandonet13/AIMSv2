@@ -45,7 +45,7 @@ function _deprecated_hook($hook, $version, $replacement = null, $message = null)
 
         if (! is_null($replacement)) {
             /* translators: 1: Hook name, 2: version number, 3: alternative hook name */
-            trigger_error(sprintf('Hook %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.', $hook, $version, $replacement) . $message);
+            // trigger_error(sprintf('Hook %1$s is <strong>deprecated</strong> since version %2$s! Use %3$s instead.', $hook, $version, $replacement) . $message);
         } else {
             /* translators: 1: Hook name, 2: version number */
             trigger_error(sprintf('Hook %1$s is <strong>deprecated</strong> since version %2$s with no alternative available.', $hook, $version) . $message);

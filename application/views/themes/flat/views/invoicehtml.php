@@ -35,7 +35,7 @@
                </a>
                <?php echo form_open($this->uri->uri_string()); ?>
                <button type="submit" name="invoicepdf" value="invoicepdf" class="btn btn-default pull-right action-button mtop5">
-               <i class='fa fa-file-pdf-o'></i>
+               <i class='fa fa-file-pdf'></i>
                <?php echo _l('clients_invoice_html_btn_download'); ?>
                </button>
                <?php echo form_close(); ?>
@@ -254,7 +254,7 @@
                         <td>
                            <span class="pull-left"><?php echo $payment['paymentid']; ?></span>
                            <?php echo form_open($this->uri->uri_string()); ?>
-                           <button type="submit" value="<?php echo $payment['paymentid']; ?>" class="btn btn-icon btn-default pull-right" name="paymentpdf"><i class="fa fa-file-pdf-o"></i></button>
+                           <button type="submit" value="<?php echo $payment['paymentid']; ?>" class="btn btn-icon btn-default pull-right" name="paymentpdf"><i class="fa fa-file-pdf"></i></button>
                            <?php echo form_close(); ?>
                         </td>
                         <td><?php echo $payment['name']; ?> <?php if(!empty($payment['paymentmethod'])){echo ' - '.$payment['paymentmethod']; } ?></td>

@@ -7018,7 +7018,7 @@ class Accounting_model extends App_Model
                             <td class="bold" width="30%">'. _l('invoice_table_quantity_heading').'</td>
                             <td class="bold">'. _l('acc_amount').'</td>
                         </tr>
-                        <tr class="project-overview '. ($invoice->total > 0 ? 'text-danger' : '').'">
+                        <!-- <tr class="project-overview '. ($invoice->total > 0 ? 'text-danger' : '').'">
                             <td class="bold" width="30%"><a href="'.admin_url('accounting/transaction?group=sales&tab=invoice&status=has_not_been_converted').'">'. _l('invoice').'</a></td>
                             <td width="30%">'. $this->count_invoice_not_convert_yet($data_currency, $where) .'</td>
                             <td>'. app_format_money($invoice->total, $currency->name)  .'</td>
@@ -7027,7 +7027,7 @@ class Accounting_model extends App_Model
                             <td class="bold" width="30%"><a href="'.admin_url('accounting/transaction?group=sales&tab=payment&status=has_not_been_converted').'">'. _l('payment').'</a></td>
                             <td width="30%">'. $this->count_payment_not_convert_yet($data_currency, $where_payment)  .'</td>
                             <td>'. app_format_money($payment->amount, $currency->name)  .'</td>
-                         </tr>
+                         </tr> -->
                          <tr class="project-overview '. ($expense->amount > 0 ? 'text-danger' : '').'">
                             <td class="bold" width="30%"><a href="'.admin_url('accounting/transaction?group=expenses&status=has_not_been_converted').'">'. _l('expense').'</a></td>
                             <td width="30%">'. $this->count_expense_not_convert_yet($data_currency, $where)  .'</td>
@@ -7359,6 +7359,7 @@ class Accounting_model extends App_Model
                 if(isset($data_date[$value['date']])){
                     $data_date[$value['date']]['expense'] += floatval($value['amount']);
                 }else{
+                    // echo json_encode($value);
                     $data_date[$value['date']] = [];
                     $data_date[$value['date']]['expense'] = floatval($value['amount']);
                     $data_date[$value['date']]['payment'] = 0;
@@ -7476,10 +7477,10 @@ class Accounting_model extends App_Model
 
         $data_return = [
             'data' => [
-                ['name' => _l('sales'), 'data' => $sales],
-                ['name' => _l('sales_have_been_mapping'), 'data' => $invoice_have_been_mapping],
+                // ['name' => _l('sales'), 'data' => $sales],
+                // ['name' => _l('sales_have_been_mapping'), 'data' => $invoice_have_been_mapping],
                 ['name' => _l('expenses'), 'data' => $expenses],
-                ['name' => _l('expenses_have_been_mapping'), 'data' => $expense_have_been_mapping],
+                // ['name' => _l('expenses_have_been_mapping'), 'data' => $expense_have_been_mapping],
             ],
             'categories' => $categories
         ];

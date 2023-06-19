@@ -83,7 +83,7 @@
                             <?php } ?>
                         </div>
                         <?php } ?>
-                        <div class="checkbox checkbox-primary checkbox-inline task-add-edit-public tw-pt-2">
+                        <!-- <div class="checkbox checkbox-primary checkbox-inline task-add-edit-public tw-pt-2">
                             <input type="checkbox" id="task_is_public" name="is_public" <?php if (isset($task)) {
                                if ($task->is_public == 1) {
                                    echo 'checked';
@@ -91,14 +91,14 @@
                            }; ?>>
                             <label for="task_is_public" data-toggle="tooltip" data-placement="bottom"
                                 title="<?php echo _l('task_public_help'); ?>"><?php echo _l('task_public'); ?></label>
-                        </div>
-                        <div class="checkbox checkbox-primary checkbox-inline task-add-edit-billable tw-pt-2">
+                        </div> -->
+                        <!-- <div class="checkbox checkbox-primary checkbox-inline task-add-edit-billable tw-pt-2">
                             <input type="checkbox" id="task_is_billable" name="billable" <?php if ((isset($task) && $task->billable == 1) || (!isset($task) && get_option('task_biillable_checked_on_creation') == 1)) {
-                               echo ' checked';
+                               echo ' hide';
                            }?>>
                             <label for="task_is_billable"><?php echo _l('task_billable'); ?></label>
-                        </div>
-                        <div class="task-visible-to-customer tw-pt-2 checkbox checkbox-inline checkbox-primary<?php if ((isset($task) && $task->rel_type != 'project') || !isset($task) || (isset($task) && $task->rel_type == 'project' && total_rows(db_prefix() . 'project_settings', ['project_id' => $task->rel_id, 'name' => 'view_tasks', 'value' => 0]) > 0)) {
+                        </div> -->
+                        <!-- <div class="task-visible-to-customer tw-pt-2 checkbox checkbox-inline checkbox-primary<?php if ((isset($task) && $task->rel_type != 'project') || !isset($task) || (isset($task) && $task->rel_type == 'project' && total_rows(db_prefix() . 'project_settings', ['project_id' => $task->rel_id, 'name' => 'view_tasks', 'value' => 0]) > 0)) {
                                echo ' hide';
                            } ?>">
                             <input type="checkbox" id="task_visible_to_client" name="visible_to_client" <?php if (isset($task)) {
@@ -107,7 +107,7 @@
                                }
                            } ?>>
                             <label for="task_visible_to_client"><?php echo _l('task_visible_to_client'); ?></label>
-                        </div>
+                        </div> -->
                         <?php if (!isset($task)) { ?>
                         <a href="#" class="pull-right tw-pt-2"
                             onclick="slideToggle('#new-task-attachments'); return false;">
@@ -144,13 +144,13 @@
                         <hr class="-tw-mx-3.5" />
                         <?php $value = (isset($task) ? $task->name : ''); ?>
                         <?php echo render_input('name', 'task_add_edit_subject', $value); ?>
-                        <div class="task-hours<?php if (isset($task) && $task->rel_type == 'project' && total_rows(db_prefix() . 'projects', ['id' => $task->rel_id, 'billing_type' => 3]) == 0) {
+                        <!-- <div class="task-hours<?php if (isset($task) && $task->rel_type == 'project' && total_rows(db_prefix() . 'projects', ['id' => $task->rel_id, 'billing_type' => 3]) == 0) {
                       echo ' hide';
                   } ?>">
                             <?php $value = (isset($task) ? $task->hourly_rate : 0); ?>
                             <?php echo render_input('hourly_rate', 'task_hourly_rate', $value); ?>
-                        </div>
-                        <div class="project-details<?php if ($rel_type != 'project') {
+                        </div> -->
+                        <!-- <div class="project-details<?php if ($rel_type != 'project') {
                       echo ' hide';
                   } ?>">
                             <div class="form-group">
@@ -165,7 +165,7 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-6">
                                 <?php if (isset($task)) {
@@ -305,65 +305,6 @@
                                 echo 'selected';
                             }
                         } ?>><?php echo _l('project'); ?></option>
-                                        <option value="invoice" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'invoice') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('invoice'); ?>
-                                        </option>
-                                        <option value="customer" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'customer') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('client'); ?>
-                                        </option>
-                                        <option value="estimate" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'estimate') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('estimate'); ?>
-                                        </option>
-                                        <option value="contract" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'contract') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('contract'); ?>
-                                        </option>
-                                        <option value="ticket" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'ticket') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('ticket'); ?>
-                                        </option>
-                                        <option value="expense" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'expense') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('expense'); ?>
-                                        </option>
-                                        <option value="lead" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'lead') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('lead'); ?>
-                                        </option>
-                                        <option value="proposal" <?php if (isset($task) || $this->input->get('rel_type')) {
-                            if ($rel_type == 'proposal') {
-                                echo 'selected';
-                            }
-                        } ?>>
-                                            <?php echo _l('proposal'); ?>
-                                        </option>
-                                        <?php
-                                hooks()->do_action('task_modal_rel_type_select', ['task' => (isset($task) ? $task : 0), 'rel_type' => $rel_type]);
-                            ?>
                                     </select>
                                 </div>
                             </div>

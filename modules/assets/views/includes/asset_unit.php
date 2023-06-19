@@ -20,7 +20,7 @@
        <td><?php  echo htmlspecialchars($c['unit_id']); ?></td>
        <td> <a href="#" onclick="edit_asset_unit(this,<?php  echo htmlspecialchars($c['unit_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['unit_name']); ?>"><?php  echo htmlspecialchars($c['unit_name']); ?></td>
        <td>
-         <a href="#" onclick="edit_asset_unit(this,<?php  echo htmlspecialchars($c['unit_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['unit_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i></a>
+         <a href="#" onclick="edit_asset_unit(this,<?php  echo htmlspecialchars($c['unit_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['unit_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i></a>
           <a href="<?php echo admin_url('assets/delete_asset_unit/'.$c['unit_id']); ?>" class="btn btn-danger btn-icon _delete"><i class="fa fa-remove"></i></a>
        </td>
     </tr>

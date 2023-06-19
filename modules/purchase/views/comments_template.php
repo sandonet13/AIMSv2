@@ -18,7 +18,7 @@
    <?php if ($comment['staffid'] == get_staff_user_id() || is_admin()) { ?>
    <a href="#" class="pull-right" onclick="remove_contract_comment(<?php echo $comment['id']; ?>); return false;">
    <i class="fa fa-times text-danger"></i>
-   <a href="#" class="pull-right mright5" onclick="toggle_contract_comment_edit(<?php echo $comment['id']; ?>);return false;"><i class="fa fa-pencil-square-o"></i></a>
+   <a href="#" class="pull-right mright5" onclick="toggle_contract_comment_edit(<?php echo $comment['id']; ?>);return false;"><i class="fa fa-pencil-square"></i></a>
    </a>
    <?php } ?>
    <div class="media-body">

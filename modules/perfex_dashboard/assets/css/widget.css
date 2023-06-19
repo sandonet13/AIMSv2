@@ -212,9 +212,10 @@ body.rtl .perfex-dashboard-panel .tab-content {
 
   .card-counter .count-numbers{
     position: absolute;
-    right: 35px;
-    top: 20px;
-    font-size: 30px;
+    right: 5%;
+    left: 5%;
+    top: 10%;
+    font-size: 17px;
     display: block;
   }
   .card-counter .count-numbers.priceable{
@@ -224,8 +225,9 @@ body.rtl .perfex-dashboard-panel .tab-content {
 
   .card-counter .count-name{
     position: absolute;
-    right: 35px;
-    top: 65px;
+    right: 5%;
+    left: 5%;
+    top: 60px;
     text-transform: capitalize;
     display: block;
     font-size: 16px;

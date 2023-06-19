@@ -27,7 +27,7 @@
                <?php } ?>
                <?php echo form_open($this->uri->uri_string()); ?>
                <button type="submit" class="btn btn-default pull-right action-button mright5 contract-html-pdf">
-               <i class="fa fa-file-pdf-o"></i> <?php echo _l('clients_invoice_html_btn_download'); ?></button>
+               <i class="fa fa-file-pdf"></i> <?php echo _l('clients_invoice_html_btn_download'); ?></button>
                <?php echo form_hidden('action','contract_pdf'); ?>
                <?php echo form_close(); ?>
                <?php if(is_client_logged_in() && has_contact_permission('contracts')){ ?>

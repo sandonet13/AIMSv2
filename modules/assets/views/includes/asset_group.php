@@ -22,7 +22,7 @@
        <td> <a href="#" onclick="edit_asset_group(this,<?php  echo htmlspecialchars($c['group_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['group_name']); ?>"><?php  echo htmlspecialchars($c['group_name']); ?></td>
        <td></td>
        <td>
-         <a href="#" onclick="edit_asset_group(this,<?php  echo htmlspecialchars($c['group_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['group_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i></a>
+         <a href="#" onclick="edit_asset_group(this,<?php  echo htmlspecialchars($c['group_id']); ?>); return false" data-name="<?php  echo htmlspecialchars($c['group_name']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i></a>
           <a href="<?php echo admin_url('assets/delete_assets_group/'.$c['group_id']); ?>" class="btn btn-danger btn-icon _delete"><i class="fa fa-remove"></i></a>
        </td>
     </tr>

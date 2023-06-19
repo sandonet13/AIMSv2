@@ -47,7 +47,7 @@
                      <i class="fa fa-print"></i>
                   </a>
                   <a href="<?php echo site_url('clients/statement_pdf?from='.urlencode($from).'&to='.urlencode($to)); ?>" id="statement_pdf"  class="btn btn-default btn-with-tooltip mright5" data-toggle="tooltip" title="<?php echo _l('view_pdf'); ?>" data-placement="bottom">
-                     <i class="fa fa-file-pdf-o"></i>
+                     <i class="fa fa-file-pdf"></i>
                   </a>
                </div>
             </div>

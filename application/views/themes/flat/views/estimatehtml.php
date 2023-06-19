@@ -62,7 +62,7 @@
                   ?>
                <?php echo form_open($this->uri->uri_string(), array('class'=>'pull-right action-button')); ?>
                <button type="submit" name="estimatepdf" class="btn btn-default action-button download mright5 mtop7" value="estimatepdf">
-               <i class="fa fa-file-pdf-o"></i>
+               <i class="fa fa-file-pdf"></i>
                <?php echo _l('clients_invoice_html_btn_download'); ?>
                </button>
                <?php echo form_close(); ?>

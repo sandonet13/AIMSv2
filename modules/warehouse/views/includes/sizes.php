@@ -37,7 +37,7 @@
 
         <td>
             <?php if (has_permission('warehouse', '', 'edit') || is_admin()) { ?>
-              <a href="#" onclick="edit_size_type(this,<?php echo html_entity_decode($size_type['size_type_id']); ?>); return false;" data-size_code="<?php echo html_entity_decode($size_type['size_code']); ?>" data-size_name="<?php echo html_entity_decode($size_type['size_name']); ?>" data-size_symbol="<?php echo html_entity_decode($size_type['size_symbol']); ?>" data-order="<?php echo html_entity_decode($size_type['order']); ?>" data-display="<?php echo html_entity_decode($size_type['display']); ?>" data-note="<?php echo html_entity_decode($size_type['note']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i>
+              <a href="#" onclick="edit_size_type(this,<?php echo html_entity_decode($size_type['size_type_id']); ?>); return false;" data-size_code="<?php echo html_entity_decode($size_type['size_code']); ?>" data-size_name="<?php echo html_entity_decode($size_type['size_name']); ?>" data-size_symbol="<?php echo html_entity_decode($size_type['size_symbol']); ?>" data-order="<?php echo html_entity_decode($size_type['order']); ?>" data-display="<?php echo html_entity_decode($size_type['display']); ?>" data-note="<?php echo html_entity_decode($size_type['note']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i>
             </a>
             <?php } ?>
 

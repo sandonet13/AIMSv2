@@ -12,7 +12,7 @@
       </a>
 
       <a href="" id="statement_pdf"  class="btn btn-default btn-with-tooltip mright5" data-toggle="tooltip" title="<?php echo _l('view_pdf'); ?>" data-placement="bottom">
-          <i class="fa fa-file-pdf-o"></i>
+          <i class="fa fa-file-pdf"></i>
       </a>
 
       <a href="#" class="btn-with-tooltip btn btn-default" data-toggle="modal" data-target="#send_statement"><span data-toggle="tooltip" data-title="<?php echo _l('send_to_email'); ?>" data-placement="bottom"><i class="fa fa-envelope"></i></span></a>

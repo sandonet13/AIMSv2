@@ -26,8 +26,8 @@
             <tbody>
                 <tr>
                   <td></td>
-                  <td class="text-right bold"><?php echo _l('debit'); ?></td>
                   <td class="text-right bold"><?php echo _l('credit'); ?></td>
+                  <td class="text-right bold"><?php echo _l('debit'); ?></td>
                 </tr>
                <tr>
                   <td><span class="bold"><?php echo _l('invoice_total'); ?> :</span>

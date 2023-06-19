@@ -127,15 +127,15 @@
         </div>
         </div>
         <div class="row">
-          <div class="col-md-6 border-right">
+          <!-- <div class="col-md-6 border-right">
             <div id="profit_and_loss" class="minwidth310">
             </div>
-          </div>
-          <div class="col-md-6 border-right">
+          </div> -->
+          <!-- <div class="col-md-6 border-right">
             <div id="expenses_chart" class="minwidth310">
             </div>
-          </div>
-          <div class="col-md-6 border-right">
+          </div> -->
+          <!-- <div class="col-md-6 border-right">
             <div class="horizontal-scrollable-tabs preview-tabs-top">
                 <div class="scroller arrow-left"><i class="fa fa-angle-left"></i></div>
                 <div class="scroller arrow-right"><i class="fa fa-angle-right"></i></div>
@@ -153,7 +153,7 @@
               </div>
             <div id="income_chart" class="minwidth310">
             </div>
-          </div>
+          </div> -->
           <div class="col-md-6 border-right">
             <div class="horizontal-scrollable-tabs preview-tabs-top">
                 <div class="scroller arrow-left"><i class="fa fa-angle-left"></i></div>
@@ -170,7 +170,7 @@
                   </ul>
                 </div>
               </div>
-            <div id="sales_chart" class="minwidth310">
+              <div id="sales_chart" class="minwidth310">
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ foreach ($rResult as $aRow) {
 			$_data ='';
 
 			if(has_permission('manufacturing','','edit')) {
-				$_data .=	'<a href="'.admin_url('manufacturing/add_edit_working_hour/'.$aRow['id']).'"  class="btn btn-default btn-icon" data-toggle="sidebar-right" ><i class="fa fa-pencil-square-o"></i></a>';
+				$_data .=	'<a href="'.admin_url('manufacturing/add_edit_working_hour/'.$aRow['id']).'"  class="btn btn-default btn-icon" data-toggle="sidebar-right" ><i class="fa fa-pencil-square"></i></a>';
 			} 
 
 			if(has_permission('manufacturing','','delete')) {

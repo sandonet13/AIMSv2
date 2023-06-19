@@ -30,20 +30,33 @@ $fn_get_data = function () {
     $sql .= "
       WHERE TBLInvoices.date >= '" . $widget_req_from . "' AND TBLInvoices.date <= '" . $widget_req_to . "'
     ";
+
   }
+  $sql .= "WHERE approve_status = 2";
 
   return $this->db->query($sql)->result_array();
 };
 
 $widget_data = $fn_get_data();
 $base_currency = get_base_currency_pur();
+// echo json_encode($widget_data);
+// $paid = $aRow['total'] - purorder_inv_left_to_pay($aRow['id']);
 ?>
 
-<div class="widget widget-finance-total-orders widget-<?= $widget['id'] ?>" data-widget-id="<?= $widget['id'] ?>">
+<!-- <div class="widget widget-finance-total-orders widget-<?= $widget['id'] ?>" data-widget-id="<?= $widget['id'] ?>">
   <div class="widget-dragger"></div>
   <div class="card-counter danger">
     <i class="fa fa-dollar"></i>
     <span class="count-numbers" style="font-size:25px;"><?= app_format_money($widget_data[0]['TOTAL_ROWS'], $base_currency->symbol) ?></span>
     <span class="count-name"><?= _l('Total PO Value') ?></span>
+  </div>
+</div> -->
+
+<div class="widget widget-finance-total-orders widget-<?= $widget['id'] ?>" data-widget-id="<?= $widget['id'] ?>">
+<div class="widget-dragger"></div>
+  <div class="card-counter green">
+  <!-- <i class="fa fa-dollar"></i> -->
+  <h5 class="count-numbers"><?= app_format_money($widget_data[0]['TOTAL_ROWS'], $base_currency->symbol) ?></h5>
+    <p class="count-name"><?= _l('Total PO Value') ?></p>
   </div>
 </div>

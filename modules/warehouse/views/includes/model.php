@@ -40,7 +40,7 @@
         
         <td>
             <?php if (has_permission('warehouse', '', 'edit') || is_admin()) { ?>
-              <a href="#" onclick="edit_model(this,<?php echo html_entity_decode($model['id']); ?>); return false;" data-name="<?php echo html_entity_decode($model['name']); ?>" data-brand_id="<?php echo html_entity_decode($model['brand_id']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i>
+              <a href="#" onclick="edit_model(this,<?php echo html_entity_decode($model['id']); ?>); return false;" data-name="<?php echo html_entity_decode($model['name']); ?>" data-brand_id="<?php echo html_entity_decode($model['brand_id']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i>
             </a>
             <?php } ?>
 

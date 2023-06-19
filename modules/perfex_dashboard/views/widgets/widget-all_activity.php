@@ -49,7 +49,7 @@ $fn_get_data = function () {
       }
     }
 
-    $activities[$i]['description']     = _l($activities[$i]['description_key']);
+    // $activities[$i]['description']     = _l($activities[$i]['description_key']);
     $activities[$i]['additional_data'] = $_additional_data;
     $activities[$i]['project_name']    = get_staff_full_name($activity['staffid']);
     // $activities[$i]['pr_name']    = get_purchase_request($activity['staffid']);

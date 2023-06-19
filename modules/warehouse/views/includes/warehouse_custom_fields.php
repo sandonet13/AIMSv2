@@ -83,7 +83,7 @@
 
         <td>
             <?php if (has_permission('warehouse', '', 'edit') || is_admin()) { ?>
-              <a href="#" onclick="edit_custom_fields_warehouse(this,<?php echo html_entity_decode($custom_fields['id']); ?>); return false;" data-custom_fields_id="<?php echo html_entity_decode($custom_fields['custom_fields_id']); ?>" data-warehouse_id="<?php echo html_entity_decode($custom_fields['warehouse_id']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square-o"></i>
+              <a href="#" onclick="edit_custom_fields_warehouse(this,<?php echo html_entity_decode($custom_fields['id']); ?>); return false;" data-custom_fields_id="<?php echo html_entity_decode($custom_fields['custom_fields_id']); ?>" data-warehouse_id="<?php echo html_entity_decode($custom_fields['warehouse_id']); ?>" class="btn btn-default btn-icon"><i class="fa fa-pencil-square"></i>
             </a>
             <?php } ?>
 

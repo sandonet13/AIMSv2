@@ -920,7 +920,7 @@ class Purchase_model extends App_Model
      */
     public function get_pur_request_detail_in_po($pur_request){
         
-        $pur_request_lst = $this->db->query('SELECT item_code, prq.unit_id as unit_id, unit_price, quantity, into_money, long_description as description, prq.tax as tax, tax_name, tax_rate, item_text, tax_value, total as total_money, total as total FROM '.db_prefix().'pur_request_detail prq LEFT JOIN '.db_prefix().'items it ON prq.item_code = it.id WHERE prq.pur_request = '.$pur_request)->result_array();
+        $pur_request_lst = $this->db->query('SELECT item_code, prq.unit_id as unit_id, unit_price, quantity, into_money, item_description as item_description, prq.tax as tax, tax_name, tax_rate, item_text, tax_value, total as total_money, total as total FROM '.db_prefix().'pur_request_detail prq LEFT JOIN '.db_prefix().'items it ON prq.item_code = it.id WHERE prq.pur_request = '.$pur_request)->result_array();
 
         foreach($pur_request_lst as $key => $detail){
             $pur_request_lst[$key]['into_money'] = (float) $detail['into_money'];
@@ -1204,6 +1204,7 @@ class Purchase_model extends App_Model
         }
 
         unset($data['item_text']);
+        unset($data['item_description']);
         unset($data['unit_price']);
         unset($data['quantity']);
         unset($data['into_money']);
@@ -1248,12 +1249,14 @@ class Purchase_model extends App_Model
                 $dt_data['pur_request'] = $id;
                 $dt_data['item_code'] = $rqd['item_code'];
                 $dt_data['unit_id'] = isset($rqd['unit_id']) ? $rqd['unit_id'] : null;
+                $dt_data['unit_name'] = $rqd['unit_name'];
                 $dt_data['unit_price'] = $rqd['unit_price'];
                 $dt_data['into_money'] = $rqd['into_money'];
                 $dt_data['total'] = $rqd['total'];
                 $dt_data['remarks'] = $rqd['remarks'];
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_text'] = $rqd['item_text'];
+                $dt_data['item_description'] = $rqd['item_description'];
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -1275,8 +1278,9 @@ class Purchase_model extends App_Model
 
                 $dt_data['quantity'] = ($rqd['quantity'] != ''&& $rqd['quantity'] != null) ? $rqd['quantity'] : 0;
 
-                if($purq->status == 2 && ($rqd['item_code'] == '' || $rqd['item_code'] == null) ){
+                if(($purq->status == 2 || $purq->status == 1)  && ($rqd['item_code'] == '' || $rqd['item_code'] == null) ){
                     $item_data['description'] = $rqd['item_text'];
+                    $item_data['long_description'] = $rqd['item_description'];
                     $item_data['purchase_price'] = $rqd['unit_price'];
                     $item_data['unit_id'] = $rqd['unit_id'];
                     $item_data['rate'] = '';
@@ -1303,11 +1307,13 @@ class Purchase_model extends App_Model
                 $dt_data['item_code'] = $rqd['item_code'];
                 $dt_data['unit_id'] = isset($rqd['unit_id']) ? $rqd['unit_id'] : null;
                 $dt_data['unit_price'] = $rqd['unit_price'];
+                $dt_data['unit_name'] = $rqd['unit_name'];
                 $dt_data['into_money'] = $rqd['into_money'];
                 $dt_data['total'] = $rqd['total'];
                 $dt_data['remarks'] = $rqd['remarks'];
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_text'] = $rqd['item_text'];
+                $dt_data['item_description'] = $rqd['item_description'];
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -1329,8 +1335,9 @@ class Purchase_model extends App_Model
 
                 $dt_data['quantity'] = ($rqd['quantity'] != ''&& $rqd['quantity'] != null) ? $rqd['quantity'] : 0;
 
-                if($purq->status == 2 && ($rqd['item_code'] == '' || $rqd['item_code'] == null) ){
+                if(($purq->status == 2 || $purq->status == 1) && ($rqd['item_code'] == '' || $rqd['item_code'] == null) ){
                     $item_data['description'] = $rqd['item_text'];
+                    $item_data['long_description'] = $rqd['item_description'];
                     $item_data['purchase_price'] = $rqd['unit_price'];
                     $item_data['unit_id'] = $rqd['unit_id'];
                     $item_data['rate'] = '';
@@ -2090,7 +2097,7 @@ class Purchase_model extends App_Model
 
         unset($data['item_select']);
         unset($data['item_name']);
-        unset($data['description']);
+        unset($data['item_description']);
         unset($data['total']);
         unset($data['quantity']);
         unset($data['unit_price']);
@@ -2103,6 +2110,7 @@ class Purchase_model extends App_Model
         unset($data['tax_name']);
         unset($data['discount_money']);
         unset($data['total_money']);
+        unset($data['partno']);
         unset($data['additional_discount']);
         unset($data['tax_value']);
 
@@ -2213,8 +2221,9 @@ class Purchase_model extends App_Model
                     $dt_data['total'] = $rqd['total'];
                     $dt_data['tax_value'] = $rqd['tax_value'];
                     $dt_data['item_name'] = $rqd['item_name'];
-                    $dt_data['description'] = $rqd['item_description'];
+                    $dt_data['item_description'] = $rqd['item_description'];
                     $dt_data['total_money'] = $rqd['total_money'];
+                    $dt_data['partno'] = $rqd['partno'];
                     $dt_data['discount_money'] = $rqd['discount_money'];
                     $dt_data['discount_%'] = $rqd['discount'];
 
@@ -2278,7 +2287,7 @@ class Purchase_model extends App_Model
 
         unset($data['item_select']);
         unset($data['item_name']);
-        unset($data['description']);
+        unset($data['item_description']);
         unset($data['total']);
         unset($data['quantity']);
         unset($data['unit_price']);
@@ -2291,6 +2300,7 @@ class Purchase_model extends App_Model
         unset($data['tax_name']);
         unset($data['discount_money']);
         unset($data['total_money']);
+        unset($data['partno']);
         unset($data['additional_discount']);
         unset($data['tax_value']);
 
@@ -2392,9 +2402,10 @@ class Purchase_model extends App_Model
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_name'] = $rqd['item_name'];
                 $dt_data['total_money'] = $rqd['total_money'];
+                $dt_data['partno'] = $rqd['partno'];
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
-                $dt_data['description'] = $rqd['item_description'];
+                $dt_data['item_description'] = $rqd['item_description'];
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -2438,9 +2449,10 @@ class Purchase_model extends App_Model
                 $dt_data['tax_value'] = $rqd['tax_value'];
                 $dt_data['item_name'] = $rqd['item_name'];
                 $dt_data['total_money'] = $rqd['total_money'];
+                $dt_data['partno'] = $rqd['partno'];
                 $dt_data['discount_money'] = $rqd['discount_money'];
                 $dt_data['discount_%'] = $rqd['discount'];
-                $dt_data['description'] = $rqd['item_description'];
+                $dt_data['item_description'] = $rqd['item_description'];
 
                 $tax_money = 0;
                 $tax_rate_value = 0;
@@ -3428,17 +3440,17 @@ class Purchase_model extends App_Model
               <tr>
                 <th align="left" style="width:5%;" class="thead-dark">'._l('No').'</th>
                 <th align="left" class="thead-dark">'._l('items').'</th>
-                <th align="left" style="width:28%;" class="thead-dark">'._l('item_description').'</th>
-                <th align="right" class="thead-dark">'._l('purchase_unit_price').'</th>
+                <th align="left" style="width:23%;" class="thead-dark">'._l('item_description').'</th>
+                <th align="right" style="width:16%;" class="thead-dark">'._l('purchase_unit_price').'</th>
                 <th align="right" style="width:5%;" class="thead-dark">'._l('Qty').'</th>
-                <th align="right" class="thead-dark">'._l('unit').'</th>
+                <th align="right" style="width:7%;" class="thead-dark">'._l('unit').'</th>
 
                 <--! <th align="right" class="thead-dark">'._l('into_money').'</th>-->';
                 if(get_option('show_purchase_tax_column')){
                         $html .= '<th align="right" class="thead-dark">'._l('tax_value').'</th>';
                   }
-                $html .= '<th align="right" class="thead-dark">'._l('total').'</th>
-                <th align="left" class="thead-dark">'._l('remarks').'</th>
+                $html .= '<th align="right" style="width:16%;" class="thead-dark">'._l('total').'</th>
+                <th align="left" style="width:15%;" class="thead-dark">'._l('remarks').'</th>
               </tr>
             </thead>
           <tbody >';
@@ -3464,16 +3476,16 @@ class Purchase_model extends App_Model
             $html .= '<tr style="border: 1px solid black;border-collapse: collapse;" >
                 <td align="left" style="width:5%;border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
                 <td align="left" style="border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$items->description.'</td>
-                <td align="left" style="width:28%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_description'].'</td>
+                <td align="left" style="width:23%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_description'].'</td>
 
-                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency).'</td>
+                <td align="right" style="width:16%;border: 1px solid black;border-collapse: collapse;font-size:90%;">'.app_format_money($row['unit_price'],$base_currency).'</td>
                 <td align="right" style="width:5%;border: 1px solid black;border-collapse: collapse;">'.app_format_number($row['quantity'],'').' '.$unit_name.'</td>
-                <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.$items->unit.'</td>' ;
+                <td align="right" style="width:7%;border: 1px solid black;border-collapse: collapse;">'.$items->unit.'</td>' ;
                 if(get_option('show_purchase_tax_column')){    
                     $html .= '<td align="right">'.app_format_money($row['tax_value'],$base_currency).'</td>';
                 }
-                $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['total'],$base_currency).'</td>
-                <td align="left" style="border: 1px solid black;border-collapse: collapse;">'.$row['remarks'].'</td>
+                $html .= '<td align="right" style="width:16%;border: 1px solid black;border-collapse: collapse;font-size:90%;">'.app_format_money($row['total'],$base_currency).'</td>
+                <td align="left" style="width:15%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['remarks'].'</td>
               </tr>';
               $counter++;
         }else{
@@ -3488,8 +3500,8 @@ class Purchase_model extends App_Model
                 if(get_option('show_purchase_tax_column')){    
                     $html .= '<td align="right">'.app_format_money($row['tax_value'],$base_currency).'</td>';
                 }
-                $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['total'],$base_currency).'</td>
-                <td align="left" style="border: 1px solid black;border-collapse: collapse;">'.$row['remarks'].'</td>
+                $html .= '<td align="right" style="width:14%;border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['total'],$base_currency).'</td>
+                <td align="left" style="width:15%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['remarks'].'</td>
               </tr>';
               $counter++;
             //   echo $counter;
@@ -4734,11 +4746,20 @@ class Purchase_model extends App_Model
         $pur_order = $this->get_pur_order($pur_order_id);
         $pur_order_detail = $this->get_pur_order_detail($pur_order_id);
         $list_approve_status = $this->get_list_approval_details($pur_order_id,'pur_order');
+        $attachment_pur_order = $this->get_purchase_order_attachments($pur_order_id);
+        // $attach = json_encode($attachment_pur_order);
+        $attach = '';
+        $discount_result = 0;
+        // $partno = '';
+        foreach($pur_order_detail as $row){
+            $discount_result+= $row['discount_money'];
+        }
 
         $company_name = get_option('invoice_company_name'); 
         $vendor = $this->get_vendor($pur_order->vendor);
         $tax_data = $this->get_html_tax_pur_order($pur_order_id);
         $base_currency = get_base_currency_pur();
+        $payment_mode = $pur_order->payment_mode;
         if($pur_order->currency != 0){
             $base_currency = pur_get_currency_by_id($pur_order->currency);
         }
@@ -4752,11 +4773,15 @@ class Purchase_model extends App_Model
         $bank_attn = $bank_string[2];
         $fix_bank_attn = str_replace('-', ' ', $bank_attn);
 
+
+
         $address = '';
         $vendor_name = '';
         $phonenumber = '';
+        $userid = '';
         $ship_to = get_option('invoice_company_address') . ', '.  get_option('invoice_company_city').', '.get_option('invoice_company_city').', '.get_option('company_state').', '.get_option('invoice_company_country_code') ;
         if($vendor){
+            $userid = $vendor->userid;
             $countryName = '';
             if($country = get_country($vendor->country) ){
                 $countryName = $country->short_name;
@@ -4795,7 +4820,7 @@ class Purchase_model extends App_Model
                 <small>Revisi:</small>
             </td>
             <td class="child">
-                <small>01</small>
+                <small>02</small>
             </td>
         </tr>
         <tr>
@@ -4803,7 +4828,7 @@ class Purchase_model extends App_Model
                 <small>Tanggal Terbit:</small>
             </td>
             <td class="child">
-                <small>13 Februari 2017</small>
+                <small>27 Februari 2023</small>
             </td>
         </tr></table>
         </td>
@@ -4818,11 +4843,19 @@ class Purchase_model extends App_Model
           </tr>
           <tr>
             <td style="width: 12%"><b>'. _l('To').': </b></td>
-            <td style="width: 50%">'. $vendor_name.'</td>
+            <td style="width: 54%">'. $vendor_name.'</td>
+            <td style="width: 20%"><b>Jenis Pembayaran:</b></td>
+            <td style="width: 15%">'. $payment_mode.'</td>
           </tr>
           <tr>
           <td style="width: 12%"><b>'. _l('Address').': </b></td>
-          <td style="width: 50%">'. $address.'</td>
+          <td style="width: 54%">'. $address.'</td>
+          <td style="width: 20%"><b>'. _l('Date').': </b></td>
+          <td style="width: 13%">'. $date.'</td>
+          </tr>
+          <tr>
+          <td style="width: 12%"><b>'. _l('NPWP').': </b></td>
+          <td style="width: 50%">'. get_custom_field_value($userid, 2, 'vendors').'</td>
           </tr>
           <tr>
           <td style="width: 12%"><b>'. _l('Telephone').': </b></td>
@@ -4833,13 +4866,10 @@ class Purchase_model extends App_Model
           <td style="width: 50%">'. $subject.'</td>
           </tr>
           <tr>
-          <td style="width: 12%"><b>'. _l('PO Number').': </b></td>
+          <td style="width: 12%"><b>'. _l('PO No').': </b></td>
           <td style="width: 50%">'. $ponumber.'</td>
           </tr>
-          <tr>
-          <td style="width: 12%"><b>'. _l('Date').': </b></td>
-          <td style="width: 50%">'. $date.'</td>
-          </tr>
+
 
         </tbody>
       </table>
@@ -4850,18 +4880,25 @@ class Purchase_model extends App_Model
         <thead>
           <tr>
             <th class="thead-dark" style="width:5%;">'._l('No').'</th>
-            <th class="thead-dark" style="">'._l('items').'</th>
-            <th class="thead-dark" style="width:25%;">'._l('item_description').'</th>
-            <th class="thead-dark" style="" align="right">'._l('purchase_unit_price').'</th>
-            <th class="thead-dark" style="width:10%;" align="right">'._l('Qty').'</th>';
+            <th class="thead-dark" style="width:18%;">'._l('items').'</th>';
+            if($discount_result){
+                $html .= '<th class="thead-dark" style="width:18%;">'._l('item_description').'</th>';
+            }else{
+                $html .= '<th class="thead-dark" style="width:31%;">'._l('item_description').'</th>';
+            }
+            $html .=  '<th class="thead-dark" style="width:14%;" align="left">'._l('purchase_unit_price').'</th>
+            <th class="thead-dark" style="width:5%;" align="left">'._l('Qty').'</th>
+            <th class="thead-dark" style="width:7%;" align="left">'._l('unit').'</th>';
          
-            if(get_option('show_purchase_tax_column') == 0){ 
+            if(get_option('show_purchase_tax_column')){ 
 
                 $html .= '<th class="thead-dark" align="right" style="">'._l('tax').'</th>';
             }
- 
-            $html .= '<th class="thead-dark" align="right" style="">'._l('discount').'</th>
-            <th class="thead-dark" align="right" style="">'._l('total').'</th>
+            if($discount_result){
+            $html .= '<th class="thead-dark" align="right" style="">'._l('discount').'</th>';
+            }
+            $html .= '<th class="thead-dark" align="right" style="width:14%;">'._l('total').'</th>
+            <th class="thead-dark" style="width:5%;" align="left">'._l('Part No.').'</th>
           </tr>
           </thead>
           <tbody>';
@@ -4869,25 +4906,36 @@ class Purchase_model extends App_Model
         $item_discount = 0;
         $counter = 1; 
       foreach($pur_order_detail as $row){
+        $items_unit = get_item_hp($row['item_code'])->unit_id;
+        $unit_name = get_unit_type_item($items_unit)->unit_name;
         $items = $this->get_items_by_id($row['item_code']);
         $des_html = ($items) ? $items->description : $row['item_name'];
 
         $units = $this->get_units_by_id($row['unit_id']);
-        $unit_name = isset($units->unit_name) ? $units->unit_name : '';
+        // $unit_name = isset($units->unit_name) ? $units->unit_name : '';
+        $partno = $row['partno'];
         
         $html .= '<tr nobr="true" class="sortable" >
-            <td style="width:5%;border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
-            <td style="border: 1px solid black;border-collapse: collapse;font-size:80%">'.$des_html.'</td>
-            <td align="left" style="width:25%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['description'].'</td>
-            <td align="right" style="border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency->symbol).'</td>
-            <td align="right" style="width:10%;border: 1px solid black;border-collapse: collapse;right">'.app_format_number($row['quantity'],'').' '. $unit_name.'</td>';
+            <td align="center" style="width:5%;border: 1px solid black;border-collapse: collapse;">'. $counter .'</td>
+            <td style="width:18%;border: 1px solid black;border-collapse: collapse;font-size:80%">'.$des_html.'</td>';
+            if($row['discount_money']){
+                $html .= '<td align="left" style="width:18%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_description'].'</td>';
+            }else{
+                $html .= '<td align="left" style="width:31%;border: 1px solid black;border-collapse: collapse;font-size:80%;">'.$row['item_description'].'</td>';
+            }
+            $html .= 
+            '<td align="right" style="font-size:90%;width:14%;border: 1px solid black;border-collapse: collapse;">'.app_format_money($row['unit_price'],$base_currency->symbol).'</td>
+            <td align="center" style="width:5%;border: 1px solid black;border-collapse: collapse;right">'.app_format_number($row['quantity'],'').'</td>
+            <td align="left" style="width:7%;border: 1px solid black;border-collapse: collapse;right">'. $unit_name.'</td>';
          
-            if(get_option('show_purchase_tax_column') == 0){  
+            if(get_option('show_purchase_tax_column')){  
                 $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['total'] - $row['into_money'],$base_currency->symbol).'</td>';
             }
-       
-            $html .= '<td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['discount_money'],$base_currency->symbol).'</td>
-            <td align="right" style="border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['total_money'],$base_currency->symbol).'</td>
+            if($row['discount_money']){
+            $html .= '<td align="right" style="font-size:90%;border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['discount_money'],$base_currency->symbol).'</td>';
+            }
+            $html .= '<td align="right" style="font-size:90%;width:14%;border: 1px solid black;border-collapse: collapse;right">'.app_format_money($row['total_money'],$base_currency->symbol).'</td>
+            <td align="left" style="width:5%;border: 1px solid black;border-collapse: collapse;right">'. $partno.'</td>
           </tr>';
           $counter++;
         $t_mn += $row['total_money'];
@@ -4937,17 +4985,18 @@ class Purchase_model extends App_Model
                     '. app_format_money($pur_order->total, $base_currency->symbol).'
                  </td>
               </tr>';
+              
 
       $html .= ' </tbody></table>';
 
-    //   $html .= '<div class="col-md-12 mtop15">
-    //                     <h4>'. _l('terms_and_conditions').':</h4><p>'. $pur_order->terms .'</p>
-                       
-    //                  </div>';
+        //   $html .= '<div class="col-md-12 mtop15">
+        //                     <h4>'. _l('terms_and_conditions').':</h4><p>'. $pur_order->terms .'</p>
+                        
+        //                  </div>';
                      $html .= '<table nobr="true" >
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Terbilang').':</h4></td>
-                                    <td style="width:50%"><p>'. $pur_order->terbilang .'</p></td>
+                                    <td style="width:50%"><p>'. strtoupper($pur_order->terbilang) .'</p></td>
                                     </tr>
                                     <tr><br></tr>
                                     <tr>
@@ -4964,7 +5013,7 @@ class Purchase_model extends App_Model
                                     </tr>
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Name').':</h4></td>
-                                    <td style="width:50%"><p>'. $fix_bank_attn .'</p></td>
+                                    <td style="width:50%"><p>'. strtoupper($fix_bank_attn) .'</p></td>
                                     </tr>
                                     <tr><br></tr>
                                     <tr>
@@ -4975,8 +5024,12 @@ class Purchase_model extends App_Model
                                     <td style="width:50%"><p>03.262.362.1-047.000</p></td>
                                     </tr>
                                     <tr>
-                                    <td style="width:20%"><h4>'. _l('Address').':</h4></td>
-                                    <td style="width:50%"><p>Jl. Pantai Indah Selatan, Sentra Industri Terpadu Pantai Indah Kapuk I.2 No. 6 RT 002 RW 003 Kamal Muara, Penjaringan, Jakarta Utara</p></td>
+                                    <td style="width:20%"><h4>'. _l('Delivery Address').':</h4></td>
+                                    <td style="width:80%"><p>' . get_option('invoice_company_address') . ', '.  get_option('invoice_company_city').', '.get_option('company_state') . ', '.get_option('invoice_company_postal_code') . '</p></td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:20%"><h4>'. _l('Phone Number').':</h4></td>
+                                    <td style="width:50%"><p>' . get_option('invoice_company_phonenumber') .'</p></td>
                                     </tr>
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Payment Terms').':</h4></td>
@@ -4988,19 +5041,20 @@ class Purchase_model extends App_Model
                                     </tr>
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Inspection Note').':</h4></td>
-                                    <td style="width:50%"><p>'. $pur_order->inspection_note .'</p></td>
+                                    <td style="width:80%"><p><i>'. $pur_order->inspection_note .'</i></p></td>
                                     </tr>
                                     <tr>
                                     <td style="width:20%"><h4>'. _l('Vendor Note').':</h4></td>
-                                    <td style="width:50%"><p>'. $pur_order->vendornote .'</p></td>
+                                    <td style="width:80%"><p>'. $pur_order->vendornote .'</p></td>
                                     </tr>
                                     <tr><br></tr>
                                     <tr><br></tr>
                                     <tr><br></tr>
                                     <tr><br></tr>
                                     <tr>
-                                    <td style="text-align: center;width:50%"><h4>'. _l('Disetujui oleh').'</h4></td>
-                                    <td style="text-align: center;"><h4>Diketahui oleh</h4></td>
+                                    <td style="text-align: center;width:33%"><h4>'. _l('PT Audemars Indonesia').'</h4></td>
+                                    <td style="text-align: center;width:33%"><h4>'. _l('PT Audemars Indonesia').'</h4></td>
+                                    <td style="text-align: center;width:33%"><h4>'. $vendor_name .'</h4></td>
                                     </tr>
                                     <tr><br></tr>
                                     <tr><br></tr>';
@@ -5027,10 +5081,24 @@ class Purchase_model extends App_Model
                                 $html .= '
                                     <tr><td></td></tr>
                                     <tr><td></td></tr>
-                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name($value['staffid']) .'</h4><br>' . get_custom_field_value($value['staffid'], 1, 'staff') . '</td>
-                                    <td style="text-align: center;width:25%"><h4>'. get_staff_full_name(18) .'</h4><br>' . get_custom_field_value(18, 1, 'staff') . '</td>
-                                    <td style="text-align: center;width:50%"><h4>'. get_staff_full_name(19) .'</h4><br>' . get_custom_field_value(19, 1, 'staff') . '</td>
-                                </table>';
+                                    <!-- <td style="text-align: center;width:33%"><h4>'. get_staff_full_name(1) .'</h4><br>' . get_custom_field_value(1, 1, 'staff') . '</td>
+                                    <td style="text-align: center;width:33%"><h4>'. get_staff_full_name(6) .'</h4><br>' . get_custom_field_value(6, 1, 'staff') . '</td>
+                                    <td style="text-align: center;width:33%"><h4>'. get_staff_full_name(19) .'</h4><br>' . get_custom_field_value(19, 1, 'staff') . '</td> -->
+                                    <td style="text-align: center;width:33%"><h4>'. get_staff_full_name(1) .'</h4><br>Purchasing</td>
+                                    <td style="text-align: center;width:33%"><h4>'. get_staff_full_name(6) .'</h4><br>' . get_custom_field_value(6, 1, 'staff') . '</td>
+                                    <td style="text-align: center;width:33%">_________________________</td>
+                                </table>
+                                ';
+                                foreach($attachment_pur_order as $row_attach){
+                                    $file_name = $row_attach['file_name'];
+                                    $rel_type = $row_attach['rel_type'];
+                                    $rel_id = $row_attach['rel_id'];
+                                    $all = json_encode($row_attach);
+                                    $html.= '<br pagebreak="true" />';
+                                    $html .= '<div style="text-align: center;">';
+                                    $html .= '<img src ="' . base_url() . 'modules/purchase/uploads/' . $rel_type . '/' . $rel_id . '/' . $file_name . '" style="display: inline-block; max-width: 100%; height: auto;"></img>';
+                                    $html .= '</div>';
+                                }
       if(count($list_approve_status) > 0){
           $html .= '<br>
           <br>
@@ -10948,14 +11016,14 @@ class Purchase_model extends App_Model
      *
      * @return     string      
      */
-    public function create_purchase_order_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '') {
+    public function create_purchase_order_row_template($name = '', $item_name = '', $item_description = '', $quantity = '', $unit_name = '', $unit_price = '', $taxname = '',  $item_code = '', $unit_id = '', $tax_rate = '', $total_money = '', $partno = '', $discount = '', $discount_money = '', $total = '', $into_money = '', $tax_id = '', $tax_value = '', $item_key = '',$is_edit = false, $currency_rate = 1, $to_currency = '') {
         
         $this->load->model('invoice_items_model');
         $row = '';
 
         $name_item_code = 'item_code';
         $name_item_name = 'item_name';
-        $name_item_description = 'description';
+        $name_item_description = 'item_description';
         $name_unit_id = 'unit_id';
         $name_unit_name = 'unit_name';
         $name_quantity = 'quantity';
@@ -10972,6 +11040,7 @@ class Purchase_model extends App_Model
         $name_discount = 'discount';
         $name_discount_money = 'discount_money';
         $name_total_money = 'total_money';
+        $name_partno = 'partno';
 
         $array_available_quantity_attr = [ 'min' => '0.0', 'step' => 'any', 'readonly' => true];
         $array_qty_attr = [ 'min' => '0.0', 'step' => 'any'];
@@ -11013,6 +11082,7 @@ class Purchase_model extends App_Model
             $name_discount = $name .'[discount]';
             $name_discount_money = $name .'[discount_money]';
             $name_total_money = $name . '[total_money]';
+            $name_partno = $name . '[partno]';
             $name_tax_value = $name. '[tax_value]';
       
            
@@ -11100,6 +11170,7 @@ class Purchase_model extends App_Model
         //$row .= '<td class="hide discount_money">' . render_input($name_discount_money, '', $discount_money, 'number', []) . '</td>';
         $row .= '<td class="hide total_after_discount">' . render_input($name_total_money, '', $total_money, 'number', []) . '</td>';
         $row .= '<td class="hide _into_money">' . render_input($name_into_money, '', $into_money, 'number', []) . '</td>';
+        $row .= '<td class="">' . render_textarea($name_partno, '', $partno, ['rows' => 2, 'placeholder' => _l('Part No.')] ) . '</td>';
 
         if ($name == '') {
             $row .= '<td><button type="button" onclick="pur_add_item_to_table(\'undefined\',\'undefined\'); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button></td>';

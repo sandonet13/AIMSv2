@@ -143,7 +143,7 @@
             </div>
             <div class="col-md-8">
                <div class="btn-group pull-right">
-                  <a href="javascript:void(0)" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
+                  <a href="javascript:void(0)" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
                   <ul class="dropdown-menu dropdown-menu-right">
                      <li class="hidden-xs"><a href="<?php echo admin_url('purchase/purorder_pdf/'.$estimate->id.'?output_type=I'); ?>"><?php echo _l('view_pdf'); ?></a></li>
                      <li class="hidden-xs"><a href="<?php echo admin_url('purchase/purorder_pdf/'.$estimate->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('view_pdf_in_new_window'); ?></a></li>
@@ -213,7 +213,7 @@
                <?php if($estimate->approve_status != 2){ ?>
                   <div class="pull-right _buttons mright10">
                      <?php if(has_permission('purchase_orders','','edit')){ ?>
-                     <a href="<?php echo admin_url('purchase/pur_order/'.$estimate->id); ?>" class="btn btn-default btn-with-tooltip" data-toggle="tooltip" title="<?php echo _l('edit'); ?>" data-placement="bottom"><i class="fa fa-pencil-square-o"></i></a>
+                     <a href="<?php echo admin_url('purchase/pur_order/'.$estimate->id); ?>" class="btn btn-default btn-with-tooltip" data-toggle="tooltip" title="<?php echo _l('edit'); ?>" data-placement="bottom"><i class="fa fa-pencil-square"></i></a>
                      <?php } ?>
 
                   </div>
@@ -399,7 +399,7 @@
                               if($value == ''){continue;}?>
                           <div class="task-info">
                           <h5 class="task-info-custom-field task-info-custom-field-<?php echo $field['id']; ?>">
-                            <i class="fa task-info-icon fa-fw fa-lg fa-pencil-square-o"></i>
+                            <i class="fa task-info-icon fa-fw fa-lg fa-pencil-square"></i>
                             <?php echo $field['name']; ?>: <?php echo $value; ?>
                           </h5>
                            </div>
@@ -421,17 +421,19 @@
                               <thead>
                                  <tr>
                                     <th align="center">#</th>
-                                    <th class="description" width="50%" align="left"><?php echo _l('items'); ?></th>
+                                    <th class="description" width="50%" align="left"><?php echo _l('item_description'); ?></th>
                                     <th align="right"><?php echo _l('purchase_quantity'); ?></th>
                                     <th align="right"><?php echo _l('purchase_unit_price'); ?></th>
+                                    <th align="right"><?php echo _l('unit_name'); ?></th>
                                     <th align="right"><?php echo _l('into_money'); ?></th>
                                     <?php if(get_option('show_purchase_tax_column') == 1){ ?>
                                     <th align="right"><?php echo _l('tax'); ?></th>
                                     <?php } ?>
                                     <th align="right"><?php echo _l('sub_total'); ?></th>
                                     <th align="right"><?php echo _l('discount(%)'); ?></th>
-                                    <th align="right"><?php echo _l('discount(money)'); ?></th>
+                                    <!-- <th align="right"><?php echo _l('discount(money)'); ?></th> -->
                                     <th align="right"><?php echo _l('total'); ?></th>
+                                    <th align="right"><?php echo _l('Part No.'); ?></th>
                                  </tr>
                               </thead>
                               <tbody class="ui-sortable">
@@ -440,8 +442,13 @@
                                     $count = 1;
                                     $t_mn = 0;
                                     $item_discount = 0;
-                                 foreach($estimate_detail as $es) { ?>
-                                 <tr nobr="true" class="sortable">
+                                 foreach($estimate_detail as $es) {
+                                    // $attachment_pur_order = $this->get_purchase_order_attachments(56);
+                                    $items_unit = get_item_hp($es['item_code'])->unit_id;
+                                    $unit_name = get_unit_type_item($items_unit)->unit_name;
+                                    // echo json_encode($es);
+                                    ?>
+                                    <tr nobr="true" class="sortable">
                                     <td class="dragger item_no ui-sortable-handle" align="center"><?php echo html_entity_decode($count); ?></td>
                                     <td class="description" align="left;"><span><strong><?php 
                                     $item = get_item_hp($es['item_code']); 
@@ -450,22 +457,25 @@
                                     }else{
                                        echo html_entity_decode($es['item_name']);
                                     }
-                                    ?></strong><?php if($es['description'] != ''){ ?><br><span><?php echo html_entity_decode($es['description']); ?></span><?php } ?></td>
+                                    ?></strong><?php if($es['item_description'] != ''){ ?><br><span><?php echo html_entity_decode($es['item_description']); ?></span><?php } ?></td>
                                     <td align="right"  width="12%"><?php echo html_entity_decode($es['quantity']); ?></td>
                                     <td align="right"><?php echo app_format_money($es['unit_price'],$base_currency->symbol); ?></td>
+                                    <td align="right"><?php echo $unit_name; ?></td>
                                     <td align="right"><?php echo app_format_money($es['into_money'],$base_currency->symbol); ?></td>
                                     <?php if(get_option('show_purchase_tax_column') == 1){ ?>
                                     <td align="right"><?php echo app_format_money(($es['total'] - $es['into_money']),$base_currency->symbol); ?></td>
                                     <?php } ?>
                                     <td class="amount" align="right"><?php echo app_format_money($es['total'],$base_currency->symbol); ?></td>
                                     <td class="amount" width="12%" align="right"><?php echo ($es['discount_%'].'%'); ?></td>
-                                    <td class="amount" align="right"><?php echo app_format_money($es['discount_money'],$base_currency->symbol); ?></td>
+                                    <!-- <td class="amount" align="right"><?php echo app_format_money($es['discount_money'],$base_currency->symbol); ?></td> -->
                                     <td class="amount" align="right"><?php echo app_format_money($es['total_money'],$base_currency->symbol); ?></td>
-                                 </tr>
-                              <?php 
-                              $t_mn += $es['total_money'];
-                              $item_discount += $es['discount_money'];
-                              $count++; } } ?>
+                                    <td align="right"><?php echo $es['partno']; ?></td>
+                                    </tr>
+                                    <?php 
+                                    $t_mn += $es['total_money'];
+                                    $item_discount += $es['discount_money'];
+                                    $count++; }                                  
+                                    } ?>
                               </tbody>
                            </table>
                         </div>
@@ -514,10 +524,17 @@
                                     <?php echo app_format_money($estimate->total, $base_currency->symbol); ?>
                                  </td>
                               </tr>
+                              <!-- <tr id="partno">
+                                 <td><span class="bold"><?php echo _l('Part No.'); ?></span>
+                                 </td>
+                                 <td class="subtotal bold">
+                                    <?php echo $estimate->partno; ?>
+                                 </td>
+                              </tr> -->
                            </tbody>
                         </table>
                      </div>
-                     <div class="col-md-6 col-sm-6">
+                     <div class="col-md-12 col-sm-6">
                      <table>
 
                      <?php if($estimate->terbilang != ''){ ?>
@@ -533,7 +550,7 @@
                      <div class="col-md-12 mtop15">
                         <tr>
                         <td style="width:40%;"><p class="bold text-muted"><?php echo _l('Note'); ?>:</p></td>
-                        <td><p><?php echo html_entity_decode($estimate->vendornote); ?></p></td>
+                        <td ><p><?php echo html_entity_decode($estimate->vendornote); ?></p></td>
                         </tr>
                      </div>
                      <?php } ?>
@@ -566,6 +583,39 @@
                      <?php } ?>
                      
                      </table>
+                     <div role="tabpanel" class="tab-pane" id="attachment2">
+               
+               <div class="col-md-12" id="purorder_pv_file">
+                                    <?php
+                                        $file_html = '';
+                                        if(count($pur_order_attachments) > 0){
+                                            $file_html .= '<hr />';
+                                            foreach ($pur_order_attachments as $f) {
+                                                $href_url = site_url(PURCHASE_PATH.'pur_order/'.$f['rel_id'].'/'.$f['file_name']).'" download';
+                                                                if(!empty($f['external'])){
+                                                                  $href_url = $f['external_link'];
+                                                                }
+                                               $file_html .= '<div class="mbot15 row inline-block full-width" data-attachment-id="'. $f['id'].'">
+                                              <div class="col-md-8">
+                                                 <a name="preview-purorder-btn" onclick="preview_purorder_btn(this); return false;" rel_id = "'. $f['rel_id']. '" id = "'.$f['id'].'" href="Javascript:void(0);" class="mbot10 mright5 btn btn-success pull-left" data-toggle="tooltip" title data-original-title="'. _l('preview_file').'"><i class="fa fa-eye"></i></a>
+                                                 <div class="pull-left"><i class="'. get_mime_class($f['filetype']).'"></i></div>
+                                                 <a href=" '. $href_url.'" target="_blank" download>'.$f['file_name'].'</a>
+                                                 <br />
+                                                 <small class="text-muted">'.$f['filetype'].'</small>
+                                              </div>
+                                              <div class="col-md-4 text-right">';
+                                                if($f['staffid'] == get_staff_user_id() || is_admin()){
+                                                // $file_html .= '<a href="#" class="text-danger" onclick="delete_purorder_attachment('. $f['id'].'); return false;"><i class="fa fa-times"></i></a>';
+                                                } 
+                                               $file_html .= '</div></div>';
+                                            }
+                                            echo html_entity_decode($file_html);
+                                        }
+                                     ?>
+                                  </div>
+
+               <div id="purorder_file_data"></div>
+            </div>
                      </div>
 
                   </div>
